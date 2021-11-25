@@ -1,9 +1,15 @@
+/**
+ * Author: Yannick Brenning
+ * Date: 24.11.2021
+ * Description: Implementation of singly linked lists
+ */
+
 #include "singly_linked_lists.h"
 
 void check_address(void *address) {
     if (!address) {
         printf("Memory allocation failed.\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -12,6 +18,7 @@ Node *llist_init(int val) {
     check_address(head);
     head->val = val;
     head->next = NULL;
+
     return head;
 }
 
@@ -35,6 +42,8 @@ void llist_append(Node **head, int val) {
         *head = llist_init(val);
         return;
     }
+
+    /* If llist not empty, traverse nodes and change next pointer of last */
     Node *curr = *head;
     while (curr->next != NULL) {
         curr = curr->next;
@@ -48,8 +57,10 @@ void llist_append(Node **head, int val) {
 int llist_get(Node *head, int index) {
     if (index < 0) return -1;
     if (llist_isempty(head)) return -1;
+
     Node *curr = head;
     for (int i = 0; i < index; i++) {
+        /* Check if index out of bounds */
         if (curr->next == NULL) return -1;
         curr = curr->next;
     }
@@ -65,32 +76,33 @@ void llist_push(Node **head, int val) {
 }
 
 int llist_remove_last(Node **head) {
-    int val;
+    int retval;
     Node *curr = *head;
     if (llist_isempty(*head)) return -1;
     if ((*head)->next == NULL) {
-        val = (*head)->val;
+        retval = (*head)->val;
         *head = NULL;
-        return val;
+        return retval;
     }
 
+    /* Get to second last node and change its next pointer */
     while (curr->next->next != NULL) {
         curr = curr->next;
     }
 
-    val = curr->next->val;
+    retval = curr->next->val;
     free(curr->next);
     curr->next = NULL;
-    return val;
+    return retval;
 }
 
 int llist_remove_first(Node **head) {
-    int val = (*head)->val;
+    int retval = (*head)->val;
     Node *front = *head;
 
     *head = front->next;
     free(front);
-    return val;
+    return retval;
 }
 
 void llist_print(Node *head) {
@@ -115,7 +127,9 @@ void llist_insert(Node **head, int val, int index) {
     }
 
     Node *curr = *head;
+    /* Get to node before index, such that curr->next can be our new node */
     for (int i = 0; i < index - 1; i++) {
+        /* Check if index is out of bounds */
         if (curr->next == NULL) return;
         curr = curr->next;
     }
@@ -144,17 +158,31 @@ void llist_reverse(Node **head) {
     Node *prev = NULL;
     Node *next;
 
+    /* Traverse entire llist and reverse each next pointer */
     while (curr != NULL) {
         next = curr->next;
         curr->next = prev;
         prev = curr;
         curr = next;
     }
-
+    /* Set head to last elem of the old llist */
     *head = prev;
 }
 
+void llist_destroy(Node **head) {
+    Node *curr = *head;
+    while (curr != NULL) {
+        Node *next = curr->next;
+        free(curr);
+        curr = next;
+    }
+
+    head = NULL;
+}
+
 int main() {
+
+    /* Some tests */
     Node *head = llist_init(2);
     Node **p_head = &head;
 
@@ -183,5 +211,6 @@ int main() {
     llist_reverse(p_head);
     llist_print(head);
 
+    llist_destroy(p_head);
     return 0;
 }

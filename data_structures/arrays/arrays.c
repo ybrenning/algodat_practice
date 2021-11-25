@@ -1,20 +1,29 @@
+/**
+ * Author: Yannick Brenning
+ * Date: 21.11.2021
+ * Description: Implementation of a dynamic array data structure
+ */
+
 #include "arrays.h"
 
 void check_address(void *address) {
     if (!address) {
         printf("Memory allocation failed.\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
 int init_capacity(int capacity) {
+    /* if the users custom capacity is smaller or equal to the default, then set to default */
     if (capacity <= DEF_CAPACITY) {
         return DEF_CAPACITY;
     }
-    while (capacity > DEF_CAPACITY) {
-        capacity = RESIZE_FACTOR * DEF_CAPACITY;
+    /* If the custom capacity is larger, resize the default until it reaches the custon capacity */
+    int new_capacity = DEF_CAPACITY;
+    while (new_capacity < capacity) {
+        new_capacity *= RESIZE_FACTOR;
     }
-    return capacity;
+    return new_capacity;
 }
 
 int darray_grow(int capacity) {
@@ -44,15 +53,13 @@ void darray_destroy(DArray *darray) {
 }
 
 bool darray_isempty(DArray *darray) {
-    if (darray->size == 0) {
-        return true;
-    } else return false;
+    return (darray->size == 0);
 }
 
 int darray_get(DArray *darray, int index) {
-    if (index < 0 || index >= darray->size || darray_isempty(darray)) {
+    if (index < 0 || index >= darray->size || darray_isempty(darray))
         return -1;
-    }
+
     return darray->data[index];
 }
 
@@ -107,9 +114,8 @@ int darray_delete(DArray *darray, int index) {
     } else {
         int val = darray->data[index];
         int new_size = darray->size - 1;
-        for (int i = index; i < new_size; i++) {
+        for (int i = index; i < new_size; i++)
             darray->data[i] = darray->data[i + 1];
-        }
 
         /* Check if shrink is possible */
         if (new_size <= darray->capacity / RESIZE_FACTOR) {
@@ -135,7 +141,8 @@ void darray_print(DArray *darray) {
 int main() {
 
     /* Some tests */
-    DArray *my_darray = darray_init(16);
+    DArray *my_darray = darray_init(19);
+    darray_print(my_darray);
     darray_push(my_darray, 3);
     darray_push(my_darray, 6);
     darray_push(my_darray, 90);
