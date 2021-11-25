@@ -37,6 +37,12 @@ DArray *darray_init(int capacity) {
     return my_darray;
 }
 
+void darray_destroy(DArray *darray) {
+    free(darray->data);
+    free(darray);
+    darray = NULL;
+}
+
 bool darray_isempty(DArray *darray) {
     if (darray->size == 0) {
         return true;
@@ -158,5 +164,7 @@ int main() {
     darray_print(my_darray);
 
     printf("%d", darray_get(my_darray, 4));
+
+    darray_destroy(my_darray);
     return 0;
 }
