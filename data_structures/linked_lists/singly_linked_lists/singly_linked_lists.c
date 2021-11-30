@@ -37,6 +37,20 @@ bool llist_isempty(Node *head) {
     return (head == NULL);
 }
 
+int llist_get(Node *head, int index) {
+    if (index < 0) return -1;
+    if (llist_isempty(head)) return -1;
+
+    Node *curr = head;
+    for (int i = 0; i < index; i++) {
+        /* Check if index out of bounds */
+        if (curr->next == NULL) return -1;
+        curr = curr->next;
+    }
+
+    return curr->val;
+}
+
 void llist_append(Node **head, int val) {
     if (llist_isempty(*head)) {
         *head = llist_init(val);
@@ -54,20 +68,6 @@ void llist_append(Node **head, int val) {
     curr->next->next = NULL;
 }
 
-int llist_get(Node *head, int index) {
-    if (index < 0) return -1;
-    if (llist_isempty(head)) return -1;
-
-    Node *curr = head;
-    for (int i = 0; i < index; i++) {
-        /* Check if index out of bounds */
-        if (curr->next == NULL) return -1;
-        curr = curr->next;
-    }
-
-    return curr->val;
-}
-
 void llist_push(Node **head, int val) {
     Node *new_node = (Node *) malloc(sizeof(Node));
     new_node->next = *head;
@@ -81,6 +81,7 @@ int llist_remove_last(Node **head) {
     if (llist_isempty(*head)) return -1;
     if ((*head)->next == NULL) {
         retval = (*head)->val;
+        free(*head);
         *head = NULL;
         return retval;
     }
@@ -97,6 +98,8 @@ int llist_remove_last(Node **head) {
 }
 
 int llist_remove_first(Node **head) {
+    if (llist_isempty(*head)) return -1;
+
     int retval = (*head)->val;
     Node *front = *head;
 
@@ -180,37 +183,152 @@ void llist_destroy(Node **head) {
     head = NULL;
 }
 
+void test_llist_init() {
+    Node *head = llist_init(1);
+    assert(head->val == 1);
+    assert(head->next == NULL);
+    llist_destroy(&head);
+}
+
+void test_llist_size() {
+    Node *head = llist_init(1);
+    assert(llist_size(head) == 1);
+
+    head->next = (Node *) malloc(sizeof(Node));
+    head->next->val = 2;
+    head->next->next = NULL;
+    assert(llist_size(head) == 2);
+    llist_destroy(&head);
+}
+
+void test_llist_isempty() {
+    Node *head = llist_init(1);
+    assert(!llist_isempty(head));
+
+    free(head);
+    head = NULL;
+    assert(llist_isempty(head));
+    llist_destroy(&head);
+}
+
+void test_llist_get() {
+    Node *head = llist_init(1);
+    assert(llist_get(head, 0) == 1);
+
+    head->next = (Node *) malloc(sizeof(Node));
+    head->next->val = 2;
+    head->next->next = NULL;
+    assert(llist_get(head, 1) == 2);
+    assert(llist_get(head, -1) == -1);
+    assert(llist_get(head, 2) == -1);
+    llist_destroy(&head);
+}
+
+void test_llist_append() {
+    Node *head = llist_init(1);
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    assert(llist_get(head, 1) == 2);
+    assert(llist_get(head, 2) == 3);
+    llist_destroy(&head);
+}
+
+void test_llist_push() {
+    Node *head = llist_init(1);
+    llist_push(&head, 2);
+    assert(llist_get(head, 0) == 2);
+    llist_destroy(&head);
+}
+
+void test_llist_remove_last() {
+    Node *head = llist_init(1);
+    assert(llist_remove_last(&head) == 1);
+    assert(llist_isempty(head));
+    assert(llist_remove_last(&head) == -1);
+
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    assert(llist_remove_last(&head) == 3);
+    assert(llist_get(head, 1) == -1);
+    llist_destroy(&head);
+}
+
+void test_llist_remove_first() {
+    Node *head = llist_init(1);
+    assert(llist_remove_first(&head) == 1);
+    assert(llist_remove_first(&head) == -1);
+
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    llist_append(&head, 4);
+    assert(llist_remove_first(&head) == 2);
+    assert(llist_get(head, 0) == 3);
+    llist_destroy(&head);
+}
+
+void test_llist_insert() {
+    Node *head = llist_init(1);
+
+    // Check if we can insert at front
+    llist_insert(&head, 2, 0);
+    assert(llist_get(head, 0) == 2);
+
+    // Check if we can insert in middle
+    llist_append(&head, 3);
+    llist_append(&head, 4);
+    llist_insert(&head, 5, 1);
+    assert(llist_get(head, 1) == 5);
+    assert(llist_get(head, 4) == 4);
+
+    // Check if we can insert at end
+    llist_insert(&head, 6, 5);
+    assert(llist_get(head, 5) == 6);
+    llist_destroy(&head);
+}
+
+void test_llist_find() {
+    Node *head = llist_init(1);
+    assert(llist_find(head, 1) == 0);
+    assert(llist_find(head, 2) == -1);
+
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    llist_append(&head, 4);
+    assert(llist_find(head, 3) == 2);
+    llist_destroy(&head);
+}
+
+void test_llist_reverse() {
+    Node *head = llist_init(1);
+    llist_reverse(&head);
+    assert(llist_get(head, 0) == 1);
+
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    llist_append(&head, 4);
+    llist_reverse(&head);
+    assert(llist_get(head, 0) == 4);
+    assert(llist_get(head, 1) == 3);
+    assert(llist_get(head, 2) == 2);
+    assert(llist_get(head, 3) == 1);
+    llist_destroy(&head);
+}
+
+void run_all_tests() {
+    test_llist_init();
+    test_llist_size();
+    test_llist_isempty();
+    test_llist_get();
+    test_llist_append();
+    test_llist_push();
+    test_llist_remove_last();
+    test_llist_remove_first();
+    test_llist_insert();
+    test_llist_find();
+    test_llist_reverse();
+}
+
 int main() {
-
-    /* Some tests */
-    Node *head = llist_init(2);
-    Node **p_head = &head;
-
-    llist_print(head);
-    llist_remove_last(p_head);
-    llist_print(head);
-
-    llist_append(p_head, 3);
-    llist_print(head);
-    llist_append(p_head, 4);
-    llist_append(p_head, 5);
-    llist_append(p_head, 6);
-    llist_print(head);
-    llist_push(p_head, 1);
-    llist_print(head);
-
-    llist_remove_last(p_head);
-    llist_print(head);
-    llist_remove_first(p_head);
-    llist_print(head);
-
-    llist_insert(p_head, 50, 9);
-    llist_print(head);
-
-    printf("%d\n", llist_find(head, 5));
-    llist_reverse(p_head);
-    llist_print(head);
-
-    llist_destroy(p_head);
+    run_all_tests();
     return 0;
 }

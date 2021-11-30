@@ -4,12 +4,13 @@
  * Description: Implementation of singly linked lists
  */
 
-#ifndef LINKED_LISTS_H
-#define LINKED_LISTS_H
+#ifndef SINGLY_LINKED_LISTS_H
+#define SINGLY_LINKED_LISTS_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
 typedef struct Node {
     int val;
@@ -24,6 +25,8 @@ Node *llist_init(int val);
 int llist_size(Node *head);
 // Check if llist is empty
 bool llist_isempty(Node *head);
+// Get val of node at index
+int llist_get(Node *head, int index);
 // Append node to llist
 void llist_append(Node **head, int val);
 // Push node to beginning of llist
@@ -41,4 +44,17 @@ void llist_reverse(Node **head);
 // Print contents of llist onto console
 void llist_print(Node *head);
 
-#endif //LINKED_LISTS_H
+// Tests
+void test_llist_init();
+void test_llist_size();
+void test_llist_isempty();
+void test_llist_get();
+void test_llist_append();
+void test_llist_push();
+void test_llist_remove_last();
+void test_llist_remove_first();
+void test_llist_insert();
+void test_llist_find();
+void test_llist_reverse();
+
+#endif //SINGLY_LINKED_LISTS_H

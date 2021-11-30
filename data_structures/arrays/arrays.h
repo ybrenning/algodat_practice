@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #define DEF_CAPACITY 16
 #define RESIZE_FACTOR 2
@@ -34,7 +35,7 @@ DArray *darray_init(int capacity);
 bool darray_isempty(DArray *darray);
 // Get value at specific index in darray
 int darray_get(DArray *darray, int index);
-// Push elem to the front of the darray
+// Push elem to the end of the darray
 void darray_push(DArray *darray, int val);
 // Remove last elem of the darray
 int darray_pop(DArray *darray);
@@ -44,5 +45,17 @@ void darray_insert(DArray *darray, int val, int index);
 int darray_delete(DArray *darray, int index);
 // Print content of darray onto console
 void darray_print(DArray *darray);
+// Linear search for val in the darray
+int darray_find(DArray *darray, int val);
+
+// Tests
+void test_darray_init();
+void test_darray_isempty();
+void test_darray_push();
+void test_darray_get();
+void test_darray_pop();
+void test_darray_insert();
+void test_darray_delete();
+void test_darray_find();
 
 #endif //ARRAYS_H
