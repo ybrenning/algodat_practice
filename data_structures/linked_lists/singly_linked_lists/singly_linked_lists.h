@@ -56,5 +56,6 @@ void test_llist_remove_first();
 void test_llist_insert();
 void test_llist_find();
 void test_llist_reverse();
+void run_all_tests();
 
 #endif //SINGLY_LINKED_LISTS_H

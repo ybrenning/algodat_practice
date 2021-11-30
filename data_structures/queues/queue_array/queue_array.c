@@ -22,6 +22,11 @@ Queue *queue_init() {
     return my_queue;
 }
 
+void queue_destroy(Queue *queue) {
+    free(queue);
+    queue = NULL;
+}
+
 bool queue_isempty(Queue *queue) {
     return (queue->front == -1 && queue->rear == -1);
 }
@@ -37,7 +42,7 @@ void enqueue(Queue *queue, int val) {
         queue->rear++;
         queue->data[queue->front] = val;
     } else if (queue_isfull(queue)) {
-        printf("Queue is full.\n");
+        return;
     } else {
         /* Otherwise, we only move the rear pointer to the next elem and insert the value */
         queue->rear++;
@@ -48,7 +53,6 @@ void enqueue(Queue *queue, int val) {
 int dequeue(Queue *queue) {
     int retval = -1;
     if (queue_isempty(queue)) {
-        printf("Queue already empty.\n");
         return retval;
     } else {
         retval = queue->data[queue->front];
@@ -78,30 +82,75 @@ void queue_print(Queue *queue) {
     } printf("%d ]\n", queue->data[queue->rear]);
 }
 
-int main() {
+void test_queue_init() {
     Queue *my_queue = queue_init();
+    assert(my_queue->front == -1 && my_queue->rear == -1);
+    queue_destroy(my_queue);
+}
 
-    enqueue(my_queue, 3);
-    enqueue(my_queue, 55);
-    enqueue(my_queue, 9);
-    enqueue(my_queue, 22);
-    queue_print(my_queue);
+void test_queue_isempty() {
+    Queue *my_queue = queue_init();
+    assert(queue_isempty(my_queue));
+    enqueue(my_queue, 1);
+    assert(!queue_isempty(my_queue));
+    queue_destroy(my_queue);
+}
 
-    dequeue(my_queue);
-    queue_print(my_queue);
-    dequeue(my_queue);
-    dequeue(my_queue);
-    dequeue(my_queue);
-    queue_print(my_queue);
+void test_queue_isfull() {
+    Queue *my_queue = queue_init();
+    assert(!queue_isfull(my_queue));
 
-    enqueue(my_queue, 66);
-    queue_print(my_queue);
-    enqueue(my_queue, 43);
-    queue_print(my_queue);
+    for (int i = 0; i < MAX_SIZE; i++) {
+        enqueue(my_queue, i + 1);
+    }
+
+    assert(queue_isfull(my_queue));
+    queue_destroy(my_queue);
+}
+
+void test_enqueue() {
+    Queue *my_queue = queue_init();
+    enqueue(my_queue, 1);
     enqueue(my_queue, 2);
-    queue_print(my_queue);
-    enqueue(my_queue, 99);
-    queue_print(my_queue);
+    assert(my_queue->data[my_queue->front] == 1);
+    assert(my_queue->data[my_queue->rear] == 2);
+    queue_destroy(my_queue);
 
+    my_queue = queue_init();
+    for (int i = 0; i < MAX_SIZE; i++) {
+        enqueue(my_queue, i + 1);
+    }
+
+    assert(my_queue->data[my_queue->rear] == MAX_SIZE);
+    assert(my_queue->data[my_queue->front] == 1);
+
+    enqueue(my_queue, MAX_SIZE + 1);
+    assert(my_queue->data[my_queue->rear] == MAX_SIZE);
+    queue_destroy(my_queue);
+}
+
+void test_dequeue() {
+    Queue *my_queue = queue_init();
+    assert(dequeue(my_queue) == -1);
+
+    enqueue(my_queue, 1);
+    enqueue(my_queue, 2);
+    enqueue(my_queue, 3);
+    assert(dequeue(my_queue) == 1);
+    assert(dequeue(my_queue) == 2);
+    assert(dequeue(my_queue) == 3);
+    queue_destroy(my_queue);
+}
+
+void run_all_tests() {
+    test_queue_init();
+    test_queue_isempty();
+    test_queue_isfull();
+    test_enqueue();
+    test_dequeue();
+}
+
+int main() {
+    run_all_tests();
     return 0;
 }

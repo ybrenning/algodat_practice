@@ -57,5 +57,6 @@ void test_darray_pop();
 void test_darray_insert();
 void test_darray_delete();
 void test_darray_find();
+void run_all_tests();
 
 #endif //ARRAYS_H
