@@ -10,13 +10,18 @@ class LinkedList:
         self.head = None
 
     def get_at_index(self, index):
+        """
+        Returns value of node at index
+        :param index: index of node
+        :return: value of node
+        """
         if index < 0 or index >= self.size:
             return -1
         elif index == 0:
             return self.head.val
         else:
             curr = self.head
-            for i in range(0, index):
+            for _ in range(0, index):
                 curr = curr.next
             return curr.val
 
@@ -44,7 +49,7 @@ class LinkedList:
             self.add_at_head(val)
         else:
             curr = self.head
-            for i in range(0, self.size - 1):
+            for _ in range(0, self.size - 1):
                 curr = curr.next
             curr.next = Node(val)
             self.size += 1
@@ -64,7 +69,7 @@ class LinkedList:
             self.add_at_tail(val)
         else:
             curr = self.head
-            for i in range(0, index - 1):
+            for _ in range(0, index - 1):
                 curr = curr.next
             new_node = Node(val)
             temp = curr.next
@@ -84,11 +89,11 @@ class LinkedList:
         elif index == 0:
             self.head = self.head.next
         elif index == self.size - 1:
-            for i in range(0, self.size - 1):
+            for _ in range(0, self.size - 1):
                 curr = curr.next
             curr.next = None
         else:
-            for i in range(0, index - 1):
+            for _ in range(0, index - 1):
                 curr = curr.next
             curr.next = curr.next.next
         self.size -= 1
