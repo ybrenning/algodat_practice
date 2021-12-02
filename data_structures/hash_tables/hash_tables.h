@@ -44,4 +44,6 @@ void ht_remove_key(ht_t *hash_table, const char *key);
 // Print content of ahsh table to console
 void ht_print(ht_t *hash_table);
 
+// Tests
+
 #endif //HASH_TABLES_H

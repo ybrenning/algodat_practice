@@ -117,6 +117,8 @@ void ht_print(ht_t *hash_table) {
     } printf("\n");
 }
 
+/* Tests */
+
 int main() {
     ht_t *hash_table = ht_init();
     entry_t *entry1 = ht_entry_init("BTC", "Bitcoin");

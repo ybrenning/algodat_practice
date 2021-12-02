@@ -82,6 +82,7 @@ void queue_print(Queue *queue) {
     } printf("%d ]\n", queue->data[queue->rear]);
 }
 
+/* Tests */
 void test_queue_init() {
     Queue *my_queue = queue_init();
     assert(my_queue->front == -1 && my_queue->rear == -1);
