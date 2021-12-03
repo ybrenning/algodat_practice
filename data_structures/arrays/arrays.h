@@ -31,6 +31,8 @@ int darray_grow(int capacity);
 int darray_shrink(int capacity);
 // Initialize the darray
 DArray *darray_init(int capacity);
+// Free darray memory
+void darray_destroy(DArray **darray);
 // Check if the darray is empty
 bool darray_isempty(DArray *darray);
 // Get value at specific index in darray
@@ -50,6 +52,7 @@ int darray_find(DArray *darray, int val);
 
 // Tests
 void test_darray_init();
+void test_darray_destroy();
 void test_darray_isempty();
 void test_darray_push();
 void test_darray_get();
