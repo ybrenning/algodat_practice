@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <assert.h>
 
 #define MAX_SIZE 10
 
@@ -30,7 +31,7 @@ ht_t *ht_init();
 // Initialize entry for hash table
 entry_t *ht_entry_init(const char *key, const char *value);
 // Free memory used for hash table
-void ht_destroy(ht_t *hash_table);
+void ht_destroy(ht_t **hash_table);
 // Create a new hash
 int ht_hash(const char *key, const int m);
 // Add entry to hash table
@@ -41,9 +42,18 @@ char *ht_get(ht_t *hash_table, const char *key);
 bool ht_key_exists(ht_t *hash_table, const char *key);
 // Remove entry by key
 void ht_remove_key(ht_t *hash_table, const char *key);
-// Print content of ahsh table to console
+// Print content of hash table to console
 void ht_print(ht_t *hash_table);
 
 // Tests
+void test_ht_init();
+void test_ht_entry_init();
+void test_ht_destroy();
+void test_ht_hash();
+void test_ht_add();
+void test_ht_get();
+void test_ht_key_exists();
+void test_ht_remove_key();
+void run_all_tests();
 
 #endif //HASH_TABLES_H

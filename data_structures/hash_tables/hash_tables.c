@@ -37,17 +37,19 @@ entry_t *ht_entry_init(const char *key, const char *value) {
     return entry;
 }
 
-void ht_destroy(ht_t *hash_table) {
+void ht_destroy(ht_t **hash_table) {
     for (int i = 0; i < MAX_SIZE; i++) {
-        if (hash_table->entries[i] != NULL) {
-            free(hash_table->entries[i]->key);
-            free(hash_table->entries[i]->value);
-            free(hash_table->entries[i]);
+        if ((*hash_table)->entries[i] != NULL) {
+            free((*hash_table)->entries[i]->key);
+            free((*hash_table)->entries[i]->value);
+            free((*hash_table)->entries[i]);
+            (*hash_table)->entries[i] = NULL;
         }
     }
-    free(hash_table->entries);
-    free(hash_table);
-    hash_table = NULL;
+    free((*hash_table)->entries);
+    (*hash_table)->entries = NULL;
+    free(*hash_table);
+    *hash_table = NULL;
 }
 
 int ht_hash(const char *key, const int m) {
@@ -63,8 +65,13 @@ int ht_hash(const char *key, const int m) {
 void ht_add(ht_t *hash_table, entry_t *entry) {
     unsigned int i = 0;
     int hash = ht_hash(entry->key, MAX_SIZE);
+
     /* Linear probing (if entry is not null, check next index) */
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
+        /* Check if the keys are identical at any point */
+        if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, entry->key) == 0) {
+            return;
+        }
         i++;
     }
 
@@ -119,37 +126,121 @@ void ht_print(ht_t *hash_table) {
 
 /* Tests */
 
-int main() {
+void test_ht_init() {
     ht_t *hash_table = ht_init();
-    entry_t *entry1 = ht_entry_init("BTC", "Bitcoin");
-    entry_t *entry2 = ht_entry_init("ETH", "Ethereum");
-    entry_t *entry3 = ht_entry_init("MIOTA", "IOTA");
-    entry_t *entry4 = ht_entry_init("DOGE", "Dogecoin");
-    entry_t *entry5 = ht_entry_init("XRP", "Ripple");
-    entry_t *entry6 = ht_entry_init("ADA", "Cardano");
-    entry_t *entry7 = ht_entry_init("SOL", "Solana");
-    entry_t *entry8 = ht_entry_init("LTC", "Litecoin");
-    entry_t *entry9 = ht_entry_init("BCH", "Bitcoin Cash");
-    entry_t *entry10 = ht_entry_init("ETC", "Ethereum Classic");
+    assert(hash_table != NULL);
 
-    ht_add(hash_table, entry1);
-    ht_add(hash_table, entry2);
-    ht_add(hash_table, entry3);
-    ht_add(hash_table, entry4);
-    ht_add(hash_table, entry5);
-    ht_add(hash_table, entry6);
-    ht_add(hash_table, entry7);
-    ht_add(hash_table, entry8);
-    ht_add(hash_table, entry9);
-    ht_add(hash_table, entry10);
-    ht_print(hash_table);
+    for (int i = 0; i < MAX_SIZE; i++) {
+        assert(hash_table->entries[i] == NULL);
+    }
 
-    printf("%s\n", ht_key_exists(hash_table, "LEF") ? "true" : "false");
-    printf("%s\n", ht_get(hash_table, "LET"));
+    ht_destroy(&hash_table);
+}
 
+void test_ht_entry_init() {
+    entry_t *entry = ht_entry_init("Ross", "636-48018");
+    assert(strcmp(entry->key, "Ross") == 0 && strcmp(entry->value, "636-48018") == 0);
+    free(entry->key);
+    free(entry->value);
+    free(entry);
+}
+
+void test_ht_destroy() {
+    ht_t *hash_table = ht_init();
+    ht_destroy(&hash_table);
+    assert(hash_table == NULL);
+}
+
+void test_ht_hash() {
+    int indices[11];
+    int index_1 = ht_hash("BTC", MAX_SIZE);
+    int index_2 = ht_hash("BTC", MAX_SIZE);
+    assert(index_1 == index_2);
+
+    indices[0] = index_1;
+    indices[1] = ht_hash("ETH", MAX_SIZE);
+    indices[2] = ht_hash("MIOTA", MAX_SIZE);
+    indices[3] = ht_hash("DOGE", MAX_SIZE);
+    indices[4] = ht_hash("XRP", MAX_SIZE);
+    indices[5] = ht_hash("ADA", MAX_SIZE);
+    indices[6] = ht_hash("SOL", MAX_SIZE);
+    indices[7] = ht_hash("LTC", MAX_SIZE);
+    indices[8] = ht_hash("BCH", MAX_SIZE);
+    indices[9] = ht_hash("ETC", MAX_SIZE);
+
+    for (int i = 0; i < 10; i++) {
+        assert(indices[i] >= 0 && indices[i] < MAX_SIZE);
+    }
+}
+
+void test_ht_add() {
+    ht_t *hash_table = ht_init();
+    entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
+    int index = ht_hash(entry_1->key, MAX_SIZE);
+
+    ht_add(hash_table, entry_1);
+    assert(strcmp(hash_table->entries[index]->value, entry_1->value) == 0);
+
+    // Add same entry again to check if duplicate keys are possible
+    ht_add(hash_table, entry_1);
+    assert(hash_table->entries[index + 1] == NULL);
+
+    // Add entry with same value to see if duplicate values are possible
+    entry_t *entry_2 = ht_entry_init("BCH", "Bitcoin");
+    ht_add(hash_table, entry_2);
+    index = ht_hash(entry_2->key, MAX_SIZE);
+    assert(strcmp(hash_table->entries[index]->value, entry_2->value) == 0);
+
+    ht_destroy(&hash_table);
+}
+
+void test_ht_get() {
+    ht_t *hash_table = ht_init();
+    assert(ht_get(hash_table, "BTC") == NULL);
+
+    entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
+    ht_add(hash_table, entry_1);
+    assert(strcmp(ht_get(hash_table, "BTC"), "Bitcoin") == 0);
+
+    ht_destroy(&hash_table);
+}
+
+void test_ht_key_exists() {
+    ht_t *hash_table = ht_init();
+    assert(!ht_key_exists(hash_table, "BTC"));
+
+    entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
+    ht_add(hash_table, entry_1);
+    assert(ht_key_exists(hash_table, "BTC"));
+
+    ht_destroy(&hash_table);
+}
+
+void test_ht_remove_key() {
+    ht_t *hash_table = ht_init();
+    entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
+    int index = ht_hash(entry_1->key, MAX_SIZE);
+
+    ht_add(hash_table, entry_1);
     ht_remove_key(hash_table, "BTC");
-    ht_print(hash_table);
+    assert(!ht_key_exists(hash_table, "BTC"));
+    assert(hash_table->entries[index] == NULL);
 
-    ht_destroy(hash_table);
+    ht_destroy(&hash_table);
+}
+
+void run_all_tests() {
+    test_ht_init();
+    test_ht_entry_init();
+    test_ht_destroy();
+    test_ht_hash();
+    test_ht_add();
+    test_ht_get();
+    test_ht_key_exists();
+    test_ht_remove_key();
+}
+
+int main() {
+    run_all_tests();
     return 0;
 }
