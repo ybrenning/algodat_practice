@@ -17,6 +17,19 @@ int binary_search(int *arr, int len, int val) {
     return -1;
 }
 
+int binary_search_rec(int *arr, int val, int l, int r) {
+    int m = (l + r) / 2;
+    if (arr[m] == val) return arr[m];
+    else if (m == l && m == r) return -1;
+    else if (arr[m] < val) {
+        l = m + 1;
+        return binary_search_rec(arr, val, l, r);
+    } else {
+        r = m - 1;
+        return binary_search_rec(arr, val, l, r);
+    }
+}
+
 int main() {
 
     return 0;
