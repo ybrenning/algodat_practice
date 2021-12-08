@@ -1,35 +1,35 @@
 #include "binary_search.h"
 
-int binary_search(int *arr, int len, int val) {
-    int l = 0;
-    int r = len - 1;
-    int mid = r / 2;
+int binary_search(int *arr, int len, unsigned int val) {
+    unsigned int l, r, mid;
+    l = 0;
+    r = len - 1;
 
-    while (l != r) {
-        if (arr[mid] == val) {
-            return arr[mid];
-        } else if (arr[mid] < val) {
-            l = mid + 1;
-        } else {
-            r = mid - 1;
-        }
-
+    while (l <= r) {
         mid = l + ((r - l) / 2);
+        if (arr[mid] < val) {
+            l = mid + 1;
+        } else if (arr[mid > val]){
+            r = mid - 1;
+        } if (arr[mid] == val) {
+            return arr[mid];
+        }
     }
 
-    if (arr[mid] == val) return arr[mid];
+
     return -1;
 }
 
-int binary_search_rec(int *arr, int val, int l, int r) {
-    int m = (l + r) / 2;
-    if (arr[m] == val) return arr[m];
-    else if (m == l && m == r) return -1;
-    else if (arr[m] < val) {
-        l = m + 1;
+int binary_search_rec(int *arr, int val, unsigned int l, unsigned int r) {
+    unsigned int mid = l +  (r - l) / 2;
+
+    if (arr[mid] == val) return arr[mid];
+    else if (mid == l && mid == r) return -1;
+    else if (arr[mid] < val) {
+        l = mid + 1;
         return binary_search_rec(arr, val, l, r);
     } else {
-        r = m - 1;
+        r = mid - 1;
         return binary_search_rec(arr, val, l, r);
     }
 }

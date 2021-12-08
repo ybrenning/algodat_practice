@@ -13,3 +13,18 @@ def binary_search(arr, val):
         else:
             return arr[mid]
     return -1
+
+
+def binary_search_rec(arr, val, l , r):
+    mid = l + (r - l) // 2
+
+    if arr[mid] == val:
+        return arr[mid]
+    elif l == r:
+        return -1
+    elif arr[mid] < val:
+        l = mid + 1
+        return binary_search_rec(arr, val, l, r)
+    else:
+        r = mid - 1
+        return binary_search_rec(arr, val, l, r)
