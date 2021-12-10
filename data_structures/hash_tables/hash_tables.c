@@ -68,8 +68,9 @@ void ht_add(ht_t *hash_table, entry_t *entry) {
 
     /* Linear probing (if entry is not null, check next index) */
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-        /* Check if the keys are identical at any point */
+        /* Check if the keys are identical at any point and update the value if they are */
         if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, entry->key) == 0) {
+            hash_table->entries[(hash + i) % MAX_SIZE]->key = entry->value;
             return;
         }
         i++;
