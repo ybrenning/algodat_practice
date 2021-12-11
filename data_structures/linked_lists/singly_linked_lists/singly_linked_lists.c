@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 24.11.2021
- * Description: Implementation of singly linked lists
+ * @author Yannick Brenning
+ * @date 24.11.2021
+ * @brief Implementation of singly linked lists
  */
 
 #include "singly_linked_lists.h"
@@ -13,8 +13,8 @@ void check_address(void *address) {
     }
 }
 
-Node *llist_init(int val) {
-    Node *head = (Node *) malloc(sizeof(Node));
+node_t *llist_init(int val) {
+    node_t *head = (node_t *) malloc(sizeof(node_t));
     check_address(head);
     head->val = val;
     head->next = NULL;
@@ -22,9 +22,9 @@ Node *llist_init(int val) {
     return head;
 }
 
-int llist_size(Node *head) {
+int llist_size(node_t *head) {
     int count = 0;
-    Node *curr = head;
+    node_t *curr = head;
     while (curr != NULL) {
         curr = curr->next;
         count++;
@@ -33,15 +33,15 @@ int llist_size(Node *head) {
     return count;
 }
 
-bool llist_isempty(Node *head) {
+bool llist_isempty(node_t *head) {
     return (head == NULL);
 }
 
-int llist_get(Node *head, int index) {
+int llist_get(node_t *head, int index) {
     if (index < 0) return -1;
     if (llist_isempty(head)) return -1;
 
-    Node *curr = head;
+    node_t *curr = head;
     for (int i = 0; i < index; i++) {
         /* Check if index out of bounds */
         if (curr->next == NULL) return -1;
@@ -51,33 +51,33 @@ int llist_get(Node *head, int index) {
     return curr->val;
 }
 
-void llist_append(Node **head, int val) {
+void llist_append(node_t **head, int val) {
     if (llist_isempty(*head)) {
         *head = llist_init(val);
         return;
     }
 
     /* If llist not empty, traverse nodes and change next pointer of last */
-    Node *curr = *head;
+    node_t *curr = *head;
     while (curr->next != NULL) {
         curr = curr->next;
     }
 
-    curr->next = (Node *) malloc(sizeof(Node));
+    curr->next = (node_t *) malloc(sizeof(node_t));
     curr->next->val = val;
     curr->next->next = NULL;
 }
 
-void llist_push(Node **head, int val) {
-    Node *new_node = (Node *) malloc(sizeof(Node));
+void llist_push(node_t **head, int val) {
+    node_t *new_node = (node_t *) malloc(sizeof(node_t));
     new_node->next = *head;
     new_node->val = val;
     *head = new_node;
 }
 
-int llist_remove_last(Node **head) {
+int llist_remove_last(node_t **head) {
     int retval;
-    Node *curr = *head;
+    node_t *curr = *head;
     if (llist_isempty(*head)) return -1;
     if ((*head)->next == NULL) {
         retval = (*head)->val;
@@ -97,24 +97,24 @@ int llist_remove_last(Node **head) {
     return retval;
 }
 
-int llist_remove_first(Node **head) {
+int llist_remove_first(node_t **head) {
     if (llist_isempty(*head)) return -1;
 
     int retval = (*head)->val;
-    Node *front = *head;
+    node_t *front = *head;
 
     *head = front->next;
     free(front);
     return retval;
 }
 
-void llist_print(Node *head) {
+void llist_print(node_t *head) {
     if (llist_isempty(head)) {
         printf("[ ]\n");
         return;
     }
 
-    Node *curr = head;
+    node_t *curr = head;
     printf("[ ");
     while (curr->next != NULL) {
         printf("%d ", curr->val);
@@ -122,30 +122,30 @@ void llist_print(Node *head) {
     } printf("%d ]\n", curr->val);
 }
 
-void llist_insert(Node **head, int val, int index) {
+void llist_insert(node_t **head, int val, int index) {
     if (index < 0 || llist_isempty(*head)) return;
     if (index == 0) {
         llist_push(head, val);
         return;
     }
 
-    Node *curr = *head;
+    node_t *curr = *head;
     /* Get to node before index, such that curr->next can be our new node */
     for (int i = 0; i < index - 1; i++) {
         /* Check if index is out of bounds */
         if (curr->next == NULL) return;
         curr = curr->next;
     }
-    Node *new_node = (Node *) malloc(sizeof(Node));
+    node_t *new_node = (node_t *) malloc(sizeof(node_t));
     new_node->val = val;
-    Node *temp = curr->next;
+    node_t *temp = curr->next;
     curr->next = new_node;
     new_node->next = temp;
 }
 
-int llist_find(Node *head, int val) {
+int llist_find(node_t *head, int val) {
     int index = 0;
-    Node *curr = head;
+    node_t *curr = head;
     while (curr != NULL) {
         if (curr->val == val) return index;
         curr = curr->next;
@@ -155,11 +155,11 @@ int llist_find(Node *head, int val) {
     return -1;
 }
 
-void llist_reverse(Node **head) {
+void llist_reverse(node_t **head) {
     if (llist_isempty(*head) || (*head)->next == NULL) return;
-    Node *curr = *head;
-    Node *prev = NULL;
-    Node *next;
+    node_t *curr = *head;
+    node_t *prev = NULL;
+    node_t *next;
 
     /* Traverse entire llist and reverse each next pointer */
     while (curr != NULL) {
@@ -172,10 +172,10 @@ void llist_reverse(Node **head) {
     *head = prev;
 }
 
-void llist_destroy(Node **head) {
-    Node *curr = *head;
+void llist_destroy(node_t **head) {
+    node_t *curr = *head;
     while (curr != NULL) {
-        Node *next = curr->next;
+        node_t *next = curr->next;
         free(curr);
         curr = next;
     }
@@ -184,17 +184,17 @@ void llist_destroy(Node **head) {
 }
 
 void test_llist_init() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(head->val == 1);
     assert(head->next == NULL);
     llist_destroy(&head);
 }
 
 void test_llist_size() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(llist_size(head) == 1);
 
-    head->next = (Node *) malloc(sizeof(Node));
+    head->next = (node_t *) malloc(sizeof(node_t));
     head->next->val = 2;
     head->next->next = NULL;
     assert(llist_size(head) == 2);
@@ -202,7 +202,7 @@ void test_llist_size() {
 }
 
 void test_llist_isempty() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(!llist_isempty(head));
 
     free(head);
@@ -212,10 +212,10 @@ void test_llist_isempty() {
 }
 
 void test_llist_get() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(llist_get(head, 0) == 1);
 
-    head->next = (Node *) malloc(sizeof(Node));
+    head->next = (node_t *) malloc(sizeof(node_t));
     head->next->val = 2;
     head->next->next = NULL;
     assert(llist_get(head, 1) == 2);
@@ -225,7 +225,7 @@ void test_llist_get() {
 }
 
 void test_llist_append() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     llist_append(&head, 2);
     llist_append(&head, 3);
     assert(llist_get(head, 1) == 2);
@@ -234,14 +234,14 @@ void test_llist_append() {
 }
 
 void test_llist_push() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     llist_push(&head, 2);
     assert(llist_get(head, 0) == 2);
     llist_destroy(&head);
 }
 
 void test_llist_remove_last() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(llist_remove_last(&head) == 1);
     assert(llist_isempty(head));
     assert(llist_remove_last(&head) == -1);
@@ -254,7 +254,7 @@ void test_llist_remove_last() {
 }
 
 void test_llist_remove_first() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(llist_remove_first(&head) == 1);
     assert(llist_remove_first(&head) == -1);
 
@@ -267,7 +267,7 @@ void test_llist_remove_first() {
 }
 
 void test_llist_insert() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
 
     // Check if we can insert at front
     llist_insert(&head, 2, 0);
@@ -287,7 +287,7 @@ void test_llist_insert() {
 }
 
 void test_llist_find() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     assert(llist_find(head, 1) == 0);
     assert(llist_find(head, 2) == -1);
 
@@ -299,7 +299,7 @@ void test_llist_find() {
 }
 
 void test_llist_reverse() {
-    Node *head = llist_init(1);
+    node_t *head = llist_init(1);
     llist_reverse(&head);
     assert(llist_get(head, 0) == 1);
 

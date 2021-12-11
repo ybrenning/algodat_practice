@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 21.11.2021
- * Description: Implementation of a dynamic array data structure
+ * @author Yannick Brenning
+ * @date 21.11.2021
+ * @brief Implementation of a dynamic array data structure
  */
 
 #ifndef ARRAYS_H

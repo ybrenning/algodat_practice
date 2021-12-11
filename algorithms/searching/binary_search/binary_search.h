@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 08.12.2021
+ * @brief Implementation of binary search
+ */
+
 #ifndef BINARY_SEARCH_H
 #define BINARY_SEARCH_H
 

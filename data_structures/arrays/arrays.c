@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 21.11.2021
- * Description: Implementation of a dynamic array data structure
+ * @author Yannick Brenning
+ * @date 21.11.2021
+ * @brief Implementation of a dynamic array data structure
  */
 
 #include "arrays.h"
@@ -14,11 +14,11 @@ void check_address(void *address) {
 }
 
 int init_capacity(int capacity) {
-    /* if the users custom capacity is smaller or equal to the default, then set to default */
+    // If the users custom capacity is smaller or equal to the default, then set to default
     if (capacity <= DEF_CAPACITY) {
         return DEF_CAPACITY;
     }
-    /* If the custom capacity is larger, resize the default until it reaches the custon capacity */
+    // If the custom capacity is larger, resize the default until it reaches the custom capacity
     int new_capacity = DEF_CAPACITY;
     while (new_capacity < capacity) {
         new_capacity *= RESIZE_FACTOR;
@@ -64,7 +64,7 @@ int darray_get(DArray *darray, int index) {
 }
 
 void darray_push(DArray *darray, int val) {
-    /* If max capacity is reached, grow the array */
+    // If max capacity is reached, grow the array
     if (darray->size == darray->capacity) {
         darray->capacity = darray_grow(darray->capacity);
         darray->data = (int *) realloc(darray->data, sizeof(int) * darray->capacity);
@@ -81,7 +81,7 @@ int darray_pop(DArray *darray) {
     } else {
         int val = darray->data[darray->size - 1];
         darray->size--;
-        /* Check if shrink is possible */
+        // Check if shrink is possible
         if (darray->size <= darray->capacity / RESIZE_FACTOR) {
             darray->capacity = darray_shrink(darray->capacity);
             darray->data = (int *) realloc(darray->data, sizeof(int) * darray->capacity);
@@ -99,7 +99,7 @@ void darray_insert(DArray *darray, int val, int index) {
         return;
     }
 
-    /* If max capacity is reached, grow the array */
+    // If max capacity is reached, grow the array
     if (darray->size == darray->capacity) {
         darray->capacity = darray_grow(darray->capacity);
         darray->data = (int *) realloc(darray->data, sizeof(int) * darray->capacity);
@@ -122,7 +122,7 @@ int darray_delete(DArray *darray, int index) {
         for (int i = index; i < new_size; i++)
             darray->data[i] = darray->data[i + 1];
 
-        /* Check if shrink is possible */
+        // Check if shrink is possible
         if (new_size <= darray->capacity / RESIZE_FACTOR) {
             darray->capacity = darray_shrink(darray->capacity);
             darray->data = (int *) realloc(darray->data, sizeof(int) * darray->capacity);
@@ -152,7 +152,7 @@ void darray_print(DArray *darray) {
     } printf("]\n\n");
 }
 
-/* Testing */
+// Testing
 void test_darray_init() {
     DArray *my_darray = darray_init(0);
     assert(my_darray->size == 0);

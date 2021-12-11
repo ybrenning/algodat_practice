@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 02.11.2021
- * Description: Implementation of simple hash table with linear probing
+ * @author Yannick Brenning
+ * @date 02.11.2021
+ * @brief Implementation of simple hash table with linear probing
  */
 
 #include "hash_tables.h"
@@ -125,8 +125,7 @@ void ht_print(ht_t *hash_table) {
     } printf("\n");
 }
 
-/* Tests */
-
+// Testing
 void test_ht_init() {
     ht_t *hash_table = ht_init();
     assert(hash_table != NULL);

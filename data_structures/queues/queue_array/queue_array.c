@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 25.11.2021
- * Description: Implementation of the queue data structure using arrays
+ * @author Yannick Brenning
+ * @date 25.11.2021
+ * @brief Implementation of the queue data structure using arrays
  */
 
 #include "queue_array.h"

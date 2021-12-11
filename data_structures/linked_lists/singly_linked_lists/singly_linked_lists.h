@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 24.11.2021
- * Description: Implementation of singly linked lists
+ * @author Yannick Brenning
+ * @date 24.11.2021
+ * @brief Implementation of singly linked lists
  */
 
 #ifndef SINGLY_LINKED_LISTS_H
@@ -12,37 +12,37 @@
 #include <stdbool.h>
 #include <assert.h>
 
-typedef struct Node {
+typedef struct node_t {
     int val;
-    struct Node *next;
-} Node;
+    struct node_t *next;
+} node_t;
 
 // Check if address is valid
 void check_address(void *address);
 // Initialize Linked List
-Node *llist_init(int val);
+node_t *llist_init(int val);
 // Return number of elems in llist
-int llist_size(Node *head);
+int llist_size(node_t *head);
 // Check if llist is empty
-bool llist_isempty(Node *head);
+bool llist_isempty(node_t *head);
 // Get val of node at index
-int llist_get(Node *head, int index);
+int llist_get(node_t *head, int index);
 // Append node to llist
-void llist_append(Node **head, int val);
+void llist_append(node_t **head, int val);
 // Push node to beginning of llist
-void llist_push(Node **head, int val);
+void llist_push(node_t **head, int val);
 // Remove last node of llist
-int llist_remove_last(Node **head);
+int llist_remove_last(node_t **head);
 // Remove first node of llist
-int llist_remove_first(Node **head);
+int llist_remove_first(node_t **head);
 // Insert node at index
-void llist_insert(Node **head, int val, int index);
+void llist_insert(node_t **head, int val, int index);
 // Find first node with specified val in llist
-int llist_find(Node *head, int val);
+int llist_find(node_t *head, int val);
 // Reverse the llist
-void llist_reverse(Node **head);
+void llist_reverse(node_t **head);
 // Print contents of llist onto console
-void llist_print(Node *head);
+void llist_print(node_t *head);
 
 // Tests
 void test_llist_init();

@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 08.12.2021
+ * @brief Implementation of binary search
+ */
+
 #include "binary_search.h"
 
 int binary_search(int *arr, int len, unsigned int val) {

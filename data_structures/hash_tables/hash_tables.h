@@ -1,7 +1,7 @@
 /**
- * Author: Yannick Brenning
- * Date: 02.11.2021
- * Description: Implementation of simple hash table with linear probing
+ * @author Yannick Brenning
+ * @date 02.11.2021
+ * @brief Implementation of simple hash table with linear probing
  */
 
 #ifndef HASH_TABLES_H
