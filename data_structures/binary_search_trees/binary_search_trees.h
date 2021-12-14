@@ -23,13 +23,11 @@ typedef struct bst_node_t {
 // Insert node into bst
 bst_node_t *bst_insert(bst_node_t *root, const int val);
 // Destroy bst
-void bst_destroy(bst_node_t *root)
+void bst_destroy(bst_node_t *root);
 // Count number of nodes
 unsigned int bst_node_count(bst_node_t *root);
-// Print content of bst onto console
-void bst_print(bst_node_t *root);
 // Check if tree contains a value
-bool bst_is_in_tree(bst_node_t *root, int val);
+bool bst_is_val_in_tree(bst_node_t *root, const int val);
 // Get height of bst (highest number edges from root to leaf)
 int bst_get_height(bst_node_t *root);
 // Get max value in bst
@@ -39,10 +37,28 @@ int bst_get_max(bst_node_t *root);
 // Checks if a binary tree is a bst
 bool bst_is_valid(bst_node_t *root);
 // Checks if all the nodes in a subtree are smaller than the current node
-bool is_subtree_greater(bst_node_t *root, int val);
-// Checks if all the nodesi n a subtree are greater than the current node
-bool is_subtree_lesser(bst_node_t *root, int val);
+bool is_subtree_greater(bst_node_t *root, const int val);
+// Checks if all the nodes in a subtree are greater than the current node
+bool is_subtree_lesser(bst_node_t *root, const int val);
 // Deletes node with val from the bst
-bst_node_t *bst_delete_val(bst_node_t *root, int val);
+bst_node_t *bst_delete_val(bst_node_t *root, const int val);
+// Returns next highest value in tree, -1 if none
+int bst_get_successor(bst_node_t *root, const int val);
+// Print content of bst onto console
+void bst_print(bst_node_t *root);
+
+// Testing
+void test_bst_insert();
+void test_bst_node_count();
+void test_bst_is_val_in_tree();
+void test_bst_get_height();
+void test_bst_get_min();
+void test_bst_get_max();
+void test_bst_is_valid();
+void test_is_subtree_greater();
+void test_is_subtree_lesser();
+void test_bst_delete_val();
+void test_bst_get_successor();
+void run_all_tests();
 
 #endif //BINARY_SEARCH_TREES_H
