@@ -184,12 +184,12 @@ int bst_get_successor(bst_node_t *root, const int val) {
     }
 }
 
-void bst_print(bst_node_t *root) {
-    if (root->left != NULL && root->right) {
+void bst_print_inorder(bst_node_t *root) {
+    if (root == NULL) return;
+    else {
+        bst_print_inorder(root->left);
         printf("%d ", root->val);
-    } else {
-        bst_print(root->left);
-        bst_print(root->right);
+        bst_print_inorder(root->right);
     }
 }
 

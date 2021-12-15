@@ -44,8 +44,8 @@ bool is_subtree_lesser(bst_node_t *root, const int val);
 bst_node_t *bst_delete_val(bst_node_t *root, const int val);
 // Returns next highest value in tree, -1 if none
 int bst_get_successor(bst_node_t *root, const int val);
-// Print content of bst onto console
-void bst_print(bst_node_t *root);
+// Print content of bst onto console in order
+void bst_print_inorder(bst_node_t *root);
 
 // Testing
 void test_bst_insert();
