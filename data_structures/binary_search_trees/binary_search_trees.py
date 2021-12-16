@@ -1,5 +1,7 @@
 """
-Implementation of the binary search tree data structure
+:author: Yannick Brenning
+:date: 16.12.2021
+:brief: Implementation of the binary search tree data structure
 """
 
 
