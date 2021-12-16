@@ -32,8 +32,7 @@ void bst_destroy(bst_node_t *root) {
 }
 
 unsigned int bst_node_count(bst_node_t *root) {
-    unsigned int count = 0;
-    if (root == NULL) return count;
+    if (root == NULL) return 0;
     else {
         return 1 + bst_node_count(root->left) + bst_node_count(root->right);
     }
@@ -192,7 +191,6 @@ void bst_print_inorder(bst_node_t *root) {
         bst_print_inorder(root->right);
     }
 }
-
 
 // Testing
 void test_bst_insert() {
