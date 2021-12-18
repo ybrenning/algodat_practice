@@ -143,6 +143,7 @@ bst_node_t *bst_delete_val(bst_node_t *root, const int val) {
 int bst_get_successor(bst_node_t *root, const int val) {
     bst_node_t *curr = root;
 
+    // Search the node in the tree - O(h)
     while (curr != NULL) {
         if (val < curr->val) {
             curr = curr->left;
@@ -154,7 +155,7 @@ int bst_get_successor(bst_node_t *root, const int val) {
     // Check whether we could find the node with val
     if (curr == NULL) return -1;
 
-    // Case 1: node has a right subtree
+    // Case 1: node has a right subtree - O(h)
     if (curr->right != NULL) {
         // Visit the smallest child in the right subtree
         bst_node_t *temp = curr->right;
@@ -164,16 +165,20 @@ int bst_get_successor(bst_node_t *root, const int val) {
         return temp->val;
     }
 
-    // Case 2: node has no right subtree
+    // Case 2: node has no right subtree - O(h)
     else {
         bst_node_t *ancestor = root;
         bst_node_t *successor = NULL;
 
         while (ancestor != curr) {
+            // Check if the ancestors val is higher than our found node
             if (curr->val < ancestor->val) {
+                // This ancestor is a potential candidate for our successor
                 successor = ancestor;
+                // Keep lowering the value until we get close to curr
                 ancestor = ancestor->left;
             } else {
+                // Our curr node lies in the right subtree
                 ancestor = ancestor->right;
             }
         }

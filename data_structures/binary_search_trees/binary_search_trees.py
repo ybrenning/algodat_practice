@@ -215,6 +215,53 @@ class BinarySearchTree:
 
         return node
 
+    def get_successor(self, val):
+        curr = self.root
+
+        while curr is not None:
+            if val < curr.val:
+                curr = curr.left
+            elif val > curr.val:
+                curr = curr.right
+            else:
+                break
+
+        # Check whether we could find the node or not
+        if curr is None:
+            return -1
+
+        # Case 1: node has a right subtree
+        if curr.right is not None:
+            temp = curr.right
+            # Find the smallest value in the right subtree
+            while temp.left is not None:
+                temp = temp.left
+            return temp.val
+
+        # Case 2: node has no right subtree
+        else:
+            ancestor = self.root
+            successor = None
+
+            while ancestor is not curr:
+                # Check if ancestors val is higher than our found node
+                if curr.val < ancestor.val:
+                    # Found a potential candidate for the successor
+                    successor = ancestor
+                    # Keep lowering the val until we get
+                    # as close as possible to our found node
+                    ancestor = ancestor.left
+                else:
+                    # Our successor lies in the right subtree
+                    ancestor = ancestor.right
+
+            if successor is not None:
+                return successor.val
+            else:
+                # If we tried to find the succ of
+                # our highest node in the BST
+                return -1
+
 
 def main():
     # Generate the following tree:
@@ -242,6 +289,8 @@ def main():
 
     bst.delete_node(80)
     bst.inorder_traversal()
+
+    print(bst.get_successor(55))
 
 
 if __name__ == "__main__":
