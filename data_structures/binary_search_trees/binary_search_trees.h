@@ -44,6 +44,8 @@ bool is_subtree_lesser(bst_node_t *root, const int val);
 bst_node_t *bst_delete_val(bst_node_t *root, const int val);
 // Returns next highest value in tree, -1 if none
 int bst_get_successor(bst_node_t *root, const int val);
+// Returns next lowest value in tree, -1 if none
+int bst_get_predecessor(bst_node_t *root, const int val);
 // Print content of bst onto console in order
 void bst_print_inorder(bst_node_t *root);
 
@@ -59,6 +61,7 @@ void test_is_subtree_greater();
 void test_is_subtree_lesser();
 void test_bst_delete_val();
 void test_bst_get_successor();
+void test_bst_get_predecessor();
 void run_all_tests();
 
 #endif //BINARY_SEARCH_TREES_H

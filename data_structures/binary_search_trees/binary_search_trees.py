@@ -262,6 +262,43 @@ class BinarySearchTree:
                 # our highest node in the BST
                 return -1
 
+    def get_predecessor(self, val):
+        curr = self.root
+        while curr is not None:
+            if val < curr.val:
+                curr = curr.left
+            elif val > curr.val:
+                curr = curr.right
+            else:
+                break
+
+        if curr is None:
+            return -1
+
+        # Case 1: curr has a left subtree
+        if curr.left is not None:
+            # Get the highest val in the left subtree
+            temp = curr.left
+            while temp.right is not None:
+                temp = temp.right
+            return temp.val
+
+        # Case 2: curr has no left subtree
+        ancestor = self.root
+        predecessor = None
+
+        while ancestor is not curr:
+            if val > ancestor.val:
+                predecessor = ancestor
+                ancestor = ancestor.right
+            else:
+                ancestor = ancestor.left
+
+        if predecessor is not None:
+            return predecessor.val
+        else:
+            return -1
+
 
 def main():
     # Generate the following tree:
@@ -291,6 +328,7 @@ def main():
     bst.inorder_traversal()
 
     print(bst.get_successor(55))
+    print(bst.get_predecessor(60))
 
 
 if __name__ == "__main__":

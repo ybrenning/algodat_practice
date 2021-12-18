@@ -188,6 +188,45 @@ int bst_get_successor(bst_node_t *root, const int val) {
     }
 }
 
+int bst_get_predecessor(bst_node_t *root, const int val) {
+    bst_node_t *curr = root;
+    while (curr != NULL) {
+        if (val < curr->val) {
+            curr = curr->left;
+        } else if (val > curr->val) {
+            curr = curr->right;
+        } else break;
+    }
+
+    if (curr == NULL) return -1;
+
+    // Case 1: curr has a left subtree
+    if (curr->left != NULL) {
+        bst_node_t *temp = curr->left;
+        while (temp->right != NULL) {
+            temp = temp->right;
+        }
+
+        return temp->val;
+    }
+
+    // Case 2: curr has no left subtree
+    bst_node_t *ancestor = root;
+    bst_node_t *predecessor = NULL;
+    while (ancestor != curr) {
+        if (val > ancestor->val) {
+            // Potential candidate for pred
+            predecessor = ancestor;
+            ancestor = ancestor->right;
+        } else {
+            ancestor = ancestor->left;
+        }
+    }
+
+    if (predecessor != NULL) return predecessor->val;
+    else return -1;
+}
+
 void bst_print_inorder(bst_node_t *root) {
     if (root == NULL) return;
     else {
@@ -348,6 +387,22 @@ void test_bst_get_successor() {
     bst_destroy(root);
 }
 
+void test_bst_get_predecessor() {
+    bst_node_t *root = NULL;
+    root = bst_insert(root, 1);
+    assert(bst_get_predecessor(root, 1) == -1);
+    assert(bst_get_predecessor(root, 2) == -1);
+
+    root = bst_insert(root, 2);
+    root = bst_insert(root, 3);
+    assert(bst_get_predecessor(root, 3) == 2);
+
+    root = bst_insert(root, 0);
+    assert(bst_get_predecessor(root, 1) == 0);
+
+    bst_destroy(root);
+}
+
 void run_all_tests() {
     test_bst_insert();
     test_bst_node_count();
@@ -360,6 +415,7 @@ void run_all_tests() {
     test_is_subtree_lesser();
     test_bst_delete_val();
     test_bst_get_successor();
+    test_bst_get_predecessor();
 }
 
 int main() {
