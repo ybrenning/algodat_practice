@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 19.12.2021
+ * @brief Implementation of priority queues using max heap
+ */
+
 #include "priority_queues.h"
 
 void swap(int *item_1, int *item_2) {
@@ -7,7 +13,7 @@ void swap(int *item_1, int *item_2) {
 }
 
 int get_left_child_index(unsigned int index) {
-    return (index * 2)+ 1;
+    return (index * 2) + 1;
 }
 
 int get_right_child_index(unsigned int index) {
@@ -35,11 +41,12 @@ void heapify_down(max_heap_t *heap) {
     while (get_left_child_index(i) < heap->size) {
         // Get the index of the larger child
         unsigned int larger_child_index = get_left_child_index(i);
-        if (get_right_child_index(i) > heap->size
-        && heap->data[get_right_child_index(i)] < heap->data[get_left_child_index(i)]) {
+        if (get_right_child_index(i) < heap->size
+        && heap->data[get_right_child_index(i)] > heap->data[get_left_child_index(i)]) {
             larger_child_index = get_right_child_index(i);
         }
 
+        printf("%d\n", i);
         if (heap->data[i] > heap->data[larger_child_index]) break;
         else swap(&i, &larger_child_index);
 
@@ -51,7 +58,7 @@ max_heap_t *heap_init() {
     max_heap_t *heap = (max_heap_t *) malloc(sizeof(max_heap_t));
     assert(heap);
     heap->size = 0;
-    heap->capacity = MAX_SIZE + 1;
+    heap->capacity = MAX_SIZE;
 
     return heap;
 }
@@ -77,16 +84,15 @@ void heap_insert(max_heap_t *heap, int val) {
     if (heap->size == heap->capacity) return;
 
     // Insert the new val at the end
-    heap->data[heap->size] = val;
+    // and increase heap size
+    heap->data[heap->size++] = val;
 
-    // Increase size of heap
-    unsigned int i = heap->size++;
     // Rearrange the heap
     heapify_up(heap);
 }
 
 int heap_extract_max(max_heap_t *heap) {
-    if (heap_is_empty(heap)) return -1;
+    if (heap_is_empty(heap)) return INT_MAX;
 
     int retval = heap->data[0];
     heap->data[0] = heap->data[heap->size - 1];
@@ -97,22 +103,97 @@ int heap_extract_max(max_heap_t *heap) {
     return retval;
 }
 
-int main() {
+// Testing
+void test_heap_init() {
     max_heap_t *heap = heap_init();
-    heap_insert(heap, 1);
-    printf("%d\n", heap->data[0]);
-
-    heap_insert(heap, 2);
-    printf("%d\n", heap->data[0]);
-
-    heap_insert(heap, 3);
-    printf("%d\n", heap->data[0]);
-
-    printf("%d\n", heap_extract_max(heap));
-    printf("%d\n", heap->data[0]);
-    printf("%d\n", heap->data[1]);
-
+    assert(heap);
+    assert(heap->size == 0);
+    assert(heap->capacity == MAX_SIZE);
 
     heap_destroy(heap);
+}
+
+void test_heap_get_max() {
+    max_heap_t *heap = heap_init();
+    assert(heap_get_max(heap) == -1);
+
+    heap->data[0] = 1;
+    heap->size++;
+    assert(heap_get_max(heap) == 1);
+
+    heap->data[0] = 2;
+    heap->data[1] = 1;
+    heap->size++;
+    assert(heap_get_max(heap) == 2);
+
+    heap_destroy(heap);
+}
+
+void test_heap_get_size() {
+    max_heap_t *heap = heap_init();
+    assert(heap_get_size(heap) == 0);
+
+    heap_insert(heap, 1);
+    assert(heap_get_size(heap) == 1);
+
+    heap_insert(heap, 2);
+    assert(heap_get_size(heap) == 2);
+
+    heap_destroy(heap);
+}
+
+void test_heap_is_empty() {
+    max_heap_t *heap = heap_init();
+    assert(heap_is_empty(heap));
+
+    heap_insert(heap, 1);
+    assert(!heap_is_empty(heap));
+
+    heap_destroy(heap);
+}
+
+void test_heap_insert() {
+    max_heap_t *heap = heap_init();
+    heap_insert(heap, 1);
+    assert(heap->data[0] == 1);
+
+    heap_insert(heap, 2);
+    assert(heap->data[0] == 2);
+
+    heap_insert(heap, 3);
+    assert(heap->data[0] == 3);
+    assert(heap->data[1] == 1);
+
+    heap_destroy(heap);
+}
+
+void test_heap_extract_max() {
+    max_heap_t *heap = heap_init();
+    assert(heap_extract_max(heap) == INT_MAX);
+
+    heap_insert(heap, 1);
+    assert(heap_extract_max(heap) == 1);
+    assert(heap_is_empty(heap));
+
+    heap_insert(heap, 2);
+    heap_insert(heap, 3);
+    heap_insert(heap, 4);
+    assert(heap_extract_max(heap) == 4);
+    assert(heap_get_size(heap) == 2);
+
+    heap_destroy(heap);
+}
+
+void run_all_tests() {
+    test_heap_init();
+    test_heap_get_max();
+    test_heap_get_size();
+    test_heap_is_empty();
+    test_heap_insert();
+    test_heap_extract_max();
+}
+
+int main() {
+    run_all_tests();
     return 0;
 }
