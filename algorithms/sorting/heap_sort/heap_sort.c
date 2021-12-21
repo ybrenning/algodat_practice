@@ -72,6 +72,7 @@ void test_heap_sort() {
 }
 
 int main() {
+    srand(time(NULL));
     test_heap_sort();
     return 0;
 }
