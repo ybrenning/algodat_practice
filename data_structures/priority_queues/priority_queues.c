@@ -12,23 +12,48 @@ void swap(int *item_1, int *item_2) {
     *item_2 = temp;
 }
 
-int get_left_child_index(unsigned int index) {
+unsigned int get_left_child_index(unsigned int index) {
     return (index * 2) + 1;
 }
 
-int get_right_child_index(unsigned int index) {
+unsigned int get_right_child_index(unsigned int index) {
     return (index * 2) + 2;
 }
 
-int get_parent_index(unsigned int index) {
+int get_parent_index(int index) {
     return (index - 1) / 2;
 }
 
+bool has_left_child(max_heap_t *heap, unsigned int index) {
+    return get_left_child_index(index) < heap->size;
+}
+
+bool has_right_child(max_heap_t *heap, unsigned int index) {
+    return get_right_child_index(index) < heap->size;
+}
+
+bool has_parent(max_heap_t *heap, int index) {
+    return get_parent_index(index) >= 0;
+}
+
+int get_left_child(max_heap_t *heap, unsigned int index) {
+    return heap->data[get_left_child_index(index)];
+}
+
+int get_right_child(max_heap_t *heap, unsigned int index) {
+    return heap->data[get_right_child_index(index)];
+}
+
+int get_parent(max_heap_t *heap, unsigned int index) {
+    return heap->data[get_parent_index(index)];
+}
+
 void heapify_up(max_heap_t *heap) {
-    unsigned int i = heap->size - 1;
-    while (i != 0 && heap->data[get_parent_index(i)] < heap->data[i]) {
+    int i = ((int) heap->size) - 1;
+    while (has_parent(heap, i) && get_parent(heap, i) < heap->data[i]) {
         // While the parent has a lower val (e.g. the heap is out of order)
         // swap the parent val with the current val, until we reach the root
+        // e.g. the element without a parent
         swap(&heap->data[get_parent_index(i)], &heap->data[i]);
         // Set the current position to the old parent and continue
         i = get_parent_index(i);
@@ -38,17 +63,17 @@ void heapify_up(max_heap_t *heap) {
 void heapify_down(max_heap_t *heap) {
     unsigned int i = 0;
     // While current index has a left child
-    while (get_left_child_index(i) < heap->size) {
+    while (has_left_child(heap, i)) {
         // Get the index of the larger child
         unsigned int larger_child_index = get_left_child_index(i);
-        if (get_right_child_index(i) < heap->size
-        && heap->data[get_right_child_index(i)] > heap->data[get_left_child_index(i)]) {
+        if (has_right_child(heap, i) && get_right_child(heap, i) > get_left_child(heap, i))
             larger_child_index = get_right_child_index(i);
-        }
 
-        printf("%d\n", i);
+        // If our current element is larger than the larger child,
+        // then we have the correct placement in the heap
         if (heap->data[i] > heap->data[larger_child_index]) break;
-        else swap(&i, &larger_child_index);
+        // Otherwise, swap the current element with the larger child
+        else swap(&heap->data[i], &heap->data[larger_child_index]);
 
         i = larger_child_index;
     }
@@ -63,7 +88,7 @@ max_heap_t *heap_init() {
     return heap;
 }
 
-void heap_destroy(void *heap) {
+void heap_destroy(max_heap_t *heap) {
     free(heap);
 }
 
@@ -180,6 +205,7 @@ void test_heap_extract_max() {
     heap_insert(heap, 4);
     assert(heap_extract_max(heap) == 4);
     assert(heap_get_size(heap) == 2);
+    assert(heap_extract_max(heap) == 3);
 
     heap_destroy(heap);
 }

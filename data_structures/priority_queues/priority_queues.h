@@ -22,7 +22,7 @@ typedef struct max_heap_t {
 } max_heap_t;
 
 max_heap_t *heap_init();
-void heap_destroy(void *heap);
+void heap_destroy(max_heap_t *heap);
 int heap_get_max(max_heap_t *heap);
 unsigned int heap_get_size(max_heap_t *heap);
 bool heap_is_empty(max_heap_t *heap);
