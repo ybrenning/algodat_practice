@@ -20,16 +20,16 @@ void swap(int *item_1, int *item_2) {
 
 void max_heapify(int *arr, unsigned int len, int i) {
     int largest = i; // Initialize largest as the root
-    int l = (2 * i) + 1; // Left child of root
-    int r = (2 * i) + 2; // Right child of root
+    int left = (2 * i) + 1; // Left child of root
+    int right = (2 * i) + 2; // Right child of root
 
     // If left child is larger than root
-    if (l < len && arr[l] > arr[largest])
-        largest = l;
+    if (left < len && arr[left] > arr[largest])
+        largest = left;
 
     // If right child is larger than root
-    if (r < len && arr[r] > arr[largest])
-        largest = r;
+    if (right < len && arr[right] > arr[largest])
+        largest = right;
 
     // If root is not the largest
     if (largest != i) {
