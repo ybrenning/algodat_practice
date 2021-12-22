@@ -1,31 +1,39 @@
 def merge(arr, left, mid, right):
-    L = arr[left:mid + 1]
-    R = arr[mid + 1:right + 1]
+    # Copy left and right sub-arrays
+    arr_l = arr[left:mid+1]
+    arr_r = arr[mid+1:right+1]
 
     i = j = 0
     k = left
-    while i < len(L) and j < len(R):
-        if L[i] <= R[j]:
-            arr[k] = L[i]
+    # Compare elements of sub-arrays
+    while i < len(arr_l) and j < len(arr_r):
+        if arr_l[i] <= arr_r[j]:
+            arr[k] = arr_l[i]
             i += 1
-        elif L[i] > R[j]:
-            arr[k] = R[j]
+        elif arr_l[i] > arr_r[j]:
+            arr[k] = arr_r[j]
             j += 1
         k += 1
 
-    while i < len(L):
-        arr[k] = L[i]
+    # Copy remaining elements of whichever
+    # sub-array was not fully copied
+    while i < len(arr_l):
+        arr[k] = arr_l[i]
         i += 1
         k += 1
-    while j < len(R):
-        arr[k] = R[j]
+    while j < len(arr_r):
+        arr[k] = arr_r[j]
         j += 1
         k += 1
 
 
 def merge_sort(arr, left, right):
+    # If the sub-array is more
+    # than one element long
     if left < right:
         mid = left + ((right - left) // 2)
+        # Recursively sort each half
         merge_sort(arr, left, mid)
         merge_sort(arr, mid + 1, right)
+        # Merge the sorted halves
         merge(arr, left, mid, right)
