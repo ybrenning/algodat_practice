@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(algodat_practice C)
+enable_testing()
 
 set(CMAKE_C_STANDARD 11)
 

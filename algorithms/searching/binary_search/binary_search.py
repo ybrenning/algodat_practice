@@ -4,14 +4,14 @@ def binary_search(arr, val):
     mid = r // 2
 
     while l <= r:
-        if arr[mid] < val:
+        if arr[mid] == val:
+            return mid
+        elif arr[mid] < val:
             l = mid + 1
             mid = l + ((r - l) // 2)
         elif arr[mid] > val:
             r = mid - 1
             mid = l + ((r - l) // 2)
-        else:
-            return arr[mid]
     return -1
 
 

@@ -21,6 +21,8 @@ typedef struct node_t {
 void check_address(void *address);
 // Initialize Linked List
 node_t *llist_init(int val);
+// Deallocates llist memory
+void llist_destroy(node_t **head);
 // Return number of elems in llist
 int llist_size(node_t *head);
 // Check if llist is empty
