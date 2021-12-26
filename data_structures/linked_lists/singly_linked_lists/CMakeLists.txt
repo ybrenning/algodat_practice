@@ -6,4 +6,4 @@ set(SOURCE_FILES singly_linked_lists.c test_singly_linked_lists.c)
 
 add_executable(singly_linked_lists ${SOURCE_FILES})
 
-add_test(NAME run_all_tests COMMAND $<TARGET_FILE:singly_linked_lists>)
+add_test(NAME test_singly_linked_lists COMMAND singly_linked_lists)
