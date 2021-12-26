@@ -65,6 +65,8 @@ void test_ht_add() {
     index = ht_hash(entry_2->key, MAX_SIZE);
     assert(strcmp(hash_table->entries[index]->value, entry_2->value) == 0);
 
+    free(entry_1);
+    free(entry_2);
     ht_destroy(&hash_table);
 }
 
