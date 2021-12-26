@@ -108,7 +108,7 @@ void run_all_tests() {
     test_ht_entry_init();
     test_ht_destroy();
     test_ht_hash();
-    //test_ht_add();
+    test_ht_add();
     //test_ht_get();
     //test_ht_key_exists();
     //test_ht_remove_key();
