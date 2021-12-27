@@ -23,13 +23,14 @@ graph_t *graph_init(bool directed, int vertices) {
     return graph;
 }
 
-void graph_destroy(graph_t *graph) {
-    for (int i = 0; i < graph->vertices; i++) {
-        free(graph->edges[i]);
+void graph_destroy(graph_t **graph) {
+    for (int i = 0; i < (*graph)->vertices; i++) {
+        free((*graph)->edges[i]);
     }
 
-    free(graph->edges);
-    free(graph);
+    free((*graph)->edges);
+    free(*graph);
+    *graph = NULL;
 }
 
 bool vertex_exists(graph_t *graph, unsigned int vertex) {
@@ -38,7 +39,8 @@ bool vertex_exists(graph_t *graph, unsigned int vertex) {
 }
 
 bool edge_exists(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
-    return graph->edges[vertex_1][vertex_2];
+    if (graph->directed) return graph->edges[vertex_1][vertex_2];
+    else return graph->edges[vertex_1][vertex_2] && graph->edges[vertex_2][vertex_1];
 }
 
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
@@ -49,6 +51,17 @@ bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2
 
     graph->edges[vertex_1][vertex_2] = true;
     if (!graph->directed) graph->edges[vertex_2][vertex_1] = true;
+    return true;
+}
+
+bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
+    if (!vertex_exists(graph, vertex_1) || !vertex_exists(graph, vertex_2)
+    || !edge_exists(graph, vertex_1, vertex_2)) {
+        return false;
+    }
+
+    graph->edges[vertex_1][vertex_2] = false;
+    if (!graph->directed) graph->edges[vertex_2][vertex_1] = false;
     return true;
 }
 
@@ -63,29 +76,4 @@ void graph_print(graph_t *graph) {
     }
 
     printf("\n");
-}
-
-bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
-    if (!vertex_exists(graph, vertex_1) || !vertex_exists(graph, vertex_2)
-    || !edge_exists(graph, vertex_1, vertex_2)) {
-        return false;
-    }
-
-    graph->edges[vertex_1][vertex_2] = false;
-    if (!graph->directed) graph->edges[vertex_2][vertex_1] = false;
-    return true;
-}
-
-// Basic driver Code
-int main() {
-    graph_t *graph = graph_init(true, 4);
-    graph_add_edge(graph, 1, 3);
-    graph_add_edge(graph, 2, 3);
-    graph_print(graph);
-
-    graph_delete_edge(graph, 1, 3);
-    graph_delete_edge(graph, 1, 4);
-    graph_print(graph);
-    graph_destroy(graph);
-    return 0;
 }

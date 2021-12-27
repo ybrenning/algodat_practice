@@ -47,8 +47,9 @@ void ht_destroy(ht_t **hash_table) {
         }
     }
 
-    //free((*hash_table)->entries);
+    free((*hash_table)->entries);
     (*hash_table)->entries = NULL;
+
     free(*hash_table);
     *hash_table = NULL;
 }

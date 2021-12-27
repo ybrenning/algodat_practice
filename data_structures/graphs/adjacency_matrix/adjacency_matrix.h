@@ -19,7 +19,9 @@ typedef struct graph_t {
 } graph_t;
 
 graph_t *graph_init(bool directed, int vertices);
-void graph_destroy(graph_t *graph);
+void graph_destroy(graph_t **graph);
+bool vertex_exists(graph_t *graph, unsigned int vertex);
+bool edge_exists(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
 bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
 void graph_print(graph_t *graph);
