@@ -49,11 +49,11 @@ void test_ht_hash() {
 
 void test_ht_add() {
     ht_t *hash_table = ht_init();
-    //entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
-    //int index = ht_hash(entry_1->key, MAX_SIZE);
+    entry_t *entry_1 = ht_entry_init("BTC", "Bitcoin");
+    int index = ht_hash(entry_1->key, MAX_SIZE);
 
-    //ht_add(hash_table, entry_1);
-    //assert(strcmp(hash_table->entries[index]->value, entry_1->value) == 0);
+    ht_add(hash_table, entry_1);
+    assert(strcmp(hash_table->entries[index]->value, entry_1->value) == 0);
 
     // Add same entry again to check if duplicate keys are possible
     //ht_add(hash_table, entry_1);
