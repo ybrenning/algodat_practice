@@ -14,6 +14,7 @@ void test_ht_init() {
 void test_ht_entry_init() {
     entry_t *entry = ht_entry_init("Ross", "636-48018");
     assert(strcmp(entry->key, "Ross") == 0 && strcmp(entry->value, "636-48018") == 0);
+
     free(entry->key);
     free(entry->value);
     free(entry);
@@ -65,8 +66,6 @@ void test_ht_add() {
     index = ht_hash(entry_2->key, MAX_SIZE);
     assert(strcmp(hash_table->entries[index]->value, entry_2->value) == 0);
 
-    //free(entry_1);
-    //free(entry_2);
     ht_destroy(&hash_table);
 }
 
