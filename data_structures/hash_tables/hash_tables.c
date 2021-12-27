@@ -71,7 +71,7 @@ void ht_add(ht_t *hash_table, entry_t *entry) {
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
         /* Check if the keys are identical at any point and update the value if they are */
         if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, entry->key) == 0) {
-            hash_table->entries[(hash + i) % MAX_SIZE]->key = entry->value;
+            hash_table->entries[(hash + i) % MAX_SIZE]->value = entry->value;
             return;
         }
 

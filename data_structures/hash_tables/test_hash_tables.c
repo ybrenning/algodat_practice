@@ -56,8 +56,8 @@ void test_ht_add() {
     assert(strcmp(hash_table->entries[index]->value, entry_1->value) == 0);
 
     // Add same entry again to check if duplicate keys are possible
-    //ht_add(hash_table, entry_1);
-    //assert(hash_table->entries[index + 1] == NULL);
+    ht_add(hash_table, entry_1);
+    assert(hash_table->entries[index + 1] == NULL);
 
     // Add entry with same value to see if duplicate values are possible
     //entry_t *entry_2 = ht_entry_init("BCH", "Bitcoin");
