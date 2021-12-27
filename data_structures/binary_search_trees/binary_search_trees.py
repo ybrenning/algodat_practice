@@ -25,9 +25,9 @@ class BinarySearchTree:
         if self.root is None:
             self.root = Node(val)
         else:
-            self.__insert_rec(self.root, val)
+            self.__insert(self.root, val)
 
-    def __insert_rec(self, node, val):
+    def __insert(self, node, val):
         """
         Recursive function for the above implementation of insert_node
         :param node: current node being checked
@@ -41,7 +41,7 @@ class BinarySearchTree:
             if node.left is None:
                 node.left = Node(val)
             elif node.left is not None:
-                self.__insert_rec(node.left, val)
+                self.__insert(node.left, val)
         # Go into right subtree
         elif val > node.val:
             # Try to insert a new node as the right
@@ -49,7 +49,7 @@ class BinarySearchTree:
             if node.right is None:
                 node.right = Node(val)
             elif node.right is not None:
-                self.__insert_rec(node.right, val)
+                self.__insert(node.right, val)
 
     def inorder_traversal(self):
         """
@@ -60,10 +60,10 @@ class BinarySearchTree:
         if self.root is None:
             return
         else:
-            self.__inorder_traversal_rec(self.root)
+            self.__inorder_traversal(self.root)
             print("")
 
-    def __inorder_traversal_rec(self, node):
+    def __inorder_traversal(self, node):
         """
         Recursive function for the above implementation
         :param node:
@@ -73,9 +73,9 @@ class BinarySearchTree:
             return
         else:
             # Get to leftmost node and begin printing
-            self.__inorder_traversal_rec(node.left)
+            self.__inorder_traversal(node.left)
             print(str(node.val), end=" ")
-            self.__inorder_traversal_rec(node.right)
+            self.__inorder_traversal(node.right)
 
     def get_height(self):
         """
@@ -84,9 +84,9 @@ class BinarySearchTree:
         most distant leaf node)
         :return: Height as integer
         """
-        return self.__get_height_rec(self.root)
+        return self.__get_height(self.root)
 
-    def __get_height_rec(self, node):
+    def __get_height(self, node):
         """
         Recursive function for the above implementation
         :param node: current node being traversed
@@ -95,8 +95,8 @@ class BinarySearchTree:
         if node is None:
             return -1
         # Check left and right trees for height and return highest
-        left_height = self.__get_height_rec(node.left)
-        right_height = self.__get_height_rec(node.right)
+        left_height = self.__get_height(node.left)
+        right_height = self.__get_height(node.right)
 
         return max(left_height, right_height) + 1
 
@@ -105,14 +105,28 @@ class BinarySearchTree:
 
     @staticmethod
     def __get_min(node):
+        """
+        Finds minimum value of a subtree
+        :param node: root of the tree or subtree
+        :return: smallest value in subtree
+        """
         curr = node
         while curr.left is not None:
             curr = curr.left
         return curr.val
 
     def get_max(self):
-        curr = self.root
-        while curr.right is not None:
+        return BinarySearchTree.__get_max(self.root)
+
+    @staticmethod
+    def __get_max(node):
+        """
+        Finds maximum value of a subtree
+        :param node: root of the tree or subtree
+        :return: largest value in subtree
+        """
+        curr = node
+        while curr is not None:
             curr = curr.right
         return curr.val
 
@@ -122,9 +136,9 @@ class BinarySearchTree:
         :param val: value to search for
         :return: boolean
         """
-        return self.__find_rec(self.root, val)
+        return self.__find(self.root, val)
 
-    def __find_rec(self, node, val):
+    def __find(self, node, val):
         """
         Recursive function for the above implementation
         :param node: current node being checked
@@ -136,9 +150,9 @@ class BinarySearchTree:
         elif node.val == val:
             return True
         elif node.val > val:
-            return self.__find_rec(node.left, val)
+            return self.__find(node.left, val)
         else:
-            return self.__find_rec(node.right, val)
+            return self.__find(node.right, val)
 
     def is_valid(self):
         """
@@ -177,9 +191,9 @@ class BinarySearchTree:
         :param val: value of node to be deleted
         :return: root of updated tree
         """
-        return self.__delete_node_rec(self.root, val)
+        return self.__delete_node(self.root, val)
 
-    def __delete_node_rec(self, node, val):
+    def __delete_node(self, node, val):
         """
         Recursive function for the above implementation
         :param node: current node being checked
@@ -190,10 +204,10 @@ class BinarySearchTree:
             return node
         # Search the left subtree
         elif node.val > val:
-            node.left = self.__delete_node_rec(node.left, val)
+            node.left = self.__delete_node(node.left, val)
         # Search the right subtree
         elif node.val < val:
-            node.right = self.__delete_node_rec(node.right, val)
+            node.right = self.__delete_node(node.right, val)
         # If the val is equal to the current node's val, then delete the current node
         else:
             # Case 1 and 2: node has one or no children
@@ -211,7 +225,7 @@ class BinarySearchTree:
             # Set the new node to this lowest value
             # and remove the duplicate value from the right subtree
             node.val = min_val
-            node.right = self.__delete_node_rec(node.right, min_val)
+            node.right = self.__delete_node(node.right, min_val)
 
         return node
 
@@ -301,6 +315,7 @@ class BinarySearchTree:
 
 
 def main():
+
     # Generate the following tree:
     #
     #           50
