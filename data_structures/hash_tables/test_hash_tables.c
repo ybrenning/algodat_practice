@@ -60,10 +60,10 @@ void test_ht_add() {
     assert(hash_table->entries[index + 1] == NULL);
 
     // Add entry with same value to see if duplicate values are possible
-    //entry_t *entry_2 = ht_entry_init("BCH", "Bitcoin");
-    //ht_add(hash_table, entry_2);
-    //index = ht_hash(entry_2->key, MAX_SIZE);
-    //assert(strcmp(hash_table->entries[index]->value, entry_2->value) == 0);
+    entry_t *entry_2 = ht_entry_init("BCH", "Bitcoin");
+    ht_add(hash_table, entry_2);
+    index = ht_hash(entry_2->key, MAX_SIZE);
+    assert(strcmp(hash_table->entries[index]->value, entry_2->value) == 0);
 
     //free(entry_1);
     //free(entry_2);
