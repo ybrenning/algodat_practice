@@ -6,16 +6,9 @@
 
 #include "singly_linked_lists.h"
 
-void check_address(void *address) {
-    if (!address) {
-        printf("Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
 node_t *llist_init(int val) {
     node_t *head = (node_t *) malloc(sizeof(node_t));
-    check_address(head);
+    assert(head);
     head->val = val;
     head->next = NULL;
 
@@ -23,14 +16,14 @@ node_t *llist_init(int val) {
 }
 
 int llist_size(node_t *head) {
-    int count = 0;
+    int size = 0;
     node_t *curr = head;
     while (curr != NULL) {
         curr = curr->next;
-        count++;
+        size++;
     }
 
-    return count;
+    return size;
 }
 
 bool llist_isempty(node_t *head) {
@@ -38,13 +31,14 @@ bool llist_isempty(node_t *head) {
 }
 
 int llist_get(node_t *head, int index) {
-    if (index < 0) return -1;
-    if (llist_isempty(head)) return -1;
+    if (index < 0 || llist_isempty(head))
+        return -1;
 
     node_t *curr = head;
     for (int i = 0; i < index; i++) {
-        /* Check if index out of bounds */
-        if (curr->next == NULL) return -1;
+        // Check if index out of bounds
+        if (curr->next == NULL)
+            return -1;
         curr = curr->next;
     }
 
@@ -57,7 +51,8 @@ void llist_append(node_t **head, int val) {
         return;
     }
 
-    /* If llist not empty, traverse nodes and change next pointer of last */
+    // If llist not empty, traverse nodes
+    // and change next pointer of last
     node_t *curr = *head;
     while (curr->next != NULL) {
         curr = curr->next;
@@ -78,7 +73,9 @@ void llist_push(node_t **head, int val) {
 int llist_remove_last(node_t **head) {
     int retval;
     node_t *curr = *head;
-    if (llist_isempty(*head)) return -1;
+    if (llist_isempty(*head))
+        return -1;
+
     if ((*head)->next == NULL) {
         retval = (*head)->val;
         free(*head);
@@ -86,7 +83,7 @@ int llist_remove_last(node_t **head) {
         return retval;
     }
 
-    /* Get to second last node and change its next pointer */
+    // Get to second last node and change its next pointer
     while (curr->next->next != NULL) {
         curr = curr->next;
     }
@@ -94,60 +91,120 @@ int llist_remove_last(node_t **head) {
     retval = curr->next->val;
     free(curr->next);
     curr->next = NULL;
+
     return retval;
 }
 
 int llist_remove_first(node_t **head) {
-    if (llist_isempty(*head)) return -1;
+    if (llist_isempty(*head))
+        return -1;
 
     int retval = (*head)->val;
-    node_t *front = *head;
+    node_t *temp = *head;
+    *head = temp->next;
+    free(temp);
 
-    *head = front->next;
-    free(front);
     return retval;
 }
 
 void llist_print(node_t *head) {
     if (llist_isempty(head)) {
         printf("[ ]\n");
-        return;
-    }
+    } else {
+        node_t *curr = head;
+        printf("[ ");
+        while (curr->next != NULL) {
+            printf("%d ", curr->val);
+            curr = curr->next;
+        }
 
-    node_t *curr = head;
-    printf("[ ");
-    while (curr->next != NULL) {
-        printf("%d ", curr->val);
-        curr = curr->next;
-    } printf("%d ]\n", curr->val);
+        printf("%d ]\n", curr->val);
+    }
 }
 
 void llist_insert(node_t **head, int val, int index) {
-    if (index < 0 || llist_isempty(*head)) return;
+    if (index < 0 || llist_isempty(*head))
+        return;
+
     if (index == 0) {
         llist_push(head, val);
         return;
     }
 
     node_t *curr = *head;
-    /* Get to node before index, such that curr->next can be our new node */
+    // Get to node before index, such that curr->next
+    // can be set to our new node
     for (int i = 0; i < index - 1; i++) {
-        /* Check if index is out of bounds */
-        if (curr->next == NULL) return;
+        // Check if index is out of bounds
+        if (curr->next == NULL)
+            return;
         curr = curr->next;
     }
+
     node_t *new_node = (node_t *) malloc(sizeof(node_t));
     new_node->val = val;
+
     node_t *temp = curr->next;
     curr->next = new_node;
     new_node->next = temp;
+}
+
+int llist_delete_index(node_t **head, int index) {
+    if (index < 0 || llist_isempty(*head))
+        return -1;
+
+    if (index == 0) {
+        return llist_remove_first(head);
+    }
+
+    // Get to node before index, such that
+    // curr->next is the node to be removed
+    node_t *curr = *head;
+    for (int i = 0; i < index - 1; i++) {
+        // Check if index is out of bounds
+        if (curr == NULL)
+            return -1;
+        curr = curr->next;
+    }
+
+    if (curr->next == NULL)
+        return -1;
+
+    if (curr->next->next == NULL)
+        return llist_remove_last(head);
+
+    int retval = curr->next->val;
+    node_t *temp = curr->next;
+    curr->next = curr->next->next;
+    free(temp);
+
+    return retval;
+}
+
+int llist_delete_val(node_t **head, int val) {
+    if (llist_isempty(*head))
+        return -1;
+
+    int curr_index = 0;
+    node_t *curr = *head;
+    while (curr != NULL) {
+        if (curr->val == val) {
+            return llist_delete_index(head, curr_index);
+        }
+
+        curr = curr->next;
+        curr_index++;
+    }
+
+    return -1;
 }
 
 int llist_find(node_t *head, int val) {
     int index = 0;
     node_t *curr = head;
     while (curr != NULL) {
-        if (curr->val == val) return index;
+        if (curr->val == val)
+            return index;
         curr = curr->next;
         index++;
     }
@@ -156,19 +213,20 @@ int llist_find(node_t *head, int val) {
 }
 
 void llist_reverse(node_t **head) {
-    if (llist_isempty(*head) || (*head)->next == NULL) return;
+    if (llist_isempty(*head) || (*head)->next == NULL)
+        return;
+
     node_t *curr = *head;
     node_t *prev = NULL;
     node_t *next;
-
-    /* Traverse entire llist and reverse each next pointer */
+    // Traverse entire llist and reverse each pointer
     while (curr != NULL) {
         next = curr->next;
         curr->next = prev;
         prev = curr;
         curr = next;
     }
-    /* Set head to last elem of the old llist */
+    // Set head node to last node of old list
     *head = prev;
 }
 
@@ -180,5 +238,5 @@ void llist_destroy(node_t **head) {
         curr = next;
     }
 
-    head = NULL;
+    *head = NULL;
 }

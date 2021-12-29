@@ -7,6 +7,12 @@ void test_llist_init() {
     llist_destroy(&head);
 }
 
+void test_llist_destroy() {
+    node_t *head = llist_init(1);
+    llist_destroy(&head);
+    assert(head == NULL);
+}
+
 void test_llist_size() {
     node_t *head = llist_init(1);
     assert(llist_size(head) == 1);
@@ -15,6 +21,7 @@ void test_llist_size() {
     head->next->val = 2;
     head->next->next = NULL;
     assert(llist_size(head) == 2);
+
     llist_destroy(&head);
 }
 
@@ -25,6 +32,7 @@ void test_llist_isempty() {
     free(head);
     head = NULL;
     assert(llist_isempty(head));
+
     llist_destroy(&head);
 }
 
@@ -38,6 +46,7 @@ void test_llist_get() {
     assert(llist_get(head, 1) == 2);
     assert(llist_get(head, -1) == -1);
     assert(llist_get(head, 2) == -1);
+
     llist_destroy(&head);
 }
 
@@ -47,6 +56,7 @@ void test_llist_append() {
     llist_append(&head, 3);
     assert(llist_get(head, 1) == 2);
     assert(llist_get(head, 2) == 3);
+
     llist_destroy(&head);
 }
 
@@ -54,6 +64,7 @@ void test_llist_push() {
     node_t *head = llist_init(1);
     llist_push(&head, 2);
     assert(llist_get(head, 0) == 2);
+
     llist_destroy(&head);
 }
 
@@ -67,6 +78,7 @@ void test_llist_remove_last() {
     llist_append(&head, 3);
     assert(llist_remove_last(&head) == 3);
     assert(llist_get(head, 1) == -1);
+
     llist_destroy(&head);
 }
 
@@ -80,6 +92,7 @@ void test_llist_remove_first() {
     llist_append(&head, 4);
     assert(llist_remove_first(&head) == 2);
     assert(llist_get(head, 0) == 3);
+
     llist_destroy(&head);
 }
 
@@ -100,6 +113,41 @@ void test_llist_insert() {
     // Check if we can insert at end
     llist_insert(&head, 6, 5);
     assert(llist_get(head, 5) == 6);
+
+    llist_destroy(&head);
+}
+
+void test_llist_delete_index() {
+    node_t *head = llist_init(1);
+    assert(llist_delete_index(&head, 1) == -1);
+    assert(llist_delete_index(&head, -1) == -1);
+    assert(llist_delete_index(&head, 0) == 1);
+    assert(llist_delete_index(&head, 0) == -1);
+
+    llist_append(&head, 1);
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+    assert(llist_delete_index(&head, 1) == 2);
+
+    llist_destroy(&head);
+}
+
+void test_llist_delete_val() {
+    node_t *head = llist_init(1);
+    assert(llist_delete_val(&head, 0) == -1);
+    assert(llist_delete_val(&head, 1) == 1);
+    assert(llist_isempty(head));
+    assert(llist_delete_val(&head, 1) == -1);
+
+    llist_append(&head, 1);
+    llist_append(&head, 2);
+    llist_append(&head, 3);
+
+    assert(llist_delete_val(&head, 2) == 2);
+    assert(llist_delete_val(&head, 3) == 3);
+    assert(llist_delete_val(&head, 1) == 1);
+    assert(llist_isempty(head));
+
     llist_destroy(&head);
 }
 
@@ -112,6 +160,7 @@ void test_llist_find() {
     llist_append(&head, 3);
     llist_append(&head, 4);
     assert(llist_find(head, 3) == 2);
+
     llist_destroy(&head);
 }
 
@@ -128,11 +177,13 @@ void test_llist_reverse() {
     assert(llist_get(head, 1) == 3);
     assert(llist_get(head, 2) == 2);
     assert(llist_get(head, 3) == 1);
+
     llist_destroy(&head);
 }
 
 void run_all_tests() {
     test_llist_init();
+    test_llist_destroy();
     test_llist_size();
     test_llist_isempty();
     test_llist_get();
@@ -141,6 +192,8 @@ void run_all_tests() {
     test_llist_remove_last();
     test_llist_remove_first();
     test_llist_insert();
+    test_llist_delete_index();
+    test_llist_delete_val();
     test_llist_find();
     test_llist_reverse();
 }

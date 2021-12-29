@@ -17,8 +17,6 @@ typedef struct node_t {
     struct node_t *next;
 } node_t;
 
-// Check if address is valid
-void check_address(void *address);
 // Initialize Linked List
 node_t *llist_init(int val);
 // Deallocates llist memory
@@ -39,6 +37,10 @@ int llist_remove_last(node_t **head);
 int llist_remove_first(node_t **head);
 // Insert node at index
 void llist_insert(node_t **head, int val, int index);
+// Remove node at index
+int llist_delete_index(node_t **head, int index);
+// Remove first node with value
+int llist_delete_val(node_t **head, int val);
 // Find first node with specified val in llist
 int llist_find(node_t *head, int val);
 // Reverse the llist
@@ -48,6 +50,7 @@ void llist_print(node_t *head);
 
 // Tests
 void test_llist_init();
+void test_llist_destroy();
 void test_llist_size();
 void test_llist_isempty();
 void test_llist_get();
@@ -56,6 +59,8 @@ void test_llist_push();
 void test_llist_remove_last();
 void test_llist_remove_first();
 void test_llist_insert();
+void test_llist_delete_index();
+void test_llist_delete_val();
 void test_llist_find();
 void test_llist_reverse();
 void run_all_tests();
