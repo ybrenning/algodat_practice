@@ -24,8 +24,6 @@ typedef struct ht_t {
     entry_t **entries;
 } ht_t;
 
-// Check if memory address is valid
-void check_address(void *address);
 // Initialize hash table
 ht_t *ht_init();
 // Initialize entry for hash table

@@ -6,18 +6,11 @@
 
 #include "hash_tables.h"
 
-void check_address(void *address) {
-    if (!address) {
-        printf("Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
 ht_t *ht_init() {
     ht_t *hash_table = malloc(sizeof(ht_t));
-    check_address(hash_table);
+    assert(hash_table);
     hash_table->entries = malloc(sizeof(entry_t) * MAX_SIZE);
-    check_address(hash_table->entries);
+    assert(hash_table->entries);
 
     for (int i = 0; i < MAX_SIZE; i++) {
         hash_table->entries[i] = NULL;
@@ -28,7 +21,7 @@ ht_t *ht_init() {
 
 entry_t *ht_entry_init(const char *key, const char *value) {
     entry_t *entry = malloc(sizeof(entry_t));
-    check_address(entry);
+    assert(entry);
     entry->key = malloc(strlen(key) + 1);
     entry->value = malloc(strlen(value) + 1);
 
@@ -68,9 +61,9 @@ void ht_add(ht_t *hash_table, entry_t *entry) {
     unsigned int i = 0;
     int hash = ht_hash(entry->key, MAX_SIZE);
 
-    /* Linear probing (if entry is not null, check next index) */
+    // Linear probing (if entry is not null, check next index)
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-        /* Check if the keys are identical at any point and update the value if they are */
+        // Check if the keys are identical at any point and update the value if they are
         if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, entry->key) == 0) {
             hash_table->entries[(hash + i) % MAX_SIZE]->value = entry->value;
             return;
@@ -108,9 +101,8 @@ void ht_remove_key(ht_t *hash_table, const char *key) {
         unsigned int i = 0;
         int hash = ht_hash(key, MAX_SIZE);
         while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-            if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0) {
+            if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0)
                 hash_table->entries[(hash + i) % MAX_SIZE] = NULL;
-            }
 
             i++;
         }
