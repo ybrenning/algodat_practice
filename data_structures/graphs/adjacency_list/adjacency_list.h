@@ -17,11 +17,14 @@ typedef struct llist_t {
 } llist_t;
 
 typedef struct node_t {
-    int val;
+    unsigned int val;
     struct node_t *next;
 } node_t;
 
 graph_t *graph_init(bool directed, int vertices);
 void graph_destroy(graph_t **graph);
+bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+void graph_print_list(graph_t *graph);
 
 #endif //ADJACENCY_LIST_H
