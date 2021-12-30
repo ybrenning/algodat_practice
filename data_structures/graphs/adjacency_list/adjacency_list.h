@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 27.12.2021
+ * @brief Implementation of graphs using adjacency list
+ */
+
 #ifndef ADJACENCY_LIST_H
 #define ADJACENCY_LIST_H
 

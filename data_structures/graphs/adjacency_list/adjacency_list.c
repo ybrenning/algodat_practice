@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 27.12.2021
+ * @brief Implementation of graphs using adjacency list
+ */
+
 #include "adjacency_list.h"
 
 graph_t *graph_init(bool directed, int vertices) {
@@ -115,6 +121,8 @@ bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int verte
 
 void dgraph_dfs(graph_t *graph, unsigned int vertex) {
     if (graph->directed) {
+        bool visited[graph->vertices];
+
         // Implemented using stack data structure
         // e.g. recursion is another possible solution
         int top = -1;
@@ -125,12 +133,14 @@ void dgraph_dfs(graph_t *graph, unsigned int vertex) {
         while (top != -1) {
             // Visit the top element of the stack
             unsigned int curr_vertex = stack[top--];
+            visited[vertex] = true;
             printf("%d ", curr_vertex);
 
-            // Add all targets to top of stack
+            // Add all unvisited targets to top of stack
             node_t *curr_node = graph->list[curr_vertex].head;
             while (curr_node != NULL) {
-                stack[++top] = curr_node->val;
+                if (!visited[curr_node->val])
+                    stack[++top] = curr_node->val;
                 curr_node = curr_node->next;
             }
         }
@@ -141,6 +151,8 @@ void dgraph_dfs(graph_t *graph, unsigned int vertex) {
 
 void dgraph_bfs(graph_t *graph, unsigned int vertex) {
     if (graph->directed) {
+        bool visited[graph->vertices];
+
         // Implemented using queue data structure
         int front = 0;
         int rear = 0;
@@ -148,15 +160,17 @@ void dgraph_bfs(graph_t *graph, unsigned int vertex) {
         queue[rear++] = vertex;
 
         // While queue is not empty
-        while (front != graph->vertices) {
+        while (front != rear) {
             // Visit the first node in the queue
             unsigned int curr_vertex = queue[front++];
+            visited[curr_vertex] = true;
             printf("%d ", curr_vertex);
 
-            // Add all targets to queue
+            // Add all unvisited targets to queue
             node_t *curr_node = graph->list[curr_vertex].head;
             while (curr_node != NULL) {
-                queue[rear++] = curr_node->val;
+                if (!visited[curr_node->val])
+                    queue[rear++] = curr_node->val;
                 curr_node = curr_node->next;
             }
         }
