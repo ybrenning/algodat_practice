@@ -38,7 +38,7 @@ bool has_vertex(graph_t *graph, unsigned int vertex) {
 bool has_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
     if (has_vertex(graph, vertex_1) && has_vertex(graph, vertex_2) && graph->list[vertex_1].head != NULL) {
         node_t *curr = graph->list[vertex_1].head;
-        while (curr->next != NULL) {
+        while (curr != NULL) {
             if (curr->val == vertex_2) return true;
             curr = curr->next;
         }
@@ -67,7 +67,8 @@ void append_node(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
 }
 
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
-    if (has_edge(graph, vertex_1, vertex_2))
+    if (has_edge(graph, vertex_1, vertex_2)
+    || !has_vertex(graph, vertex_1) ||!has_vertex(graph, vertex_2))
         return false;
 
     append_node(graph, vertex_1, vertex_2);
@@ -82,7 +83,6 @@ bool delete_node(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
     node_t *temp = *head;
 
     if (temp != NULL && temp->val == vertex_2) {
-        printf("deleting %d\n", temp->val);
         (*head) = temp->next;
         free(temp);
     } else {
@@ -111,6 +111,58 @@ bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int verte
         retval = delete_node(graph, vertex_2, vertex_1);
 
     return retval;
+}
+
+void dgraph_dfs(graph_t *graph, unsigned int vertex) {
+    if (graph->directed) {
+        // Implemented using stack data structure
+        // e.g. recursion is another possible solution
+        int top = -1;
+        unsigned int stack[graph->vertices];
+        stack[++top] = vertex;
+
+        // While stack is not empty
+        while (top != -1) {
+            // Visit the top element of the stack
+            unsigned int curr_vertex = stack[top--];
+            printf("%d ", curr_vertex);
+
+            // Add all targets to top of stack
+            node_t *curr_node = graph->list[curr_vertex].head;
+            while (curr_node != NULL) {
+                stack[++top] = curr_node->val;
+                curr_node = curr_node->next;
+            }
+        }
+
+        printf("\n");
+    }
+}
+
+void dgraph_bfs(graph_t *graph, unsigned int vertex) {
+    if (graph->directed) {
+        // Implemented using queue data structure
+        int front = 0;
+        int rear = 0;
+        unsigned int queue[graph->vertices];
+        queue[rear++] = vertex;
+
+        // While queue is not empty
+        while (front != graph->vertices) {
+            // Visit the first node in the queue
+            unsigned int curr_vertex = queue[front++];
+            printf("%d ", curr_vertex);
+
+            // Add all targets to queue
+            node_t *curr_node = graph->list[curr_vertex].head;
+            while (curr_node != NULL) {
+                queue[rear++] = curr_node->val;
+                curr_node = curr_node->next;
+            }
+        }
+
+        printf("\n");
+    }
 }
 
 void graph_print_list(graph_t *graph) {

@@ -18,18 +18,47 @@ void test_graph_destroy() {
     assert(!graph);
 }
 
+void test_graph_add_edge() {
+    graph_t *graph = graph_init(true, 5);
+    graph_add_edge(graph, 0, 1);
+    assert(has_edge(graph, 0, 1));
+
+    graph_add_edge(graph, 0, 1);
+    graph_add_edge(graph, 0, 2);
+    graph_add_edge(graph, 0, 3);
+    assert(has_edge(graph, 0, 2));
+    assert(has_edge(graph, 0, 3));
+
+    assert(!graph_add_edge(graph, 0, 6));
+    assert(!has_edge(graph, 0, 6));
+
+    graph_destroy(&graph);
+}
+
+void test_graph_delete_edge() {
+    graph_t *graph = graph_init(true, 5);
+    graph_add_edge(graph, 0, 1);
+    graph_delete_edge(graph, 0, 1);
+    assert(!has_edge(graph, 0, 1));
+
+    graph_add_edge(graph, 0, 1);
+    graph_add_edge(graph, 0, 2);
+    graph_add_edge(graph, 0, 3);
+    graph_add_edge(graph, 0, 4);
+    assert(graph_delete_edge(graph, 0, 3));
+    assert(!has_edge(graph, 0, 3));
+
+    graph_destroy(&graph);
+}
+
 void run_all_tests() {
     test_graph_init();
     test_graph_destroy();
+    test_graph_add_edge();
+    test_graph_delete_edge();
 }
 
 int main() {
-    graph_t *graph = graph_init(true, 5);
-    graph_add_edge(graph, 0, 1);
-    graph_add_edge(graph, 0, 2);
-    graph_print_list(graph);
-    graph_delete_edge(graph, 0, 1);
-    graph_print_list(graph);
     run_all_tests();
     return 0;
 }
