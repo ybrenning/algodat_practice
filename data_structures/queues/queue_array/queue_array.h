@@ -13,32 +13,34 @@
 #include <assert.h>
 
 #define MAX_SIZE 10
+#define EMPTY_SLOT 0
 
-typedef struct Queue {
+typedef struct queue_t {
     int data[MAX_SIZE];
     int front;
     int rear;
-} Queue;
+} queue_t;
 
 // Check if pointer address is valid
 void check_address(void *address);
 // Initialize queue pointer
-Queue *queue_init();
+queue_t *queue_init();
 // Free queue memory
-void queue_destroy(Queue *queue);
+void queue_destroy(queue_t **queue);
 // Check if queue is empty
-bool queue_isempty(Queue *queue);
+bool queue_isempty(queue_t *queue);
 // Check if queue is full
-bool queue_isfull(Queue *queue);
+bool queue_isfull(queue_t *queue);
 // Place value at end of queue
-void enqueue(Queue *queue, int val);
+void enqueue(queue_t *queue, int val);
 // Remove first value in queue
-int dequeue(Queue *queue);
+int dequeue(queue_t *queue);
 // Print content of queue onto console
-void queue_print(Queue *queue);
+void queue_print(queue_t *queue);
 
 // Tests
 void test_queue_init();
+void test_queue_destroy();
 void test_queue_isempty();
 void test_queue_isfull();
 void test_enqueue();
