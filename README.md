@@ -20,6 +20,8 @@ Literature:
 
 [Some additional references](https://github.com/yznnck/algodat_practice/tree/master/references)
 
+---
+
 ## Overview
 ### Algorithms
 * [Searching](https://github.com/ybrenning/algodat_practice/tree/master/algorithms/searching)
