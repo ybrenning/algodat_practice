@@ -1,4 +1,7 @@
 ## Searching
+
+---
+
 ### Linear Search
 Simple approach to searching for a value `val` within an array `arr`.
 * Start from leftmost element and one by one compare `val` with each element of `arr`
@@ -7,8 +10,11 @@ Simple approach to searching for a value `val` within an array `arr`.
 
 ![Source: TutorialsPoint](media/linear_search.gif)
 
-Time Complexity: **O(n)**
+Time Complexity: **O(n)** \
+Space Complexity: **O(1)**
 <br> </br>
+
+---
 
 ### Binary Search
 Search a sorted array by repeatedly dividing the search interval in half. 
