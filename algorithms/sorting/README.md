@@ -40,8 +40,8 @@ The `merge()` function is used for merging two sorted halves.
 ![Source: Wikipedia](media/merge_sort_wiki.png)
 <br></br>
 
-* Time Complexity: **O(n log n)** \
-* Space Complexity: **O(n)** \
+* Time Complexity: **O(n log n)** 
+* Space Complexity: **O(n)** 
 * Sorting in-place: **No**
 * Stable: **Yes**
 <br></br>
@@ -51,3 +51,22 @@ The `merge()` function is used for merging two sorted halves.
 ---
 
 ### Quick Sort
+Quick Sort is a divide and conquer algorithm that picks a so-called pivot-element and partitions
+the given array around this element. As a result, there are different versions of Quick Sort that
+pick the pivot-element in different ways.
+1. Always pick first element
+2. Always pick last element
+3. Pick a random element
+4. Pick the median
+
+The key process is the `partition()` function. The point of this function is to take a
+pivot-element `p` of an array `arr` and put `p` at the correct position in the sorted array
+such that all elements before `p` are smaller and all elements after are greater.
+
+![Source: GeeksforGeeks](media/QuickSort2.png)
+<br></br>
+
+* Time Complexity: **O(n log n)**
+* Space Complexity: **O(n)**
+* Sorting in-place: **Yes**
+* Stable: **No**
