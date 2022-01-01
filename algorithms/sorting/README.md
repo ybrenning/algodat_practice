@@ -66,7 +66,12 @@ such that all elements before `p` are smaller and all elements after are greater
 ![Source: GeeksforGeeks](media/QuickSort2.png)
 <br></br>
 
-* Time Complexity: **O(n log n)**
-* Space Complexity: **O(n)**
+* Time Complexity: **O(n^2) worst case, O(n log n) average case**
+* Space Complexity: **O(log n)**
 * Sorting in-place: **Yes**
 * Stable: **No**
+
+> The time complexity will vary depending on the choice of the pivot-element. 
+> Although O(n^2) is the worst case, QuickSort is faster in practice.
+
+> Randomized Quick Sort works well in practice and has a better space complexity than Merge Sort.
