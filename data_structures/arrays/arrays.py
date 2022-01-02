@@ -1,4 +1,5 @@
-# Lists in Python are mutable objects that may contain any number of items of different types
+# Lists in Python are mutable objects that may contain
+# any number of items of different types
 my_list = [1, "Hello", True, 3.4]
 
 # Python allows negative indexing

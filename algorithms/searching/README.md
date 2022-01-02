@@ -1,7 +1,5 @@
 ## Searching
 
----
-
 ### Linear Search
 Simple approach to searching for a value `val` within an array `arr`.
 * Start from leftmost element and one by one compare `val` with each element of `arr`

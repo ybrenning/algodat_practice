@@ -1,7 +1,5 @@
 ## Sorting
 
---- 
-
 ### Insertion Sort
 Simple sorting algorithm that works similar to sorting a deck of cards in your hands.
 The array is "split" into a sorted and unsorted part, such that values from the unsorted part are picked
