@@ -6,11 +6,13 @@ This is a part of my ongoing study and practice of data structures and algorithm
 Most of my implementations will be written in C and Python in order to cover both high- and low-level concepts.
 
 ---
+
 ### Useful references
 Digital resources:
 * [Coding Interview University](https://github.com/jwasham/coding-interview-university) by John Washnam
 * [CompSci OSSU](https://github.com/ossu/computer-science)
 * [Exercism](https://exercism.org/dashboard)
+* [Python Type Hints Cheat Sheet](https://github.com/python/mypy/blob/5d765e71fa1313830b485a4e9f18a6553b221426/docs/source/cheat_sheet_py3.rst)
 
 Literature:
 * [Algorithms (4. Edition)](http://index-of.es/Varios-2/Algorithms%204th%20Edition.pdf) by Robert Sedgewick and Kevin Wayne
