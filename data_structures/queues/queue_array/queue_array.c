@@ -12,6 +12,7 @@ queue_t *queue_init() {
 
     my_queue->front = -1;
     my_queue->rear = -1;
+
     return my_queue;
 }
 
@@ -45,9 +46,9 @@ void enqueue(queue_t *queue, int val) {
 
 int dequeue(queue_t *queue) {
     int retval = -1;
-    if (queue_isempty(queue)) {
+    if (queue_isempty(queue))
         return retval;
-    } else {
+    else {
         retval = queue->data[queue->front];
         // Check if front and rear pointer are on the same elem
         // This means the queue only contains one elem

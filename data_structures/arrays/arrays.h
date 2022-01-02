@@ -21,8 +21,6 @@ typedef struct dynamic_array {
     int *data;
 } DArray;
 
-// Check if pointer address is valid
-void check_address(void *address);
 // initialize the capacity of the darray
 int init_capacity(int capacity);
 // Grow the capacity based on the RESIZE_FACTOR

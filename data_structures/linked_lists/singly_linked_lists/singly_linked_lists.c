@@ -108,9 +108,9 @@ int llist_remove_first(node_t **head) {
 }
 
 void llist_print(node_t *head) {
-    if (llist_isempty(head)) {
+    if (llist_isempty(head))
         printf("[ ]\n");
-    } else {
+    else {
         node_t *curr = head;
         printf("[ ");
         while (curr->next != NULL) {
@@ -153,9 +153,8 @@ int llist_delete_index(node_t **head, int index) {
     if (index < 0 || llist_isempty(*head))
         return -1;
 
-    if (index == 0) {
+    if (index == 0)
         return llist_remove_first(head);
-    }
 
     // Get to node before index, such that
     // curr->next is the node to be removed
@@ -188,9 +187,8 @@ int llist_delete_val(node_t **head, int val) {
     int curr_index = 0;
     node_t *curr = *head;
     while (curr != NULL) {
-        if (curr->val == val) {
+        if (curr->val == val)
             return llist_delete_index(head, curr_index);
-        }
 
         curr = curr->next;
         curr_index++;

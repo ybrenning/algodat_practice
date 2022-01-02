@@ -9,6 +9,7 @@
 ht_t *ht_init() {
     ht_t *hash_table = malloc(sizeof(ht_t));
     assert(hash_table);
+
     hash_table->entries = malloc(sizeof(entry_t) * MAX_SIZE);
     assert(hash_table->entries);
 
@@ -27,6 +28,7 @@ entry_t *ht_entry_init(const char *key, const char *value) {
 
     strcpy(entry->key, key);
     strcpy(entry->value, value);
+
     return entry;
 }
 
@@ -72,18 +74,17 @@ void ht_add(ht_t *hash_table, entry_t *entry) {
         i++;
     }
 
-    if (hash_table->entries[(hash + i) % MAX_SIZE] == NULL) {
+    if (hash_table->entries[(hash + i) % MAX_SIZE] == NULL)
         hash_table->entries[(hash + i) % MAX_SIZE] = entry;
-    } else return;
+    else return;
 }
 
 char *ht_get(ht_t *hash_table, const char *key) {
     unsigned int i = 0;
     int hash = ht_hash(key, MAX_SIZE);
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-        if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0) {
+        if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0)
             return hash_table->entries[(hash + i) % MAX_SIZE]->value;
-        }
 
         i++;
     }
@@ -113,11 +114,10 @@ void ht_print(ht_t *hash_table) {
     printf("\n");
 
     for (int i = 0; i < MAX_SIZE; i++) {
-        if (hash_table->entries[i] == NULL) {
+        if (hash_table->entries[i] == NULL)
             printf("%d : \n", i + 1);
-        } else {
+        else
             printf("%s : %s\n", hash_table->entries[i]->key, hash_table->entries[i]->value);
-        }
     }
 
     printf("\n");

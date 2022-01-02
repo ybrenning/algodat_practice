@@ -8,6 +8,8 @@ void test_darray_init() {
 
     my_darray = darray_init(DEF_CAPACITY + 1);
     assert(my_darray->capacity == DEF_CAPACITY * RESIZE_FACTOR);
+
+    darray_destroy(&my_darray);
 }
 
 void test_darray_destroy() {
@@ -39,7 +41,9 @@ void test_darray_push() {
     for (int i = 0; i < DEF_CAPACITY + 1; i++) {
         darray_push(my_darray, i + 1);
     }
+
     assert(my_darray->size == 17 && my_darray->capacity == DEF_CAPACITY * RESIZE_FACTOR);
+
     darray_destroy(&my_darray);
 }
 
@@ -56,6 +60,7 @@ void test_darray_get() {
     darray_push(my_darray, 2);
     darray_push(my_darray, 3);
     assert(darray_get(my_darray, 2) == 3);
+
     darray_destroy(&my_darray);
 }
 
@@ -74,6 +79,7 @@ void test_darray_pop() {
 
     assert(darray_pop(my_darray) == 17);
     assert(my_darray->capacity == DEF_CAPACITY);
+
     darray_destroy(&my_darray);
 }
 
@@ -98,6 +104,7 @@ void test_darray_insert() {
 
     assert(my_darray->size == DEF_CAPACITY + 1);
     assert(my_darray->capacity == DEF_CAPACITY * RESIZE_FACTOR);
+
     darray_destroy(&my_darray);
 }
 
@@ -125,6 +132,7 @@ void test_darray_delete() {
 
     assert(darray_delete(my_darray, DEF_CAPACITY) == DEF_CAPACITY + 1);
     assert(my_darray->capacity == DEF_CAPACITY);
+
     darray_destroy(&my_darray);
 }
 
@@ -138,6 +146,7 @@ void test_darray_find() {
     darray_push(my_darray, 4);
     assert(darray_find(my_darray, 2) == 1);
     assert(darray_find(my_darray, 5) == -1);
+    
     darray_destroy(&my_darray);
 }
 
