@@ -24,6 +24,7 @@ to the right to make space
 * Sorting in-place: **Yes** 
 * Stable: **Yes**
 <br></br>
+
 > Insertion Sort is useful on arrays with small amounts of elements or when the input array is almost sorted.
 
 ---
@@ -45,6 +46,7 @@ The `merge()` function is used for merging two sorted halves.
 * Sorting in-place: **No**
 * Stable: **Yes**
 <br></br>
+
 > Merge Sort is useful for sorting Linked Lists as we can complete the `merge()` operation without extra space.
 > It is also used for large amounts of data like in [External Sorting](https://en.wikipedia.org/wiki/External_sorting).
 
@@ -70,8 +72,35 @@ such that all elements before `p` are smaller and all elements after are greater
 * Space Complexity: **O(log n)**
 * Sorting in-place: **Yes**
 * Stable: **No**
+<br></br>
 
 > The time complexity will vary depending on the choice of the pivot-element. 
 > Although O(n^2) is the worst case, QuickSort is faster in practice.
 
 > Randomized Quick Sort works well in practice and has a better space complexity than Merge Sort.
+
+---
+
+### Heap Sort
+Comparison-based sorting technique based on the 
+[Binary Heap](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/priority_queues) 
+data structure. It is similar to Selection Sort in that we repeatedly find the minimum element and place it at
+the beginning. We can modify a complete Binary Tree to a Max-Heap by running a `heapify()` function on all non-leaf
+nodes of the heap.
+
+* Build a max heap from the input data
+* At this point, the largest item is stored at the root. Replace it with the last item of the heap and reduce the size
+of the heap by 1.
+* Re-heapify the root of the tree
+* Repeat the last two steps while the size of the heap is greater than 1
+
+![Source: Towards Data Science](media/heapsort.png)
+<br></br>
+
+* Time complexity: **O(n log n)**
+* Space complexity: **O(1)**
+* Sorting in-place: **Yes**
+* Stable: **No**
+<br></br>
+
+> Heap Sort is widely used due to its simplicity, consistency and efficient space- and time complexities.
