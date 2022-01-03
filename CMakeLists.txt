@@ -13,6 +13,7 @@ add_subdirectory(algorithms/sorting/quick_sort)
 
 add_subdirectory(data_structures/arrays)
 add_subdirectory(data_structures/linked_lists/singly_linked_lists)
+add_subdirectory(data_structures/linked_lists/doubly_linked_lists)
 add_subdirectory(data_structures/queues/queue_array)
 add_subdirectory(data_structures/hash_tables)
 add_subdirectory(data_structures/binary_search_trees)

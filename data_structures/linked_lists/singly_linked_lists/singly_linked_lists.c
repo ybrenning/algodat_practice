@@ -224,6 +224,7 @@ void llist_reverse(node_t **head) {
         prev = curr;
         curr = next;
     }
+
     // Set head node to last node of old list
     *head = prev;
 }
