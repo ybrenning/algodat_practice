@@ -25,6 +25,10 @@ to the right to make space
 
 > Insertion Sort is useful on arrays with small amounts of elements or when the input array is almost sorted.
 
+**More on Insertion Sort**
+* [Programiz](https://www.programiz.com/dsa/insertion-sort)
+* [MyCodeSchool](https://youtu.be/i-SKeOcBwko) (Video)
+
 ---
 ### Merge Sort
 Merge Sort is a divide and conquer algorithm which divides the input array into
@@ -47,6 +51,12 @@ The `merge()` function is used for merging two sorted halves.
 
 > Merge Sort is useful for sorting Linked Lists as we can complete the `merge()` operation without extra space.
 > It is also used for large amounts of data like in [External Sorting](https://en.wikipedia.org/wiki/External_sorting).
+
+**More on Merge Sort**
+* [Programiz](https://www.programiz.com/dsa/merge-sort)
+* [Simple Snippets](https://youtu.be/cAv-4ltj1go) (Very in-depth video)
+* [MyCodeSchool](https://youtu.be/TzeBrDU-JaY) (Video)
+* [Jenny's Lectures](https://youtu.be/jlHkDBEumP0) (Video)
 
 ---
 
@@ -77,6 +87,11 @@ such that all elements before `p` are smaller and all elements after are greater
 
 > Randomized Quick Sort works well in practice and has a better space complexity than Merge Sort.
 
+**More on Quick Sort**
+* [Programiz](https://www.programiz.com/dsa/quick-sort)
+* [Simple Snippets](https://youtu.be/yEzFMbc7ltQ) (Very in-depth video)
+* [MyCodeSchool](https://youtu.be/COk73cpQbFQ) (Video)
+
 ---
 
 ### Heap Sort
@@ -102,3 +117,7 @@ of the heap by 1.
 <br></br>
 
 > Heap Sort is widely used due to its simplicity, consistency and efficient space- and time complexities.
+
+**More on Heap Sort**
+* [Programiz](https://www.programiz.com/dsa/heap-sort)
+* [Simple Snippets](https://youtu.be/XrY8z4e5HAk) (In-depth video)
