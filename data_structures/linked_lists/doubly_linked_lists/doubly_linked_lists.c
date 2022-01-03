@@ -1,3 +1,9 @@
+/**
+ * @author Yannick Brenning
+ * @date 03.01.2021
+ * @brief Implementation of doubly linked lists
+ */
+
 #include "doubly_linked_lists.h"
 
 node_t *dllist_init(const int val) {
@@ -30,14 +36,25 @@ bool is_empty(node_t *head) {
     return head == NULL;
 }
 
-void dllist_append(node_t *head, const int val) {
-    if (is_empty(head)) {
-        head = (node_t *) malloc(sizeof(node_t));
-        head->val = val;
-        head->next = NULL;
-        head->prev = NULL;
+int dllist_get(node_t *head, const unsigned int index) {
+    if (is_empty(head))
+        return -1;
+
+    node_t *curr = head;
+    for (int i = 0; i < index; i++) {
+        if (curr->next == NULL)
+            return -1;
+        curr = curr->next;
+    }
+
+    return curr->val;
+}
+
+void dllist_append(node_t **head, const int val) {
+    if (is_empty(*head)) {
+        *head = dllist_init(val);
     } else {
-        node_t *curr = head;
+        node_t *curr = *head;
         while (curr->next != NULL) {
             curr = curr->next;
         }
@@ -64,8 +81,11 @@ void dllist_push(node_t **head, const int val) {
 void dllist_insert(node_t **head, const int val, const unsigned int index) {
     if (is_empty(*head))
         return;
-    else if (index == 0)
+
+    if (index == 0) {
         dllist_push(head, val);
+        return;
+    }
 
     node_t *curr = *head;
     for (int i = 0; i < index - 1; i++) {
@@ -84,6 +104,7 @@ void dllist_insert(node_t **head, const int val, const unsigned int index) {
 
 int dllist_remove_last(node_t **head) {
     int retval;
+
     if (is_empty(*head))
         retval = -1;
     else if ((*head)->next == NULL) {
@@ -107,6 +128,7 @@ int dllist_remove_last(node_t **head) {
 
 int dllist_remove_first(node_t **head) {
     int retval;
+
     if (is_empty(*head))
         retval = -1;
     else if ((*head)->next == NULL) {
@@ -133,12 +155,19 @@ int dllist_delete(node_t **head, const unsigned int index) {
     else if (index == 0) {
         return dllist_remove_first(head);
     } else {
+        // Get to the node before the one
+        // we want to delete such that curr->next
+        // is the node to be removed
         node_t *curr = *head;
         for (int i = 0; i < index - 1; i++) {
+            // Check if we are out of bounds
             if (curr->next == NULL)
                 return retval;
             curr = curr->next;
         }
+
+        if (curr->next == NULL)
+            return retval;
 
         retval = curr->next->val;
         node_t *new_next = curr->next->next;
@@ -153,6 +182,24 @@ int dllist_delete(node_t **head, const unsigned int index) {
 
         return retval;
     }
+}
+
+void dllist_reverse(node_t **head) {
+    node_t *curr = *head;
+    node_t *temp = NULL;
+    while (curr != NULL) {
+        // Reversing doubly linked list simply
+        // requires us to swap each prev and next node
+        temp = curr->prev;
+        curr->prev = curr->next;
+        curr->next = temp;
+
+        curr = curr->prev;
+    }
+
+    // Set new head to last node of old llist
+    if (temp != NULL)
+        *head = temp->prev;
 }
 
 void dllist_print(node_t *head) {
