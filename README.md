@@ -39,7 +39,7 @@ Literature:
 * [Arrays](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/arrays)
 * [Linked Lists](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/linked_lists)
   * [Singly Linked Lists](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/linked_lists/singly_linked_lists)
-  * Doubly Linked Lists
+  * [Doubly Linked Lists](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/linked_lists/doubly_linked_lists)
 * [Queues](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/queues)
   * [Queue Array](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/queues/queue_array)
 * [Hash Tables](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/hash_tables)
