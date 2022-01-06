@@ -198,6 +198,7 @@ void dllist_reverse(node_t **head) {
     }
 
     // Set new head to last node of old llist
+    // NULL <- old_head -> <- node_1 -> <- node_2 -> ... <- temp -> <- old_tail -> NULL
     if (temp != NULL)
         *head = temp->prev;
 }

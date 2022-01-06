@@ -111,6 +111,29 @@ class DoublyLinkedList:
         self.size -= 1
         return retval
 
+    def get(self, index):
+        if self.is_empty() or index < 0 or index >= self.size:
+            raise IndexError("Index out of bounds")
+        else:
+            curr = self.head
+            for _ in range(0, index):
+                curr = curr.next
+
+            return curr.val
+
+    def reverse(self):
+        if not self.size <= 1:
+            curr = self.head
+            temp = None
+            while curr is not None:
+                temp = curr.prev
+                curr.prev = curr.next
+                curr.next = temp
+
+                curr = curr.prev
+
+            self.head = temp.prev
+
     def __str__(self):
         if self.is_empty():
             return "[ ]"
@@ -127,17 +150,38 @@ class DoublyLinkedList:
 
 
 def main():
+
+    # Basic driver code to construct the following linked list
+    # None <- 1 -> <- 2 -> <- 3 -> <- 4 -> <- 5 -> None
+
     linked_list = DoublyLinkedList()
     linked_list.append(1)
     linked_list.append(2)
     linked_list.append(3)
     linked_list.append(4)
     linked_list.append(5)
+
+    # Demonstrate basic operations on linked list
+
     linked_list.push(0)
-    linked_list.insert(60, 5)
+    linked_list.insert(6, 5)
     linked_list.remove_last()
     linked_list.pop()
     linked_list.delete(4)
+    print(linked_list.get(2))
+
+    print(linked_list)
+
+    # Swaps each prev and next pointer
+    # using a temp node to store the prev node
+
+    # None <- old_head -> <- node_1 -> ... <- temp -> <- old_tail -> None
+
+    # On the final step, curr is at the old_tail node, meaning temp is the prev
+    # (the second node of the new list, second last of old list)
+    # Set the head variable to be the prev value of the temp node (old_tail)
+
+    linked_list.reverse()
 
     print(linked_list)
 
