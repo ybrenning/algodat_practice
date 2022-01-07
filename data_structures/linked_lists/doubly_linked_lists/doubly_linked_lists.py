@@ -8,7 +8,7 @@ from typing import Any
 class Node:
     def __init__(self, val: Any) -> None:
         self.val = val
-        self.next: Node | None= None
+        self.next: Node | None = None
         self.prev: Node | None = None
 
 

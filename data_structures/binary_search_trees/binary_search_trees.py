@@ -1,39 +1,33 @@
 """
-:author: Yannick Brenning
-:date: 16.12.2021
-:brief: Implementation of the binary search tree data structure
+Implementation of binary search trees.
 """
 
 
 class Node:
-    def __init__(self, val):
+    def __init__(self, val: int) -> None:
         self.val = val
-        self.left = None
-        self.right = None
+        self.left: Node | None = None
+        self.right: Node | None = None
 
 
 class BinarySearchTree:
-    def __init__(self):
-        self.root = None
+    def __init__(self) -> None:
+        self.root: Node | None = None
 
-    def insert_node(self, val):
-        """
-        Insert a new node into the BST
-        :param val: value of node to be inserted
-        :return: None
-        """
+    def insert_node(self, val: int) -> None:
         if self.root is None:
             self.root = Node(val)
         else:
             self.__insert(self.root, val)
 
-    def __insert(self, node, val):
+    def __insert(self, node: Node, val: int) -> None:
         """
         Recursive function for the above implementation of insert_node
         :param node: current node being checked
         :param val: value of node to be inserted
         :return: None
         """
+
         # Go into left subtree
         if val <= node.val:
             # Try to insert a new node as the left
@@ -51,7 +45,7 @@ class BinarySearchTree:
             elif node.right is not None:
                 self.__insert(node.right, val)
 
-    def inorder_traversal(self):
+    def inorder_traversal(self) -> None:
         """
         Print content of BST using inorder traversal
         (Smallest to largest values)
@@ -63,10 +57,10 @@ class BinarySearchTree:
             self.__inorder_traversal(self.root)
             print("")
 
-    def __inorder_traversal(self, node):
+    def __inorder_traversal(self, node: Node) -> None:
         """
         Recursive function for the above implementation
-        :param node:
+        :param node: current node being printed
         :return: None
         """
         if node is None:
@@ -77,7 +71,7 @@ class BinarySearchTree:
             print(str(node.val), end=" ")
             self.__inorder_traversal(node.right)
 
-    def get_height(self):
+    def get_height(self) -> int:
         """
         Calculate the height of the BST's root
         (Height = largest number of edges to
@@ -86,7 +80,7 @@ class BinarySearchTree:
         """
         return self.__get_height(self.root)
 
-    def __get_height(self, node):
+    def __get_height(self, node: Node) -> int:
         """
         Recursive function for the above implementation
         :param node: current node being traversed
@@ -100,11 +94,11 @@ class BinarySearchTree:
 
         return max(left_height, right_height) + 1
 
-    def get_min(self):
+    def get_min(self) -> int:
         return BinarySearchTree.__get_min(self.root)
 
     @staticmethod
-    def __get_min(node):
+    def __get_min(node: Node) -> int:
         """
         Finds minimum value of a subtree
         :param node: root of the tree or subtree
@@ -115,11 +109,11 @@ class BinarySearchTree:
             curr = curr.left
         return curr.val
 
-    def get_max(self):
+    def get_max(self) -> int:
         return BinarySearchTree.__get_max(self.root)
 
     @staticmethod
-    def __get_max(node):
+    def __get_max(node: Node) -> int:
         """
         Finds maximum value of a subtree
         :param node: root of the tree or subtree
@@ -130,7 +124,7 @@ class BinarySearchTree:
             curr = curr.right
         return curr.val
 
-    def find_node(self, val):
+    def find_node(self, val: int) -> bool:
         """
         Find node with value inside BST
         :param val: value to search for
@@ -138,7 +132,7 @@ class BinarySearchTree:
         """
         return self.__find(self.root, val)
 
-    def __find(self, node, val):
+    def __find(self, node: Node, val: int) -> bool:
         """
         Recursive function for the above implementation
         :param node: current node being checked
@@ -154,14 +148,14 @@ class BinarySearchTree:
         else:
             return self.__find(node.right, val)
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Check if a BST is valid by definition
         :return: boolean
         """
         return self.__is_valid(self.root)
 
-    def __is_valid(self, node):
+    def __is_valid(self, node: Node) -> bool:
         """
         Recursive function for the above implementation
         :param node: current node of which the subtrees will be checked
@@ -175,17 +169,17 @@ class BinarySearchTree:
         return self.is_subtree_lesser(node.left, node.val) and self.is_subtree_greater(node.right, node.val) \
                and self.__is_valid(node.left) and self.__is_valid(node.right)
 
-    def is_subtree_greater(self, node, val):
+    def is_subtree_greater(self, node: Node, val: int) -> bool:
         if node is None:
             return True
         return node.val > val and self.is_subtree_greater(node.left, val) and self.is_subtree_greater(node.right, val)
 
-    def is_subtree_lesser(self, node, val):
+    def is_subtree_lesser(self, node: Node, val: int) -> bool:
         if node is None:
             return True
         return node.val <= val and self.is_subtree_lesser(node.left, val) and self.is_subtree_lesser(node.right, val)
 
-    def delete_node(self, val):
+    def delete_node(self, val: int) -> Node:
         """
         Remove a node from the tree
         :param val: value of node to be deleted
@@ -193,7 +187,7 @@ class BinarySearchTree:
         """
         return self.__delete_node(self.root, val)
 
-    def __delete_node(self, node, val):
+    def __delete_node(self, node: Node, val: int) -> Node:
         """
         Recursive function for the above implementation
         :param node: current node being checked
@@ -229,7 +223,12 @@ class BinarySearchTree:
 
         return node
 
-    def get_successor(self, val):
+    def get_successor(self, val: int) -> int:
+        """
+        Find the next highest number in the tree
+        :param val: value of node to get successor of
+        :return: value of successor node
+        """
         curr = self.root
 
         while curr is not None:
@@ -276,7 +275,12 @@ class BinarySearchTree:
                 # our highest node in the BST
                 return -1
 
-    def get_predecessor(self, val):
+    def get_predecessor(self, val: int) -> int:
+        """
+        Find the next lowest number in the tree
+        :param val: value of node to get predecessor of
+        :return: value of predecessor node
+        """
         curr = self.root
         while curr is not None:
             if val < curr.val:

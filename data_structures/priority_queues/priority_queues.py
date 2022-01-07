@@ -1,58 +1,51 @@
 """
-:author: Yannick Brenning
-:date: 20.12.2021
-:brief: Implementation of priority queues using max heap
+Implementation of priority queues using max heap.
 """
 
 
 class MaxHeap:
-    def __init__(self):
-        self.data = []
+    def __init__(self) -> None:
+        self.data: List[int] = []
 
-    def swap(self, index_1, index_2):
+    def swap(self, index_1: int, index_2: int) -> None:
         temp = self.data[index_1]
         self.data[index_1] = self.data[index_2]
         self.data[index_2] = temp
 
     @staticmethod
-    def get_left_child_index(index):
+    def get_left_child_index(index: int) -> int:
         return (2 * index) + 1
 
     @staticmethod
-    def get_right_child_index(index):
+    def get_right_child_index(index: int) -> int:
         return (2 * index) + 2
 
     @staticmethod
-    def get_parent_index(index):
+    def get_parent_index(index: int) -> int:
         return (index - 1) // 2
 
-    def has_left_child(self, index):
+    def has_left_child(self, index: int) -> bool:
         return self.get_left_child_index(index) < len(self.data)
 
-    def has_right_child(self, index):
+    def has_right_child(self, index: int) -> bool:
         return self.get_right_child_index(index) < len(self.data)
 
-    def has_parent(self, index):
+    def has_parent(self, index: int) -> bool:
         return self.get_parent_index(index) >= 0
 
-    def get_left_child(self, index):
+    def get_left_child(self, index: int) -> int:
         return self.data[self.get_left_child_index(index)]
 
-    def get_right_child(self, index):
+    def get_right_child(self, index: int) -> int:
         return self.data[self.get_right_child_index(index)]
 
-    def get_parent(self, index):
+    def get_parent(self, index: int) -> int:
         return self.data[self.get_parent_index(index)]
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return len(self.data) == 0
 
-    def insert(self, val):
-        """
-        Inserts an element into the heap
-        :param val: value of the element
-        :return: None
-        """
+    def insert(self, val: int) -> None:
         self.data.append(val)
 
         # Heapify up: rearranges heap by moving
@@ -62,13 +55,13 @@ class MaxHeap:
             self.swap(self.get_parent_index(i), i)
             i = self.get_parent_index(i)
 
-    def extract_max(self):
+    def extract_max(self) -> int:
         """
         Remove the top (max) element from the heap
         :return: value of top element
         """
         if self.is_empty():
-            raise "Cannot extract from an empty heap"
+            raise IndexError("Extract from empty heap")
 
         # Get the top value and replace it with the bottom value
         retval = self.data[0]

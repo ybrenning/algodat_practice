@@ -1,13 +1,18 @@
+"""
+Implementation of graphs using adjacency matrix.
+"""
+
+
 class Graph:
-    def __init__(self, directed=True, vertices=5):
+    def __init__(self, directed=True, vertices=5) -> None:
         self.directed = directed
         self.vertices = vertices
         self.edges = [[False] * vertices for _ in range(vertices)]
 
-    def has_vertex(self, vertex):
+    def has_vertex(self, vertex: int) -> bool:
         return 0 <= vertex < self.vertices
 
-    def has_edge(self, vertex_1, vertex_2):
+    def has_edge(self, vertex_1: int, vertex_2: int) -> bool:
         if not self.has_vertex(vertex_1) or not self.has_vertex(vertex_2):
             return False
 
@@ -15,7 +20,7 @@ class Graph:
             return self.edges[vertex_1][vertex_2]
         return self.edges[vertex_1][vertex_2] and self.edges[vertex_2][vertex_1]
 
-    def add_edge(self, vertex_1, vertex_2):
+    def add_edge(self, vertex_1: int, vertex_2: int) -> bool:
         if self.has_edge(vertex_1, vertex_2):
             return False
 
@@ -27,7 +32,7 @@ class Graph:
             self.edges[vertex_2][vertex_1] = True
         return True
 
-    def delete_edge(self, vertex_1, vertex_2):
+    def delete_edge(self, vertex_1: int, vertex_2: int) -> bool:
         if not self.has_edge(vertex_1, vertex_2):
             return False
 
@@ -38,7 +43,7 @@ class Graph:
             self.edges[vertex_2][vertex_1] = False
         return True
 
-    def __str__(self):
+    def __str__(self) -> str:
         output = ""
         for i in range(0, self.vertices):
             for j in range(0, self.vertices):
@@ -53,13 +58,15 @@ class Graph:
 
 def main():
 
-    # Basic driver code to generate the
-    # directed graph 0 -> 1 -> 2
+    # Driver code to generate the following directed graph:
+    #               0 -> 1 -> 2
 
     graph = Graph()
     graph.add_edge(0, 1)
     graph.add_edge(1, 2)
+
     print(graph)
+
     graph.delete_edge(0, 1)
     print(graph)
 

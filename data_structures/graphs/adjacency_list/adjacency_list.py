@@ -1,26 +1,24 @@
 """
-:author: Yannick Brenning
-:date: 02.01.2022
-:brief: Implementation of graphs using adjacency list
+Implementation of graphs using adjacency list
 """
 
 
 class Node:
-    def __init__(self, val):
+    def __init__(self, val: int) -> None:
         self.val = val
-        self.next = None
+        self.next: Node | None = None
 
 
 class Graph:
-    def __init__(self, directed=True, vertices=5):
+    def __init__(self, directed=True, vertices=5) -> None:
         self.directed = directed
         self.vertices = vertices
-        self.edges = [None] * vertices
+        self.edges: List[Node | None] = [None] * vertices
 
-    def has_vertex(self, vertex):
+    def has_vertex(self, vertex: int) -> bool:
         return 0 <= vertex < self.vertices
 
-    def has_edge(self, vertex_1, vertex_2):
+    def has_edge(self, vertex_1: int, vertex_2: int) -> bool:
         if self.has_vertex(vertex_1) and self.has_vertex(vertex_2):
             curr = self.edges[vertex_1]
             while curr is not None:
@@ -30,11 +28,11 @@ class Graph:
 
         return False
 
-    def add_edge(self, vertex_1, vertex_2):
+    def add_edge(self, vertex_1: int, vertex_2: int) -> bool:
         """
-        Add a new edge to the graph
+        Add a new edge to the graph.
         :param vertex_1: source/starting vertex
-        :param vertex_2: target/destinatin vertex
+        :param vertex_2: target/destination vertex
         :return: bool value representing success or failure
         """
         if not self.has_edge(vertex_1, vertex_2):
@@ -51,11 +49,11 @@ class Graph:
 
         return False
 
-    def delete_node(self, vertex_1, vertex_2):
+    def delete_node(self, vertex_1: int, vertex_2: int) -> bool:
         """
-        Deletes a node from an adjacency list
+        Deletes a node from an adjacency list.
         :param vertex_1: source, e.g. index of head node
-        :param vertex_2: value of node within linkedlist to be deleted
+        :param vertex_2: value of node within linked list to be deleted
         :return: bool representing success or failure of deletion
         """
         curr = self.edges[vertex_1]
@@ -72,9 +70,9 @@ class Graph:
             prev.next = curr.next
             return True
 
-    def delete_edge(self, vertex_1, vertex_2):
+    def delete_edge(self, vertex_1: int, vertex_2: int) -> bool:
         """
-        Deletes edge from graph
+        Deletes edge from graph.
         :param vertex_1: source/starting vertex
         :param vertex_2: target/destination vertex
         :return: bool representing success or failure of deletion
@@ -86,7 +84,7 @@ class Graph:
         if not self.directed:
             self.delete_node(vertex_2, vertex_1)
 
-    def dfs(self, vertex):
+    def dfs(self, vertex: int) -> None:
         """
         Depth-First-Search and print the graph from a specific vertex
         :param vertex: vertex to start from
@@ -109,7 +107,10 @@ class Graph:
 
         print("\n")
 
-    def __str__(self):
+    def bfs(self, vertex: int) -> None:
+        pass
+
+    def __str__(self) -> str:
         output = ""
         for i in range(0, self.vertices):
             output += str(i) + ": "
