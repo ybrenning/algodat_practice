@@ -1,17 +1,24 @@
+"""
+Implementation of Singly Linked Lists.
+"""
+
+from typing import Any
+
+
 class Node:
-    def __init__(self, val):
+    def __init__(self, val: Any) -> None:
         self.val = val
-        self.next = None
+        self.next: Node | None = None
 
 
 class LinkedList:
-    def __init__(self):
-        self.head = None
+    def __init__(self) -> None:
+        self.head: Node | None = None
         self.size = 0
 
-    def get(self, index):
+    def get(self, index: int) -> Any:
         """
-        Returns value of node at index
+        Returns value of node at index.
         :param index: index of node
         :return: value of node
         """
@@ -26,9 +33,9 @@ class LinkedList:
 
             return curr.val
 
-    def push(self, val):
+    def push(self, val: Any) -> None:
         """
-        Inserts node at the front of the linked list
+        Inserts node at the front of the linked list.
         :param val: value to be stored in node
         :return: None
         """
@@ -41,9 +48,9 @@ class LinkedList:
 
         self.size += 1
 
-    def append(self, val):
+    def append(self, val: Any) -> None:
         """
-        Inserts node at the end of the linked list
+        Inserts node at the end of the linked list.
         :param val: value to be stored in node
         :return: None
         """
@@ -57,9 +64,9 @@ class LinkedList:
 
             self.size += 1
 
-    def insert(self, val, index):
+    def insert(self, val: Any, index: int) -> None:
         """
-        Insert new node at index
+        Insert new node at index.
         :param val: value to be stored in node
         :param index: index of new node
         :return: None
@@ -83,7 +90,7 @@ class LinkedList:
 
             self.size += 1
 
-    def delete(self, index):
+    def delete(self, index: int) -> Any:
         """
         Remove node at index
         :param index: index of node
@@ -105,7 +112,7 @@ class LinkedList:
 
         self.size -= 1
 
-    def __str__(self):
+    def __str__(self) -> str:
         output = "["
         curr = self.head
         while curr is not None:

@@ -1,19 +1,26 @@
+"""
+Implementation of Doubly Linked Lists.
+"""
+
+from typing import Any
+
+
 class Node:
-    def __init__(self, val):
+    def __init__(self, val: Any) -> None:
         self.val = val
-        self.next = None
-        self.prev = None
+        self.next: Node | None= None
+        self.prev: Node | None = None
 
 
 class DoublyLinkedList:
-    def __init__(self):
-        self.head = None
+    def __init__(self) -> None:
+        self.head: Node | None = None
         self.size = 0
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self.size == 0
 
-    def append(self, val):
+    def append(self, val: Any) -> None:
         if self.is_empty():
             self.head = Node(val)
         else:
@@ -26,7 +33,7 @@ class DoublyLinkedList:
             curr.next = new_node
         self.size += 1
 
-    def push(self, val):
+    def push(self, val: Any) -> None:
         if self.is_empty():
             self.head = Node(val)
         else:
@@ -39,7 +46,7 @@ class DoublyLinkedList:
 
         self.size += 1
 
-    def insert(self, val, index):
+    def insert(self, val: Any, index: int) -> None:
         if index < 0 or index > self.size:
             raise IndexError("Index out of bounds")
         elif index == 0:
@@ -59,7 +66,7 @@ class DoublyLinkedList:
 
             self.size += 1
 
-    def remove_last(self):
+    def remove_last(self) -> Any:
         if self.is_empty():
             raise IndexError("Removing from empty list")
         elif self.size == 1:
@@ -76,7 +83,7 @@ class DoublyLinkedList:
         self.size -= 1
         return retval
 
-    def pop(self):
+    def pop(self) -> Any:
         if self.is_empty():
             raise IndexError("Pop from empty list")
         else:
@@ -89,7 +96,7 @@ class DoublyLinkedList:
         self.size -= 1
         return retval
 
-    def delete(self, index):
+    def delete(self, index: int) -> Any:
         if index < 0 or index > self.size:
             raise IndexError("Index out of bounds")
         elif index == 0:
@@ -111,7 +118,7 @@ class DoublyLinkedList:
         self.size -= 1
         return retval
 
-    def get(self, index):
+    def get(self, index: int) -> Any:
         if self.is_empty() or index < 0 or index >= self.size:
             raise IndexError("Index out of bounds")
         else:
@@ -121,7 +128,7 @@ class DoublyLinkedList:
 
             return curr.val
 
-    def reverse(self):
+    def reverse(self) -> None:
         if not self.size <= 1:
             curr = self.head
             temp = None
@@ -134,7 +141,7 @@ class DoublyLinkedList:
 
             self.head = temp.prev
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.is_empty():
             return "[ ]"
         else:
@@ -151,7 +158,8 @@ class DoublyLinkedList:
 
 def main():
 
-    # Basic driver code to construct the following linked list
+    # Driver code to construct the following linked list:
+    #
     # None <- 1 -> <- 2 -> <- 3 -> <- 4 -> <- 5 -> None
 
     linked_list = DoublyLinkedList()
@@ -169,6 +177,8 @@ def main():
     linked_list.pop()
     linked_list.delete(4)
     print(linked_list.get(2))
+
+    linked_list.append("A")
 
     print(linked_list)
 
