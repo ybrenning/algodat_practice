@@ -13,7 +13,7 @@ class Graph:
     def __init__(self, directed=True, vertices=5) -> None:
         self.directed = directed
         self.vertices = vertices
-        self.edges: List[Node | None] = [None] * vertices
+        self.edges: list[Node | None] = [None] * vertices
 
     def has_vertex(self, vertex: int) -> bool:
         return 0 <= vertex < self.vertices

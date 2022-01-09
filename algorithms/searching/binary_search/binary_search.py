@@ -1,4 +1,4 @@
-def binary_search(arr, val):
+def binary_search(arr: list[int], val: int) -> int:
     l = 0
     r = len(arr) - 1
     mid = r // 2
@@ -15,11 +15,11 @@ def binary_search(arr, val):
     return -1
 
 
-def binary_search_rec(arr, val, l , r):
+def binary_search_rec(arr: list[int], val: int, l: int, r: int) -> int:
     mid = l + (r - l) // 2
 
     if arr[mid] == val:
-        return arr[mid]
+        return mid
     elif l == r:
         return -1
     elif arr[mid] < val:

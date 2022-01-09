@@ -5,7 +5,7 @@ Implementation of priority queues using max heap.
 
 class MaxHeap:
     def __init__(self) -> None:
-        self.data: List[int] = []
+        self.data: list[int] = []
 
     def swap(self, index_1: int, index_2: int) -> None:
         temp = self.data[index_1]

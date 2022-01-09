@@ -1,4 +1,4 @@
-def merge(arr, left, mid, right):
+def merge(arr: list[int], left: int, mid: int, right: int) -> None:
     # Copy left and right sub-arrays
     arr_l = arr[left:mid+1]
     arr_r = arr[mid+1:right+1]
@@ -27,7 +27,7 @@ def merge(arr, left, mid, right):
         k += 1
 
 
-def merge_sort(arr, left, right):
+def merge_sort(arr: list[int], left: int, right: int) -> None:
     # If the sub-array is more
     # than one element long
     if left < right:

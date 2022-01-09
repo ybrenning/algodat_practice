@@ -7,7 +7,7 @@ from typing import Any
 
 class Queue:
     def __init__(self) -> None:
-        self.queue: List[Any] = []
+        self.queue: list[Any] = []
 
     def is_empty(self) -> bool:
         return len(self.queue) == 0

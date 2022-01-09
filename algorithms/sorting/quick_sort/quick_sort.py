@@ -1,4 +1,4 @@
-def partition(arr, low, high):
+def partition(arr: list[int], low: int, high: int) -> int:
     pivot = arr[high]
     p_index = low
 
@@ -15,7 +15,7 @@ def partition(arr, low, high):
     return p_index
 
 
-def quick_sort(arr, low, high):
+def quick_sort(arr: list[int], low: int, high: int) -> None:
     # Similar approach to merge sort
     if low < high:
         # Get partition index
