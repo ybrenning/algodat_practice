@@ -33,8 +33,8 @@ bool has_vertex(graph_t *graph, unsigned int vertex);
 bool has_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
 bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
-void dgraph_dfs(graph_t *graph, unsigned int vertex);
-void dgraph_bfs(graph_t *graph, unsigned int vertex);
+void graph_dfs(graph_t *graph, unsigned int vertex);
+void graph_bfs(graph_t *graph, unsigned int vertex);
 void graph_print_list(graph_t *graph);
 
 // Tests

@@ -119,64 +119,60 @@ bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int verte
     return retval;
 }
 
-void dgraph_dfs(graph_t *graph, unsigned int vertex) {
-    if (graph->directed) {
-        bool visited[graph->vertices];
+void graph_dfs(graph_t *graph, unsigned int vertex) {
+    bool visited[graph->vertices];
 
-        // Implemented using stack data structure
-        // e.g. recursion is another possible solution
-        int top = -1;
-        unsigned int stack[graph->vertices];
-        stack[++top] = vertex;
+    // Implemented using stack data structure
+    // e.g. recursion is another possible solution
+    int top = -1;
+    unsigned int stack[graph->vertices];
+    stack[++top] = vertex;
 
-        // While stack is not empty
-        while (top != -1) {
-            // Visit the top element of the stack
-            unsigned int curr_vertex = stack[top--];
-            visited[vertex] = true;
-            printf("%d ", curr_vertex);
+    // While stack is not empty
+    while (top != -1) {
+        // Visit the top element of the stack
+        unsigned int curr_vertex = stack[top--];
+        visited[curr_vertex] = true;
+        printf("%d ", curr_vertex);
 
-            // Add all unvisited targets to top of stack
-            node_t *curr_node = graph->list[curr_vertex].head;
-            while (curr_node != NULL) {
-                if (!visited[curr_node->val])
-                    stack[++top] = curr_node->val;
-                curr_node = curr_node->next;
-            }
+        // Add all unvisited targets to top of stack
+        node_t *curr_node = graph->list[curr_vertex].head;
+        while (curr_node != NULL) {
+            if (!visited[curr_node->val])
+                stack[++top] = curr_node->val;
+            curr_node = curr_node->next;
         }
-
-        printf("\n");
     }
+
+    printf("\n");
 }
 
-void dgraph_bfs(graph_t *graph, unsigned int vertex) {
-    if (graph->directed) {
-        bool visited[graph->vertices];
+void graph_bfs(graph_t *graph, unsigned int vertex) {
+    bool visited[graph->vertices];
 
-        // Implemented using queue data structure
-        int front = 0;
-        int rear = 0;
-        unsigned int queue[graph->vertices];
-        queue[rear++] = vertex;
+    // Implemented using queue data structure
+    int front = 0;
+    int rear = 0;
+    unsigned int queue[graph->vertices];
+    queue[rear++] = vertex;
 
-        // While queue is not empty
-        while (front != rear) {
-            // Visit the first node in the queue
-            unsigned int curr_vertex = queue[front++];
-            visited[curr_vertex] = true;
-            printf("%d ", curr_vertex);
+    // While queue is not empty
+    while (front != rear) {
+        // Visit the first node in the queue
+        unsigned int curr_vertex = queue[front++];
+        visited[curr_vertex] = true;
+        printf("%d ", curr_vertex);
 
-            // Add all unvisited targets to queue
-            node_t *curr_node = graph->list[curr_vertex].head;
-            while (curr_node != NULL) {
-                if (!visited[curr_node->val])
-                    queue[rear++] = curr_node->val;
-                curr_node = curr_node->next;
-            }
+        // Add all unvisited targets to queue
+        node_t *curr_node = graph->list[curr_vertex].head;
+        while (curr_node != NULL) {
+            if (!visited[curr_node->val])
+                queue[rear++] = curr_node->val;
+            curr_node = curr_node->next;
         }
-
-        printf("\n");
     }
+
+    printf("\n");
 }
 
 void graph_print_list(graph_t *graph) {
