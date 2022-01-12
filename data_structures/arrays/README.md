@@ -19,4 +19,4 @@ Time complexities:
 Space complexity: **O(n)**
 
 > Dynamic arrays allow for fast random read access, but adding or removing from anywhere but
-> the back of the array requires shifting all other elements over.
+> the back of the array requires shifting other elements over.
