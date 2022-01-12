@@ -31,4 +31,4 @@ A heap is a complete binary tree that satisfies the so-called _heap property_ :
 * [Simple Snippets](https://youtu.be/86mQ1gD3Zgg) (Video)
 
 > Heaps are useful for implementing priority queues and in algorithms such as
-> Dijsktra's algorithm and [Heap Sort](https://github.com/ybrenning/algodat_practice/tree/master/algorithms/sorting).
+> Dijkstra's algorithm and [Heap Sort](https://github.com/ybrenning/algodat_practice/tree/master/algorithms/sorting).
