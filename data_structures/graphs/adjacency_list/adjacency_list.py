@@ -10,7 +10,7 @@ class Node:
 
 
 class Graph:
-    def __init__(self, directed=True, vertices=5) -> None:
+    def __init__(self, directed: bool =True, vertices: int =5) -> None:
         self.directed = directed
         self.vertices = vertices
         self.edges: list[Node | None] = [None] * vertices
@@ -131,6 +131,42 @@ class Graph:
 
         print("\n")
 
+    def shortest_paths(self, start):
+        path = [None] * self.vertices
+        distance = [-1] * self.vertices
+
+        path[start] = start
+        distance[start] = 0
+
+        queue = [start]
+
+        while len(queue) > 0:
+            size = len(queue)
+
+            while size > 0:
+                vertex = queue.pop(0)
+
+                curr_node = self.edges[vertex]
+                while curr_node is not None:
+                    if distance[curr_node.val] == -1:
+                        distance[curr_node.val] = distance[vertex] + 1
+                        path[curr_node.val] = vertex
+                        queue.append(curr_node.val)
+
+                    curr_node = curr_node.next
+
+                size -= 1
+
+            print(f"Distance from node {start} to...")
+            for i in range(0, self.vertices):
+                print(f"{i} is {distance[i]} via path {path[i]}")
+
+            print("\n")
+
+
+
+
+
     def __str__(self) -> str:
         output = ""
         for i in range(0, self.vertices):
@@ -165,6 +201,7 @@ def main():
 
     graph.dfs(0)
     graph.bfs(0)
+    graph.shortest_paths(0)
 
     graph.delete_edge(3, 1)
     graph.delete_edge(0, 2)
