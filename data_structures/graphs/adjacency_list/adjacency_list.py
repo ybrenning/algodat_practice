@@ -92,10 +92,10 @@ class Graph:
         """
         visited = [False] * self.vertices
         stack = [vertex]
+        visited[vertex] = True
 
         while len(stack) > 0:
             curr_vertex = stack.pop()
-            visited[curr_vertex] = True
             print(curr_vertex, end=" ")
 
             # Add all unvisited targets to top of stack
@@ -103,12 +103,33 @@ class Graph:
             while curr_node is not None:
                 if not visited[curr_node.val]:
                     stack.append(curr_node.val)
+                    visited[curr_node.val] = True
                 curr_node = curr_node.next
 
         print("\n")
 
     def bfs(self, vertex: int) -> None:
-        pass
+        """
+        Breadth-First-Search and print the graph from a specific vertex
+        :param vertex: starting point
+        :return: None
+        """
+        visited = [False] * self.vertices
+        queue = [vertex]
+        visited[vertex] = True
+
+        while len(queue) > 0:
+            curr_vertex = queue.pop(0)
+            print(curr_vertex, end=" ")
+
+            curr_node = self.edges[curr_vertex]
+            while curr_node is not None:
+                if not visited[curr_node.val]:
+                    queue.append(curr_node.val)
+                    visited[curr_node.val] = True
+                curr_node = curr_node.next
+
+        print("\n")
 
     def __str__(self) -> str:
         output = ""
@@ -143,6 +164,7 @@ def main():
     graph.add_edge(4, 3)
 
     graph.dfs(0)
+    graph.bfs(0)
 
     graph.delete_edge(3, 1)
     graph.delete_edge(0, 2)

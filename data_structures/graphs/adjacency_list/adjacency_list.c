@@ -127,19 +127,22 @@ void graph_dfs(graph_t *graph, unsigned int vertex) {
     int top = -1;
     unsigned int stack[graph->vertices];
     stack[++top] = vertex;
+    visited[vertex] = true;
 
     // While stack is not empty
     while (top != -1) {
         // Visit the top element of the stack
         unsigned int curr_vertex = stack[top--];
-        visited[curr_vertex] = true;
         printf("%d ", curr_vertex);
 
         // Add all unvisited targets to top of stack
         node_t *curr_node = graph->list[curr_vertex].head;
         while (curr_node != NULL) {
-            if (!visited[curr_node->val])
+            if (!visited[curr_node->val]) {
                 stack[++top] = curr_node->val;
+                visited[curr_node->val] = true;
+            }
+
             curr_node = curr_node->next;
         }
     }
@@ -155,19 +158,22 @@ void graph_bfs(graph_t *graph, unsigned int vertex) {
     int rear = 0;
     unsigned int queue[graph->vertices];
     queue[rear++] = vertex;
+    visited[vertex] = true;
 
     // While queue is not empty
     while (front != rear) {
         // Visit the first node in the queue
         unsigned int curr_vertex = queue[front++];
-        visited[curr_vertex] = true;
         printf("%d ", curr_vertex);
 
         // Add all unvisited targets to queue
         node_t *curr_node = graph->list[curr_vertex].head;
         while (curr_node != NULL) {
-            if (!visited[curr_node->val])
+            if (!visited[curr_node->val]) {
                 queue[rear++] = curr_node->val;
+                visited[curr_node->val] = true;
+            }
+
             curr_node = curr_node->next;
         }
     }
