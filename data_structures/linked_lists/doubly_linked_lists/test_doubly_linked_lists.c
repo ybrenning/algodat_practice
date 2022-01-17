@@ -1,10 +1,12 @@
+#include <stdlib.h>
+#include <assert.h>
 #include "doubly_linked_lists.h"
 
 void test_dllist_init() {
     node_t *head = dllist_init(1);
     assert(head->val == 1);
     assert(head->next == NULL && head->prev == NULL);
-    assert(!is_empty(head));
+    assert(!dllist_isempty(head));
 
     dllist_destroy(&head);
 }
@@ -70,7 +72,7 @@ void test_dllist_insert() {
 void test_dllist_remove_first() {
     node_t *head = dllist_init(1);
     assert(dllist_remove_first(&head) == 1);
-    assert(is_empty(head));
+    assert(dllist_isempty(head));
 
     dllist_append(&head, 3);
     dllist_append(&head, 2);
@@ -84,7 +86,7 @@ void test_dllist_remove_first() {
 void test_dllist_remove_last() {
     node_t *head = dllist_init(1);
     assert(dllist_remove_last(&head) == 1);
-    assert(is_empty(head));
+    assert(dllist_isempty(head));
 
     dllist_append(&head, 1);
     dllist_append(&head, 2);
@@ -99,7 +101,7 @@ void test_dllist_delete() {
     node_t *head = dllist_init(1);
     assert(dllist_delete(&head, 1) == -1);
     assert(dllist_delete(&head, 0) == 1);
-    assert(is_empty(head));
+    assert(dllist_isempty(head));
 
     assert(dllist_delete(&head, 0) == -1);
 

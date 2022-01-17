@@ -4,17 +4,29 @@
  * @brief Implementation of singly linked lists
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "singly_linked_lists.h"
 
-node_t *llist_init(int val) {
+node_t *llist_init(const int val) {
     node_t *head = (node_t *) malloc(sizeof(node_t));
     assert(head);
     head->val = val;
     head->next = NULL;
 
     return head;
+}
+
+void llist_destroy(node_t **head) {
+    node_t *curr = *head;
+    while (curr != NULL) {
+        node_t *next = curr->next;
+        free(curr);
+        curr = next;
+    }
+
+    *head = NULL;
 }
 
 unsigned int llist_size(node_t *head) {
@@ -32,7 +44,7 @@ bool llist_isempty(node_t *head) {
     return (head == NULL);
 }
 
-int llist_get(node_t *head, int index) {
+int llist_get(node_t *head, const int index) {
     if (index < 0 || llist_isempty(head)) {
         return -1;
     }
@@ -50,7 +62,7 @@ int llist_get(node_t *head, int index) {
     return curr->val;
 }
 
-void llist_append(node_t **head, int val) {
+void llist_append(node_t **head, const int val) {
     if (llist_isempty(*head)) {
         *head = llist_init(val);
         return;
@@ -68,7 +80,7 @@ void llist_append(node_t **head, int val) {
     curr->next = new_node;
 }
 
-void llist_push(node_t **head, int val) {
+void llist_push(node_t **head, const int val) {
     node_t *new_node = (node_t *) malloc(sizeof(node_t));
     new_node->next = *head;
     new_node->val = val;
@@ -118,22 +130,7 @@ int llist_remove_first(node_t **head) {
     return retval;
 }
 
-void llist_print(node_t *head) {
-    if (llist_isempty(head)) {
-        printf("[ ]\n");
-    } else {
-        node_t *curr = head;
-        printf("[ ");
-        while (curr->next != NULL) {
-            printf("%d ", curr->val);
-            curr = curr->next;
-        }
-
-        printf("%d ]\n", curr->val);
-    }
-}
-
-bool llist_insert(node_t **head, int val, int index) {
+bool llist_insert(node_t **head, const int val, const int index) {
     if (index < 0 || llist_isempty(*head)) {
         return false;
     }
@@ -165,7 +162,7 @@ bool llist_insert(node_t **head, int val, int index) {
     return true;
 }
 
-int llist_delete_index(node_t **head, int index) {
+int llist_delete_index(node_t **head, const int index) {
     if (index < 0 || llist_isempty(*head)) {
         return -1;
     }
@@ -202,7 +199,7 @@ int llist_delete_index(node_t **head, int index) {
     return retval;
 }
 
-int llist_delete_val(node_t **head, int val) {
+int llist_delete_val(node_t **head, const int val) {
     if (llist_isempty(*head)) {
         return -1;
     }
@@ -221,7 +218,7 @@ int llist_delete_val(node_t **head, int val) {
     return -1;
 }
 
-int llist_find(node_t *head, int val) {
+int llist_find(node_t *head, const int val) {
     int index = 0;
     node_t *curr = head;
     while (curr != NULL) {
@@ -242,7 +239,8 @@ void llist_reverse(node_t **head) {
     }
 
     node_t *curr = *head;
-    node_t *next = NULL, *prev = NULL;
+    node_t *prev, *next;
+    prev = next = NULL;
     // Traverse entire list and reverse each pointer
     while (curr != NULL) {
         next = curr->next;
@@ -259,13 +257,17 @@ void llist_reverse(node_t **head) {
     // old_head -> node_1 -> ... -> prev -> old_tail -> NULL
 }
 
-void llist_destroy(node_t **head) {
-    node_t *curr = *head;
-    while (curr != NULL) {
-        node_t *next = curr->next;
-        free(curr);
-        curr = next;
-    }
+void llist_print(node_t *head) {
+    if (llist_isempty(head)) {
+        printf("[ ]\n");
+    } else {
+        node_t *curr = head;
+        printf("[ ");
+        while (curr->next != NULL) {
+            printf("%d ", curr->val);
+            curr = curr->next;
+        }
 
-    *head = NULL;
+        printf("%d ]\n", curr->val);
+    }
 }

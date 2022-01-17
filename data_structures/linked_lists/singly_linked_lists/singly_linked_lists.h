@@ -7,7 +7,6 @@
 #ifndef SINGLY_LINKED_LISTS_H
 #define SINGLY_LINKED_LISTS_H
 
-#include <stdio.h>
 #include <stdbool.h>
 
 typedef struct node_t {
@@ -15,7 +14,7 @@ typedef struct node_t {
     struct node_t *next;
 } node_t;
 
-// Initialize Linked List
+// Initialize Singly Linked List
 node_t *llist_init(int val);
 // Deallocates llist memory
 void llist_destroy(node_t **head);
