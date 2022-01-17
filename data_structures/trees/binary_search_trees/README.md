@@ -12,7 +12,7 @@ Time complexities
 
 Space complexity: **O(n)**
 
-> To keep the height _h_ low, we can use self-balancing BSTs such as AVL Trees
+> To keep the height _h_  low, we can use self-balancing BSTs such as AVL Trees
 > and Red Black Trees. These maintain a height of log n and therefore all of the 
 > complexities above become **O(log n)**.
 
