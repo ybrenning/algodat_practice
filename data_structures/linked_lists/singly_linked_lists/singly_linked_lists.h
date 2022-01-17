@@ -8,9 +8,7 @@
 #define SINGLY_LINKED_LISTS_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <assert.h>
 
 typedef struct node_t {
     int val;
@@ -22,7 +20,7 @@ node_t *llist_init(int val);
 // Deallocates llist memory
 void llist_destroy(node_t **head);
 // Return number of elems in llist
-int llist_size(node_t *head);
+unsigned int llist_size(node_t *head);
 // Check if llist is empty
 bool llist_isempty(node_t *head);
 // Get val of node at index
@@ -36,7 +34,7 @@ int llist_remove_last(node_t **head);
 // Remove first node of llist
 int llist_remove_first(node_t **head);
 // Insert node at index
-void llist_insert(node_t **head, int val, int index);
+bool llist_insert(node_t **head, int val, int index);
 // Remove node at index
 int llist_delete_index(node_t **head, int index);
 // Remove first node with value

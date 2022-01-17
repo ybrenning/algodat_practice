@@ -1,9 +1,12 @@
+#include <stdlib.h>
+#include <assert.h>
 #include "singly_linked_lists.h"
 
 void test_llist_init() {
     node_t *head = llist_init(1);
     assert(head->val == 1);
     assert(head->next == NULL);
+
     llist_destroy(&head);
 }
 
