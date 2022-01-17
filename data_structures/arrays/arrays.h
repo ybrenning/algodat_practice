@@ -8,45 +8,44 @@
 #define ARRAYS_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <assert.h>
 
-#define DEF_CAPACITY 16
-#define RESIZE_FACTOR 2
+#define DEF_CAPACITY ((size_t) 1 << 4)
+#define RESIZE_FACTOR (1 << 1)
 
 typedef struct dynamic_array {
-    int size;
-    int capacity;
+    size_t size;
+    size_t capacity;
     int *data;
-} DArray;
+} darray_t;
 
-// initialize the capacity of the darray
-int init_capacity(int capacity);
-// Grow the capacity based on the RESIZE_FACTOR
-int darray_grow(int capacity);
-// Shrink the capacity based on the RESIZE_FACTOR
-int darray_shrink(int capacity);
+// Initialize the capacity of the darray
+size_t init_capacity(int capacity);
+// Grow the capacity based on RESIZE_FACTOR
+size_t darray_grow(size_t capacity);
+// Shrink the capacity based on RESIZE_FACTOR
+size_t darray_shrink(size_t capacity);
+
 // Initialize the darray
-DArray *darray_init(int capacity);
+darray_t *darray_init(int capacity);
 // Free darray memory
-void darray_destroy(DArray **darray);
+void darray_destroy(darray_t **darray);
 // Check if the darray is empty
-bool darray_isempty(DArray *darray);
+bool darray_isempty(darray_t *darray);
 // Get value at specific index in darray
-int darray_get(DArray *darray, int index);
+int darray_get(darray_t *darray, int index);
 // Push elem to the end of the darray
-void darray_push(DArray *darray, int val);
-// Remove last elem of the darray
-int darray_pop(DArray *darray);
+void darray_push(darray_t *darray, int val);
+// Remove and return last elem of the darray
+int darray_pop(darray_t *darray);
 // Insert elem at index in darray
-void darray_insert(DArray *darray, int val, int index);
-// Delete elem at index in darray
-int darray_delete(DArray *darray, int index);
+bool darray_insert(darray_t *darray, int val, int index);
+// Delete and return elem at index in darray
+int darray_delete(darray_t *darray, int index);
 // Print content of darray onto console
-void darray_print(DArray *darray);
+void darray_print(darray_t *darray);
 // Linear search for val in the darray
-int darray_find(DArray *darray, int val);
+int darray_find(darray_t *darray, int val);
 
 // Tests
 void test_darray_init();
