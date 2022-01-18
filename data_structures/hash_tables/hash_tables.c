@@ -4,6 +4,10 @@
  * @brief Implementation of simple hash table with linear probing
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
 #include "hash_tables.h"
 
 ht_t *ht_init() {
@@ -49,7 +53,7 @@ void ht_destroy(ht_t **hash_table) {
     *hash_table = NULL;
 }
 
-int ht_hash(const char *key, const int m) {
+unsigned int ht_hash(const char *key, const int m) {
     int value = 0;
     unsigned int i = 0;
     while (key[i] != '\0') {
@@ -61,7 +65,7 @@ int ht_hash(const char *key, const int m) {
 
 void ht_add(ht_t *hash_table, entry_t *entry) {
     unsigned int i = 0;
-    int hash = ht_hash(entry->key, MAX_SIZE);
+    unsigned int hash = ht_hash(entry->key, MAX_SIZE);
 
     // Linear probing (if entry is not null, check next index)
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
@@ -74,17 +78,18 @@ void ht_add(ht_t *hash_table, entry_t *entry) {
         i++;
     }
 
-    if (hash_table->entries[(hash + i) % MAX_SIZE] == NULL)
+    if (hash_table->entries[(hash + i) % MAX_SIZE] == NULL) {
         hash_table->entries[(hash + i) % MAX_SIZE] = entry;
-    else return;
+    }
 }
 
 char *ht_get(ht_t *hash_table, const char *key) {
     unsigned int i = 0;
-    int hash = ht_hash(key, MAX_SIZE);
+    unsigned int hash = ht_hash(key, MAX_SIZE);
     while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-        if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0)
+        if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0) {
             return hash_table->entries[(hash + i) % MAX_SIZE]->value;
+        }
 
         i++;
     }
@@ -97,27 +102,34 @@ bool ht_key_exists(ht_t *hash_table, const char *key) {
     return (value != NULL);
 }
 
-void ht_remove_key(ht_t *hash_table, const char *key) {
+bool ht_remove_key(ht_t *hash_table, const char *key) {
     if (ht_key_exists(hash_table, key)) {
         unsigned int i = 0;
-        int hash = ht_hash(key, MAX_SIZE);
+        unsigned int hash = ht_hash(key, MAX_SIZE);
+
         while (hash_table->entries[(hash + i) % MAX_SIZE] != NULL && i < MAX_SIZE) {
-            if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0)
+            if (strcmp(hash_table->entries[(hash + i) % MAX_SIZE]->key, key) == 0) {
                 hash_table->entries[(hash + i) % MAX_SIZE] = NULL;
+            }
 
             i++;
         }
+
+        return true;
     }
+
+    return false;
 }
 
 void ht_print(ht_t *hash_table) {
     printf("\n");
 
     for (int i = 0; i < MAX_SIZE; i++) {
-        if (hash_table->entries[i] == NULL)
+        if (hash_table->entries[i] == NULL) {
             printf("%d : \n", i + 1);
-        else
+        } else {
             printf("%s : %s\n", hash_table->entries[i]->key, hash_table->entries[i]->value);
+        }
     }
 
     printf("\n");
