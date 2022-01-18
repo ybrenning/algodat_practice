@@ -4,6 +4,9 @@
  * @brief Implementation of the queue data structure using arrays
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "queue_array.h"
 
 queue_t *queue_init() {
@@ -26,43 +29,48 @@ bool queue_isempty(queue_t *queue) {
 }
 
 bool queue_isfull(queue_t *queue) {
-    return (queue->rear == MAX_SIZE - 1);
+    return (queue->rear >= MAX_SIZE - 1);
 }
 
-void enqueue(queue_t *queue, int val) {
+bool enqueue(queue_t *queue, int val) {
+    if (queue_isfull(queue)) {
+        return false;
+    }
+
     // If the queue is empty, we move the front "pointer"
     // to the first elem of the queue
     if (queue_isempty(queue)) {
         queue->front++;
         queue->rear++;
         queue->data[queue->front] = val;
-    } else if (!queue_isfull(queue)) {
+    } else {
         // We move the rear pointer to
         // the next elem and insert the value
         queue->rear++;
         queue->data[queue->rear] = val;
     }
+
+    return true;
 }
 
 int dequeue(queue_t *queue) {
     int retval = -1;
-    if (queue_isempty(queue))
-        return retval;
-    else {
+
+    if (!queue_isempty(queue)) {
         retval = queue->data[queue->front];
         // Check if front and rear pointer are on the same elem
         // This means the queue only contains one elem
         if (queue->front == queue->rear) {
             queue->front = -1;
             queue->rear = -1;
-        // Otherwise, move the front pointer along to the next elem
+            // Otherwise, move the front pointer along to the next elem
         } else {
             queue->data[queue->front] = EMPTY_SLOT;
             queue->front++;
         }
-
-        return retval;
     }
+
+    return retval;
 }
 
 void queue_print(queue_t *queue) {

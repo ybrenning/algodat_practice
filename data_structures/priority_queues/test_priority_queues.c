@@ -1,3 +1,5 @@
+#include <assert.h>
+#include <limits.h>
 #include "priority_queues.h"
 
 void test_heap_init() {
@@ -6,12 +8,12 @@ void test_heap_init() {
     assert(heap->size == 0);
     assert(heap->capacity == MAX_SIZE);
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void test_heap_get_max() {
     max_heap_t *heap = heap_init();
-    assert(heap_get_max(heap) == -1);
+    assert(heap_get_max(heap) == INT_MAX);
 
     heap->data[0] = 1;
     heap->size++;
@@ -22,7 +24,7 @@ void test_heap_get_max() {
     heap->size++;
     assert(heap_get_max(heap) == 2);
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void test_heap_get_size() {
@@ -35,7 +37,7 @@ void test_heap_get_size() {
     heap_insert(heap, 2);
     assert(heap_get_size(heap) == 2);
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void test_heap_is_empty() {
@@ -45,7 +47,7 @@ void test_heap_is_empty() {
     heap_insert(heap, 1);
     assert(!heap_is_empty(heap));
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void test_heap_insert() {
@@ -60,7 +62,7 @@ void test_heap_insert() {
     assert(heap->data[0] == 3);
     assert(heap->data[1] == 1);
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void test_heap_extract_max() {
@@ -78,7 +80,7 @@ void test_heap_extract_max() {
     assert(heap_get_size(heap) == 2);
     assert(heap_extract_max(heap) == 3);
 
-    heap_destroy(heap);
+    heap_destroy(&heap);
 }
 
 void run_all_tests() {

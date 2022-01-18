@@ -7,34 +7,31 @@
 #ifndef PRIORITY_QUEUES_H
 #define PRIORITY_QUEUES_H
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <limits.h>
-#include <assert.h>
 
-#define MAX_SIZE 1000
+#define MAX_SIZE ((size_t) 1 << 6)
 
 typedef struct max_heap_t {
-    unsigned int size;
-    unsigned int capacity;
+    size_t size;
+    size_t capacity;
     int data[MAX_SIZE];
 } max_heap_t;
 
 max_heap_t *heap_init();
-void heap_destroy(max_heap_t *heap);
+void heap_destroy(max_heap_t **heap);
 int heap_get_max(max_heap_t *heap);
-unsigned int heap_get_size(max_heap_t *heap);
+size_t heap_get_size(max_heap_t *heap);
 bool heap_is_empty(max_heap_t *heap);
-void heap_insert(max_heap_t *heap, int val);
+bool heap_insert(max_heap_t *heap, int val);
 int heap_extract_max(max_heap_t *heap);
 
 // Moves item from bottom of heap upwards
-// until heap is rearranged - used for insertions
+// until heap is rearranged. Used for insertions.
 void heapify_up(max_heap_t *heap);
 // Moves item from top of heap downwards
-// until heap is rearranged - used for deletion
-// of top heap element
+// until heap is rearranged.
+// Used for deletion of top heap element.
 void heapify_down(max_heap_t *heap);
 
 // Testing

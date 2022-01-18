@@ -4,6 +4,9 @@
  * @brief Implementation of priority queues using max heap
  */
 
+#include <stdio.h>
+#include <assert.h>
+#include <limits.h>
 #include "priority_queues.h"
 
 void swap(int *item_1, int *item_2) {
@@ -12,11 +15,11 @@ void swap(int *item_1, int *item_2) {
     *item_2 = temp;
 }
 
-unsigned int get_left_child_index(unsigned int index) {
+int get_left_child_index(int index) {
     return (index * 2) + 1;
 }
 
-unsigned int get_right_child_index(unsigned int index) {
+int get_right_child_index(int index) {
     return (index * 2) + 2;
 }
 
@@ -24,27 +27,27 @@ int get_parent_index(int index) {
     return (index - 1) / 2;
 }
 
-bool has_left_child(max_heap_t *heap, unsigned int index) {
-    return get_left_child_index(index) < heap->size;
+bool has_left_child(max_heap_t *heap, int index) {
+    return (get_left_child_index(index) < heap->size);
 }
 
-bool has_right_child(max_heap_t *heap, unsigned int index) {
-    return get_right_child_index(index) < heap->size;
+bool has_right_child(max_heap_t *heap, int index) {
+    return (get_right_child_index(index) < heap->size);
 }
 
 bool has_parent(max_heap_t *heap, int index) {
-    return get_parent_index(index) >= 0;
+    return (0 <= get_parent_index(index) && get_parent_index(index) < heap->size);
 }
 
-int get_left_child(max_heap_t *heap, unsigned int index) {
+int get_left_child(max_heap_t *heap, int index) {
     return heap->data[get_left_child_index(index)];
 }
 
-int get_right_child(max_heap_t *heap, unsigned int index) {
+int get_right_child(max_heap_t *heap, int index) {
     return heap->data[get_right_child_index(index)];
 }
 
-int get_parent(max_heap_t *heap, unsigned int index) {
+int get_parent(max_heap_t *heap, int index) {
     return heap->data[get_parent_index(index)];
 }
 
@@ -61,19 +64,23 @@ void heapify_up(max_heap_t *heap) {
 }
 
 void heapify_down(max_heap_t *heap) {
-    unsigned int i = 0;
-    // While current index has a left child
+    int i = 0;
+    // While current index (e.g. node) has a left child
     while (has_left_child(heap, i)) {
         // Get the index of the larger child
-        unsigned int larger_child_index = get_left_child_index(i);
-        if (has_right_child(heap, i) && get_right_child(heap, i) > get_left_child(heap, i))
+        int larger_child_index = get_left_child_index(i);
+        if (has_right_child(heap, i) && get_right_child(heap, i) > get_left_child(heap, i)) {
             larger_child_index = get_right_child_index(i);
+        }
 
-        // If our current element is larger than the larger child,
-        // then we have the correct placement in the heap
-        if (heap->data[i] > heap->data[larger_child_index]) break;
-        // Otherwise, swap the current element with the larger child
-        else swap(&heap->data[i], &heap->data[larger_child_index]);
+        if (heap->data[i] > heap->data[larger_child_index]) {
+            // If our current element is larger than the larger child,
+            // then we have the correct placement in the heap
+            break;
+        }else {
+            // Otherwise, swap the current element with the larger child
+            swap(&heap->data[i], &heap->data[larger_child_index]);
+        }
 
         i = larger_child_index;
     }
@@ -88,25 +95,31 @@ max_heap_t *heap_init() {
     return heap;
 }
 
-void heap_destroy(max_heap_t *heap) {
-    free(heap);
+void heap_destroy(max_heap_t **heap) {
+    free(*heap);
+    *heap = NULL;
 }
 
 int heap_get_max(max_heap_t *heap) {
-    if (heap_is_empty(heap)) return -1;
-    else return heap->data[0];
+    if (heap_is_empty(heap)) {
+        return INT_MAX;
+    } else {
+        return heap->data[0];
+    }
 }
 
-unsigned int heap_get_size(max_heap_t *heap) {
+size_t heap_get_size(max_heap_t *heap) {
     return heap->size;
 }
 
 bool heap_is_empty(max_heap_t *heap) {
-    return heap_get_size(heap) == 0;
+    return (heap_get_size(heap) == 0);
 }
 
-void heap_insert(max_heap_t *heap, int val) {
-    if (heap->size == heap->capacity) return;
+bool heap_insert(max_heap_t *heap, int val) {
+    if (heap->size == heap->capacity) {
+        return false;
+    }
 
     // Insert the new val at the end
     // and increase heap size
@@ -114,10 +127,13 @@ void heap_insert(max_heap_t *heap, int val) {
 
     // Rearrange the heap
     heapify_up(heap);
+    return true;
 }
 
 int heap_extract_max(max_heap_t *heap) {
-    if (heap_is_empty(heap)) return INT_MAX;
+    if (heap_is_empty(heap)) {
+        return INT_MAX;
+    }
 
     int retval = heap->data[0];
     heap->data[0] = heap->data[heap->size - 1];

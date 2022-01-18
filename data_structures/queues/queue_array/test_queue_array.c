@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <assert.h>
 #include "queue_array.h"
 
 void test_queue_init() {
@@ -52,7 +54,7 @@ void test_enqueue() {
     assert(my_queue->data[my_queue->rear] == MAX_SIZE);
     assert(my_queue->data[my_queue->front] == 1);
 
-    enqueue(my_queue, MAX_SIZE + 1);
+    assert(!enqueue(my_queue, MAX_SIZE + 1));
     assert(my_queue->data[my_queue->rear] == MAX_SIZE);
 
     queue_destroy(&my_queue);

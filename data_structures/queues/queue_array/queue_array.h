@@ -7,12 +7,9 @@
 #ifndef QUEUE_ARRAY_H
 #define QUEUE_ARRAY_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <assert.h>
 
-#define MAX_SIZE 10
+#define MAX_SIZE (1 << 4)
 #define EMPTY_SLOT 0
 
 typedef struct queue_t {
@@ -21,18 +18,16 @@ typedef struct queue_t {
     int rear;
 } queue_t;
 
-// Check if pointer address is valid
-void check_address(void *address);
 // Initialize queue pointer
 queue_t *queue_init();
-// Free queue memory
+// Deallocate queue memory
 void queue_destroy(queue_t **queue);
 // Check if queue is empty
 bool queue_isempty(queue_t *queue);
 // Check if queue is full
 bool queue_isfull(queue_t *queue);
 // Place value at end of queue
-void enqueue(queue_t *queue, int val);
+bool enqueue(queue_t *queue, int val);
 // Remove first value in queue
 int dequeue(queue_t *queue);
 // Print content of queue onto console
