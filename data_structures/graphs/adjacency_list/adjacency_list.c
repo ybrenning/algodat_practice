@@ -4,6 +4,9 @@
  * @brief Implementation of graphs using adjacency list
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "adjacency_list.h"
 
 graph_t *graph_init(bool directed, int vertices) {
@@ -38,14 +41,17 @@ void graph_destroy(graph_t **graph) {
 }
 
 bool has_vertex(graph_t *graph, unsigned int vertex) {
-    return vertex >= 0 && vertex < graph->vertices;
+    return (vertex >= 0 && vertex < graph->vertices);
 }
 
 bool has_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
     if (has_vertex(graph, vertex_1) && has_vertex(graph, vertex_2) && graph->list[vertex_1].head != NULL) {
         node_t *curr = graph->list[vertex_1].head;
         while (curr != NULL) {
-            if (curr->val == vertex_2) return true;
+            if (curr->val == vertex_2) {
+                return true;
+            }
+
             curr = curr->next;
         }
 
@@ -74,12 +80,15 @@ void append_node(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
 
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
     if (has_edge(graph, vertex_1, vertex_2)
-    || !has_vertex(graph, vertex_1) ||!has_vertex(graph, vertex_2))
+    || !has_vertex(graph, vertex_1) ||!has_vertex(graph, vertex_2)) {
         return false;
+    }
 
     append_node(graph, vertex_1, vertex_2);
-    if (!graph->directed)
+
+    if (!graph->directed) {
         append_node(graph, vertex_2, vertex_1);
+    }
 
     return true;
 }
@@ -98,8 +107,9 @@ bool delete_node(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
             temp = temp->next;
         }
 
-        if (temp == NULL)
+        if (temp == NULL) {
             return false;
+        }
 
         prev->next = temp->next;
         free(temp);
@@ -109,12 +119,14 @@ bool delete_node(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
 }
 
 bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2) {
-    if (!has_edge(graph, vertex_1, vertex_2))
+    if (!has_edge(graph, vertex_1, vertex_2)) {
         return false;
+    }
 
     bool retval = delete_node(graph, vertex_1, vertex_2);
-    if (!graph->directed)
+    if (!graph->directed) {
         retval = delete_node(graph, vertex_2, vertex_1);
+    }
 
     return retval;
 }
@@ -189,7 +201,10 @@ void graph_print_list(graph_t *graph) {
         while (curr != NULL) {
             printf("%d) ", curr->val);
             curr = curr->next;
-            if (curr) printf("(%d -> ", i);
+
+            if (curr != NULL) {
+                printf("(%d -> ", i);
+            }
         }
 
         printf("\n");

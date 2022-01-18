@@ -7,23 +7,20 @@
 #ifndef ADJACENCY_MATRIX_H
 #define ADJACENCY_MATRIX_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <assert.h>
 
-typedef struct graph_t {
+typedef struct am_graph_t {
     bool directed;
     int vertices;
     bool **edges;
-} graph_t;
+} am_graph_t;
 
-graph_t *graph_init(bool directed, int vertices);
-void graph_destroy(graph_t **graph);
-bool vertex_exists(graph_t *graph, unsigned int vertex);
-bool edge_exists(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
-bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
-bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
-void graph_print(graph_t *graph);
+am_graph_t *am_graph_init(bool directed, int vertices);
+void am_graph_destroy(am_graph_t **graph);
+bool am_graph_vertex_exists(am_graph_t *graph, unsigned int vertex);
+bool am_graph_edge_exists(am_graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+bool am_graph_add_edge(am_graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+bool am_graph_delete_edge(am_graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+void am_graph_print(am_graph_t *graph);
 
 #endif //ADJACENCY_MATRIX_H

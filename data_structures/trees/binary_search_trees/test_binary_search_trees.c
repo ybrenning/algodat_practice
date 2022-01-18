@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <assert.h>
 #include "binary_search_trees.h"
 
 void test_bst_insert() {

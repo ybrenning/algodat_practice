@@ -7,10 +7,7 @@
 #ifndef ADJACENCY_LIST_H
 #define ADJACENCY_LIST_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <assert.h>
 
 typedef struct graph_t {
     bool directed;
@@ -27,14 +24,23 @@ typedef struct node_t {
     struct node_t *next;
 } node_t;
 
+// Initialize new graph
 graph_t *graph_init(bool directed, int vertices);
+// Deallocate memory of graph
 void graph_destroy(graph_t **graph);
+// Check if graph has vertex
 bool has_vertex(graph_t *graph, unsigned int vertex);
+// Check if graph has edge vertex_1 -> vertex_2
 bool has_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+// Add edge to graph
 bool graph_add_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+// Delete edge from graph
 bool graph_delete_edge(graph_t *graph, unsigned int vertex_1, unsigned int vertex_2);
+// Depth-first search from vertex
 void graph_dfs(graph_t *graph, unsigned int vertex);
+// Breadth-first search from vertex
 void graph_bfs(graph_t *graph, unsigned int vertex);
+// Print adjacency list onto console
 void graph_print_list(graph_t *graph);
 
 // Tests

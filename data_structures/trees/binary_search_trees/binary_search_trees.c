@@ -4,6 +4,9 @@
  * @brief Implementation of binary search trees
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "binary_search_trees.h"
 
 bst_node_t *bst_insert(bst_node_t *root, const int val) {
@@ -24,7 +27,9 @@ bst_node_t *bst_insert(bst_node_t *root, const int val) {
 }
 
 void bst_destroy(bst_node_t *root) {
-    if (root == NULL) return;
+    if (root == NULL) {
+        return;
+    }
 
     bst_destroy(root->left);
     bst_destroy(root->right);
@@ -32,23 +37,28 @@ void bst_destroy(bst_node_t *root) {
 }
 
 unsigned int bst_node_count(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return 0;
-    else return 1 + bst_node_count(root->left) + bst_node_count(root->right);
+    } else {
+        return 1 + bst_node_count(root->left) + bst_node_count(root->right);
+    }
 }
 
 bool bst_is_val_in_tree(bst_node_t *root, const int val) {
-    if (root == NULL) return false;
-    else if (root->val == val) return true;
-    else {
+    if (root == NULL) {
+        return false;
+    } else if (root->val == val) {
+        return true;
+    } else {
         bst_is_val_in_tree(root->left, val);
         bst_is_val_in_tree(root->right, val);
     }
 }
 
 int bst_get_height(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return -1;
+    }
 
     int left_height = bst_get_height(root->left);
     int right_height = bst_get_height(root->right);
@@ -57,8 +67,9 @@ int bst_get_height(bst_node_t *root) {
 }
 
 int bst_get_min(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return -1;
+    }
 
     bst_node_t *curr = root;
     while (curr->left != NULL) {
@@ -69,8 +80,9 @@ int bst_get_min(bst_node_t *root) {
 }
 
 int bst_get_max(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return -1;
+    }
 
     bst_node_t *curr = root;
     while (curr->right != NULL) {
@@ -81,50 +93,57 @@ int bst_get_max(bst_node_t *root) {
 }
 
 bool bst_is_valid(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return true;
+    }
 
-    return (is_subtree_lesser(root->left, root->val)
-    && is_subtree_greater(root->right, root->val)
-    && bst_is_valid(root->left) && bst_is_valid(root->right));
+    return (
+            is_subtree_lesser(root->left, root->val)
+            && is_subtree_greater(root->right, root->val)
+            && bst_is_valid(root->left) && bst_is_valid(root->right)
+            );
 }
 
 bool is_subtree_greater(bst_node_t *root, const int val) {
-    if (root == NULL)
+    if (root == NULL) {
         return true;
+    }
 
-    return (root->val >= val
-    && is_subtree_greater(root->left, val)
-    && is_subtree_greater(root->right, val));
+    return (
+            root->val >= val
+            && is_subtree_greater(root->left, val)
+            && is_subtree_greater(root->right, val)
+            );
 }
 
 bool is_subtree_lesser(bst_node_t *root, const int val) {
-    if (root == NULL)
+    if (root == NULL) {
         return true;
+    }
 
-    return (root->val <= val
-    && is_subtree_lesser(root->left, val)
-    && is_subtree_lesser(root->right, val));
+    return (
+            root->val <= val && is_subtree_lesser(root->left, val)
+            && is_subtree_lesser(root->right, val)
+            );
 }
 
 bst_node_t *bst_delete_val(bst_node_t *root, const int val) {
-    if (root == NULL)
+    if (root == NULL) {
         return root;
-    else if (root->val > val)
+    } else if (root->val > val) {
         root->left = bst_delete_val(root->left, val);
-    else if (root->val < val)
+    } else if (root->val < val) {
         root->right = bst_delete_val(root->right, val);
+    }
 
     // Node has been found and will now be deleted
     else {
-
         // Case 1: node has no children
         if (root->left == NULL && root->right == NULL) {
             free(root);
             root = NULL;
             return root;
         }
-
         // Case 2: node has one child
         else if (root->left == NULL && root->right != NULL) {
             bst_node_t *temp = root;
@@ -136,7 +155,6 @@ bst_node_t *bst_delete_val(bst_node_t *root, const int val) {
             root = root->left;
             free(temp);
         }
-
         // Case 3: node has two children
         else {
             // Set our deleted node to the min node of the right subtree
@@ -156,16 +174,19 @@ int bst_get_successor(bst_node_t *root, const int val) {
 
     // Search the node in the tree - O(h)
     while (curr != NULL) {
-        if (val < curr->val)
+        if (val < curr->val) {
             curr = curr->left;
-        else if (val > curr->val)
+        } else if (val > curr->val) {
             curr = curr->right;
-        else break;
+        } else {
+            break;
+        }
     }
 
     // Check whether we could find the node with val
-    if (curr == NULL)
+    if (curr == NULL) {
         return -1;
+    }
 
     // Case 1: node has a right subtree - O(h)
     if (curr->right != NULL) {
@@ -196,24 +217,29 @@ int bst_get_successor(bst_node_t *root, const int val) {
             }
         }
 
-        if (successor)
+        if (successor != NULL) {
             return successor->val;
-        else return -1;
+        } else {
+            return -1;
+        }
     }
 }
 
 int bst_get_predecessor(bst_node_t *root, const int val) {
     bst_node_t *curr = root;
     while (curr != NULL) {
-        if (val < curr->val)
+        if (val < curr->val) {
             curr = curr->left;
-        else if (val > curr->val)
+        } else if (val > curr->val) {
             curr = curr->right;
-        else break;
+        } else {
+            break;
+        }
     }
 
-    if (curr == NULL)
+    if (curr == NULL) {
         return -1;
+    }
 
     // Case 1: curr has a left subtree
     if (curr->left != NULL) {
@@ -238,15 +264,17 @@ int bst_get_predecessor(bst_node_t *root, const int val) {
         }
     }
 
-    if (predecessor != NULL)
+    if (predecessor != NULL) {
         return predecessor->val;
-    else return -1;
+    } else {
+        return -1;
+    }
 }
 
 void bst_print_inorder(bst_node_t *root) {
-    if (root == NULL)
+    if (root == NULL) {
         return;
-    else {
+    } else {
         bst_print_inorder(root->left);
         printf("%d ", root->val);
         bst_print_inorder(root->right);

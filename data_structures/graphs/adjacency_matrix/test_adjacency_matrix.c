@@ -1,57 +1,58 @@
+#include <assert.h>
 #include "adjacency_matrix.h"
 
 void test_graph_init() {
-    graph_t *dgraph = graph_init(true, 4);
+    am_graph_t *dgraph = am_graph_init(true, 4);
     assert(dgraph->directed);
     assert(dgraph->vertices == 4);
 
-    graph_t *ugraph = graph_init(false, 4);
+    am_graph_t *ugraph = am_graph_init(false, 4);
     assert(!ugraph->directed);
     assert(ugraph->vertices == 4);
 
-    graph_destroy(&dgraph);
-    graph_destroy(&ugraph);
+    am_graph_destroy(&dgraph);
+    am_graph_destroy(&ugraph);
 }
 
 void test_graph_destroy() {
-    graph_t *graph = graph_init(true, 4);
+    am_graph_t *graph = am_graph_init(true, 4);
     assert(graph);
 
-    graph_destroy(&graph);
+    am_graph_destroy(&graph);
     assert(!graph);
 }
 
 void test_graph_add_edge() {
-    graph_t *dgraph = graph_init(true, 4);
-    graph_add_edge(dgraph, 0, 1);
-    assert(edge_exists(dgraph, 0, 1));
-    assert(!graph_add_edge(dgraph, 0, 5));
+    am_graph_t *dgraph = am_graph_init(true, 4);
+    am_graph_add_edge(dgraph, 0, 1);
+    assert(am_graph_edge_exists(dgraph, 0, 1));
+    assert(!am_graph_add_edge(dgraph, 0, 5));
 
-    graph_t *ugraph = graph_init(false, 4);
-    graph_add_edge(ugraph, 0, 1);
-    assert(edge_exists(ugraph, 0, 1));
-    assert(edge_exists(ugraph, 1, 0));
+    am_graph_t *ugraph = am_graph_init(false, 4);
+    am_graph_add_edge(ugraph, 0, 1);
+    assert(am_graph_edge_exists(ugraph, 0, 1));
+    assert(am_graph_edge_exists(ugraph, 1, 0));
 
-    graph_destroy(&dgraph);
-    graph_destroy(&ugraph);
+    am_graph_destroy(&dgraph);
+    am_graph_destroy(&ugraph);
 }
 
 void test_graph_delete_edge() {
-    graph_t *dgraph = graph_init(true, 4);
-    assert(!graph_delete_edge(dgraph, 0, 1));
+    am_graph_t *dgraph = am_graph_init(true, 4);
+    assert(!am_graph_delete_edge(dgraph, 0, 1));
 
-    graph_add_edge(dgraph, 0, 1);
-    assert(graph_delete_edge(dgraph, 0, 1));
-    assert(!edge_exists(dgraph, 0, 1));
+    am_graph_add_edge(dgraph, 0, 1);
+    assert(am_graph_delete_edge(dgraph, 0, 1));
+    assert(!am_graph_edge_exists(dgraph, 0, 1));
 
-    graph_t *ugraph = graph_init(false, 4);
-    graph_add_edge(ugraph, 0, 1);
-    assert(graph_delete_edge(ugraph, 0, 1));
-    assert(!edge_exists(ugraph, 0, 1));
-    assert(!edge_exists(ugraph, 1, 0));
+    am_graph_t *ugraph = am_graph_init(false, 4);
+    am_graph_add_edge(ugraph, 0, 1);
+    assert(am_graph_delete_edge(ugraph, 0, 1));
+    assert(!am_graph_edge_exists(ugraph, 0, 1));
+    assert(!am_graph_edge_exists(ugraph, 1, 0));
 
-    graph_destroy(&dgraph);
-    graph_destroy(&ugraph);
+    am_graph_destroy(&dgraph);
+    am_graph_destroy(&ugraph);
 }
 
 void run_all_tests() {

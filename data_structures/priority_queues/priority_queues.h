@@ -18,12 +18,19 @@ typedef struct max_heap_t {
     int data[MAX_SIZE];
 } max_heap_t;
 
+// Initialize new heap
 max_heap_t *heap_init();
+// Deallocate memory of heap
 void heap_destroy(max_heap_t **heap);
+// Get max value in heap
 int heap_get_max(max_heap_t *heap);
+// get size of heap
 size_t heap_get_size(max_heap_t *heap);
+// Check if heap is empty
 bool heap_is_empty(max_heap_t *heap);
+// Insert value into the heap
 bool heap_insert(max_heap_t *heap, int val);
+// Get max value (first value) of heap
 int heap_extract_max(max_heap_t *heap);
 
 // Moves item from bottom of heap upwards

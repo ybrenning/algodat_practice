@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <assert.h>
 #include "adjacency_list.h"
 
 void test_graph_init() {
