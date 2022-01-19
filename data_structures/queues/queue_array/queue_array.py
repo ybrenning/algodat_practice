@@ -2,12 +2,21 @@
 Implementation of queues using lists.
 """
 
+from __future__ import annotations
 from typing import Any
 
 
 class Queue:
     def __init__(self) -> None:
         self.queue: list[Any] = []
+
+    def __str__(self) -> str:
+        output = "[ "
+
+        for i in range(0, len(self.queue)):
+            output += f"{self.queue[i]} "
+
+        return output + "]"
 
     def is_empty(self) -> bool:
         return len(self.queue) == 0
@@ -18,14 +27,8 @@ class Queue:
     def dequeue(self) -> Any:
         if self.is_empty():
             raise IndexError("Dequeue from empty queue")
+
         return self.queue.pop(0)
-
-    def __str__(self) -> str:
-        output = "[ "
-        for i in range (0, len(self.queue)):
-            output += str(self.queue[i]) + " "
-
-        return output + "]"
 
 
 def main():
@@ -47,7 +50,7 @@ def main():
     my_queue.dequeue()
     print(my_queue)
 
-    print(my_queue.isempty())
+    print(my_queue.is_empty())
 
 
 if __name__ == "__main__":

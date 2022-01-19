@@ -2,6 +2,8 @@
 Implementation of priority queues using max heap.
 """
 
+from __future__ import annotations
+
 
 class MaxHeap:
     def __init__(self) -> None:
@@ -46,6 +48,12 @@ class MaxHeap:
         return len(self.data) == 0
 
     def insert(self, val: int) -> None:
+        """
+        Insert a new value into the heap
+        :param val: value to be inserted
+        :return: None
+        """
+
         self.data.append(val)
 
         # Heapify up: rearranges heap by moving
@@ -60,6 +68,7 @@ class MaxHeap:
         Remove the top (max) element from the heap
         :return: value of top element
         """
+
         if self.is_empty():
             raise IndexError("Extract from empty heap")
 
@@ -68,7 +77,7 @@ class MaxHeap:
         self.data[0] = self.data.pop()
 
         # Heapify down: rearranges heap by
-        # moving element from the top (front of list)  down
+        # moving element from the top (front of list) down
         i = 0
         while self.has_left_child(i):
             larger_child_index = self.get_left_child_index(i)
@@ -78,7 +87,8 @@ class MaxHeap:
             if self.data[i] > self.data[larger_child_index]:
                 break
             else:
-                self.swap(i, larger_child_index)
+                self.swap(i, larger_child_index)#
+
             i = larger_child_index
 
         return retval
