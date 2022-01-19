@@ -2,6 +2,8 @@
 Implementation of binary search trees.
 """
 
+from __future__ import annotations
+
 
 class Node:
     def __init__(self, val: int) -> None:
@@ -14,7 +16,7 @@ class BinarySearchTree:
     def __init__(self) -> None:
         self.root: Node | None = None
 
-    def insert_node(self, val: int) -> None:
+    def insert(self, val: int) -> None:
         if self.root is None:
             self.root = Node(val)
         else:
@@ -51,6 +53,7 @@ class BinarySearchTree:
         (Smallest to largest values)
         :return: None
         """
+
         if self.root is None:
             return
         else:
@@ -63,6 +66,7 @@ class BinarySearchTree:
         :param node: current node being printed
         :return: None
         """
+
         if node is None:
             return
         else:
@@ -78,6 +82,7 @@ class BinarySearchTree:
         most distant leaf node)
         :return: Height as integer
         """
+
         return self.__get_height(self.root)
 
     def __get_height(self, node: Node) -> int:
@@ -86,6 +91,7 @@ class BinarySearchTree:
         :param node: current node being traversed
         :return: Height as integer
         """
+
         if node is None:
             return -1
         # Check left and right trees for height and return highest
@@ -104,6 +110,7 @@ class BinarySearchTree:
         :param node: root of the tree or subtree
         :return: smallest value in subtree
         """
+
         curr = node
         while curr.left is not None:
             curr = curr.left
@@ -119,6 +126,7 @@ class BinarySearchTree:
         :param node: root of the tree or subtree
         :return: largest value in subtree
         """
+
         curr = node
         while curr is not None:
             curr = curr.right
@@ -130,6 +138,7 @@ class BinarySearchTree:
         :param val: value to search for
         :return: boolean
         """
+
         return self.__find(self.root, val)
 
     def __find(self, node: Node, val: int) -> bool:
@@ -139,6 +148,7 @@ class BinarySearchTree:
         :param val: value to search for
         :return: boolean
         """
+
         if node is None:
             return False
         elif node.val == val:
@@ -150,50 +160,62 @@ class BinarySearchTree:
 
     def is_valid(self) -> bool:
         """
-        Check if a BST is valid by definition
-        :return: boolean
+        Check if a BST is valid by [definition](https://en.wikipedia.org/wiki/Binary_search_tree#Definition)
+        :return: validity status
         """
+
         return self.__is_valid(self.root)
 
     def __is_valid(self, node: Node) -> bool:
         """
         Recursive function for the above implementation
         :param node: current node of which the subtrees will be checked
-        :return: boolean
+        :return: validity of current subtree
         """
+
         if node is None:
             return True
+
         # Check if the left and right subtrees are lesser and greater
         # (meaning the definition is true for the current node)
         # Then repeat this check for every node in the tree
-        return self.is_subtree_lesser(node.left, node.val) and self.is_subtree_greater(node.right, node.val) \
-               and self.__is_valid(node.left) and self.__is_valid(node.right)
+        return \
+            self.is_subtree_lesser(node.left, node.val) and self.is_subtree_greater(node.right, node.val) \
+            and self.__is_valid(node.left) and self.__is_valid(node.right)
 
     def is_subtree_greater(self, node: Node, val: int) -> bool:
         if node is None:
             return True
-        return node.val > val and self.is_subtree_greater(node.left, val) and self.is_subtree_greater(node.right, val)
+
+        return \
+            node.val > val \
+            and self.is_subtree_greater(node.left, val) and self.is_subtree_greater(node.right, val)
 
     def is_subtree_lesser(self, node: Node, val: int) -> bool:
         if node is None:
             return True
-        return node.val <= val and self.is_subtree_lesser(node.left, val) and self.is_subtree_lesser(node.right, val)
 
-    def delete_node(self, val: int) -> Node:
+        return \
+            node.val <= val \
+            and self.is_subtree_lesser(node.left, val) and self.is_subtree_lesser(node.right, val)
+
+    def delete(self, val: int) -> Node:
         """
         Remove a node from the tree
         :param val: value of node to be deleted
         :return: root of updated tree
         """
+
         return self.__delete_node(self.root, val)
 
-    def __delete_node(self, node: Node, val: int) -> Node:
+    def __delete_node(self, node: Node, val: int) -> Node | None:
         """
         Recursive function for the above implementation
         :param node: current node being checked
         :param val: value of node to be deleted
         :return: root of updated tree
         """
+
         if node is None:
             return node
         # Search the left subtree
@@ -216,6 +238,7 @@ class BinarySearchTree:
             # Case 3: Node with two children
             # Get the lowest value of our right subtree
             min_val = self.__get_min(node.right)
+
             # Set the new node to this lowest value
             # and remove the duplicate value from the right subtree
             node.val = min_val
@@ -229,8 +252,8 @@ class BinarySearchTree:
         :param val: value of node to get successor of
         :return: value of successor node
         """
-        curr = self.root
 
+        curr = self.root
         while curr is not None:
             if val < curr.val:
                 curr = curr.left
@@ -249,6 +272,7 @@ class BinarySearchTree:
             # Find the smallest value in the right subtree
             while temp.left is not None:
                 temp = temp.left
+
             return temp.val
 
         # Case 2: node has no right subtree
@@ -268,12 +292,12 @@ class BinarySearchTree:
                     # Our successor lies in the right subtree
                     ancestor = ancestor.right
 
-            if successor is not None:
-                return successor.val
-            else:
-                # If we tried to find the succ of
+            if successor is None:
+                # We tried to find the succ of
                 # our highest node in the BST
                 return -1
+            else:
+                return successor.val
 
     def get_predecessor(self, val: int) -> int:
         """
@@ -281,6 +305,7 @@ class BinarySearchTree:
         :param val: value of node to get predecessor of
         :return: value of predecessor node
         """
+
         curr = self.root
         while curr is not None:
             if val < curr.val:
@@ -299,6 +324,7 @@ class BinarySearchTree:
             temp = curr.left
             while temp.right is not None:
                 temp = temp.right
+
             return temp.val
 
         # Case 2: curr has no left subtree
@@ -312,10 +338,12 @@ class BinarySearchTree:
             else:
                 ancestor = ancestor.left
 
-        if predecessor is not None:
-            return predecessor.val
-        else:
+        if predecessor is None:
+            # We tried to find the pred
+            # of the minimum node
             return -1
+        else:
+            return predecessor.val
 
 
 def main():
@@ -329,21 +357,21 @@ def main():
     #            55   80
 
     bst = BinarySearchTree()
-    bst.insert_node(50)
-    bst.insert_node(40)
-    bst.insert_node(60)
-    bst.insert_node(80)
-    bst.insert_node(55)
+    bst.insert(50)
+    bst.insert(40)
+    bst.insert(60)
+    bst.insert(80)
+    bst.insert(55)
     bst.inorder_traversal()
 
     invalid_bst = BinarySearchTree()
-    invalid_bst.insert_node(20)
+    invalid_bst.insert(20)
     invalid_bst.root.left = Node(30)
 
     print(invalid_bst.is_valid())
     print(bst.is_valid())
 
-    bst.delete_node(80)
+    bst.delete(80)
     bst.inorder_traversal()
 
     print(bst.get_successor(55))
