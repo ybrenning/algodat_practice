@@ -85,6 +85,7 @@ class Graph:
                 return False
 
             prev.next = curr.next
+
             return True
 
     def delete_edge(self, vertex_1: int, vertex_2: int) -> bool:
