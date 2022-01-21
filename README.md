@@ -46,7 +46,7 @@ Literature:
 * [Priority Queues](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/priority_queues)
   * [Heaps](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/priority_queues)
 * [Trees](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/trees)
-  * [Binary Search Trees](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/binary_search_trees)
+  * [Binary Search Trees](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/trees/binary_search_trees)
 * [Graphs](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/graphs)
   * [Adjacency Matrix](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/graphs/adjacency_matrix)
   * [Adjacency List](https://github.com/ybrenning/algodat_practice/tree/master/data_structures/graphs/adjacency_list)
