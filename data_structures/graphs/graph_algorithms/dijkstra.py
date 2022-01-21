@@ -12,8 +12,8 @@ def dijkstra(graph: WeightedGraph, start: int) -> tuple[list[int], list[int]]:
     Dijkstra's shortest path algorithm implementation
     :param graph: weighted graph to perform algorithm on
     :param start: starting point in the graph
-    :return: tuple containing list of distances to each
-    node and list of nodes from which these nodes are reached
+    :return: tuple containing list of distances to each node
+    and list of nodes from which these destinations are reached
     >>> graph = WeightedGraph()
     >>> graph.add_edge(1, 2, weight=4)
     >>> graph.add_edge(2, 3, weight=5)
@@ -52,12 +52,15 @@ def dijkstra(graph: WeightedGraph, start: int) -> tuple[list[int], list[int]]:
             if vis[curr_edge_dest]:
                 continue
 
+            # Edge relaxation operation:
+            # Adding best distance from start node to current node
+            # and cost of getting to destination node
             new_dist = dist[index] + curr_edge_weight
-            if dist[curr_edge_dest] is None \
-                    or new_dist < dist[curr_edge_dest]:
-                prev[curr_edge_dest] = index
-                dist[curr_edge_dest] = new_dist
-                heapq.heappush(pq, (curr_edge_dest, new_dist))
+            # Compare to best distance for destination
+            if dist[curr_edge_dest] is None or new_dist < dist[curr_edge_dest]:
+                prev[curr_edge_dest] = index  # Save the node we got here from
+                dist[curr_edge_dest] = new_dist  # Set new lowest distance
+                heapq.heappush(pq, (curr_edge_dest, new_dist))  # Add tuple to pq so we visit it later
 
     return dist, prev
 
