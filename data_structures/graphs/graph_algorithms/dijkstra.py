@@ -8,11 +8,26 @@ import heapq
 
 
 def dijkstra(graph: WeightedGraph, start: int) -> tuple[list[int], list[int]]:
+    """
+    Dijkstra's shortest path algorithm implementation
+    :param graph: weighted graph to perform algorithm on
+    :param start: starting point in the graph
+    :return: tuple containing list of distances to each
+    node and list of nodes from which these nodes are reached
+    >>> graph = WeightedGraph()
+    >>> graph.add_edge(1, 2, weight=4)
+    >>> graph.add_edge(2, 3, weight=5)
+    >>> graph.add_edge(2, 4, weight=1)
+    >>> print(dijkstra(graph, 1)
+    ([None, 0, 4, 9, 5], [-1, 1, 1, 2, 2])
+    """
+
     vis: list[bool] = [False] * graph.vertices  # All unvisited
     dist: list[int | None] = [None] * graph.vertices  # Set to "infinity"
     prev: list[int] = [-1] * graph.vertices  # Keeps track of paths
 
     dist[start] = 0
+    prev[start] = start
 
     # Priority queue stores
     # `(node index, node weight)` pairs

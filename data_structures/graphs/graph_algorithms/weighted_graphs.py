@@ -9,7 +9,7 @@ class WeightedGraph:
     def __init__(self, vertices: int, directed: bool = True) -> None:
         self.vertices = vertices
         self.directed = directed
-        self.edges: list[list[(int, int)]] = [[] for _ in range(vertices)]
+        self.edges: list[list[tuple[int, int]]] = [[] for _ in range(vertices)]
 
     def __str__(self) -> str:
         output = ""
@@ -64,11 +64,11 @@ class WeightedGraph:
 
 def main():
     graph = WeightedGraph(5)
-    graph.add_edge(1, 3, 5)
-    graph.add_edge(1, 2, 1)
-    graph.add_edge(2, 4, 8)
-    graph.add_edge(0, 1, -5)
-    graph.add_edge(4, 3, 2)
+    graph.add_edge(1, 3, weight=5)
+    graph.add_edge(1, 2, weight=1)
+    graph.add_edge(2, 4, weight=8)
+    graph.add_edge(0, 1, weight=-5)
+    graph.add_edge(4, 3, weight=2)
 
     print(graph)
 
