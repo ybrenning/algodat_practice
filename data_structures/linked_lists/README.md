@@ -34,3 +34,4 @@ Space complexity: **O(n)**
   * [Arrays vs Linked Lists](https://www.youtube.com/watch?v=lC-yYCOnN8Q&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=4&ab_channel=mycodeschool)
   * [Linked List Implementation](https://www.youtube.com/watch?v=vcQIFT79_50&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=5&ab_channel=mycodeschool)
   * [Doubly Linked List Implementation](https://www.youtube.com/watch?v=VOQNf1VxU3Q&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=13&ab_channel=mycodeschool)
+* [freeCodeCamp](https://youtu.be/Hj_rA0dhr2I) (In-Depth Video)

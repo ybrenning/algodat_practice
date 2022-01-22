@@ -22,3 +22,4 @@ Space complexity: **O(n)**
 * MyCodeSchool
   * [Introduction](https://youtu.be/pYT9F8_LFTM)
   * [Implementation in C](https://youtu.be/COZK7NATh4k)
+* [freeCodeCamp](https://youtu.be/fAAZixBzIAI) (In-Depth Video)
