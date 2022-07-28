@@ -1,7 +1,7 @@
 # Dijkstra's Algorithm
 
 Dijkstra's algorithm solves the single-sourced shortest paths problem
-on a weighted, directed graph `G = (V,E)` for the case in which all edge weights
+on a weighted, directed graph $G = (V, E)$ for the case in which all edge weights
 are non-negative.
 
 Dijkstra’s algorithm maintains a set S of vertices whose final shortest-path
