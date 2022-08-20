@@ -14,7 +14,7 @@ of children with parents, represented as a hierarchical set of linked nodes.
 **Level**: The level of a node is the number of edges along the unique path between it and the root node. \
 **Width**: The number of nodes in a level. 
 **Breadth**: The number of leaves. \
-**Forest**: A set of n ≥ 0 disjoint trees. \
+**Forest**: A set of $n \geq 0$ disjoint trees. \
 **Ordered tree**: A rooted tree in which an ordering is specified for the children of each vertex. \
 **Size of a tree**: Number of nodes in the tree.
 
