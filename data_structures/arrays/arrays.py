@@ -8,7 +8,7 @@ print(my_list[-1])
 
 # We can access a range of items within the list using slicing
 # my_list[start:stop:step]
-my_list = ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']
+my_list = ["H", "e", "l", "l", "o", "W", "o", "r", "l", "d"]
 print(my_list[2:5])
 print(my_list[5:])
 print(my_list[:-2])

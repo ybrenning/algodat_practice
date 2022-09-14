@@ -74,13 +74,7 @@ def main():
 
     # Alternatively:
     other_graph = WeightedGraph(5)
-    other_graph.edges = [
-        [(1, -5)],
-        [(3, 5), (2, 1)],
-        [(4, 8)],
-        [],
-        [(3, 2)]
-    ]
+    other_graph.edges = [[(1, -5)], [(3, 5), (2, 1)], [(4, 8)], [], [(3, 2)]]
 
     print(other_graph)
 

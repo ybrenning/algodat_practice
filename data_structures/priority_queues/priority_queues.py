@@ -81,13 +81,15 @@ class MaxHeap:
         i = 0
         while self.has_left_child(i):
             larger_child_index = self.get_left_child_index(i)
-            if self.has_right_child(i) and self.get_right_child(i) > self.get_left_child(i):
+            if self.has_right_child(i) and self.get_right_child(
+                i
+            ) > self.get_left_child(i):
                 larger_child_index = self.get_right_child_index(i)
 
             if self.data[i] > self.data[larger_child_index]:
                 break
             else:
-                self.swap(i, larger_child_index)#
+                self.swap(i, larger_child_index)  #
 
             i = larger_child_index
 

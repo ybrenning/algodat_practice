@@ -179,25 +179,32 @@ class BinarySearchTree:
         # Check if the left and right subtrees are lesser and greater
         # (meaning the definition is true for the current node)
         # Then repeat this check for every node in the tree
-        return \
-            self.is_subtree_lesser(node.left, node.val) and self.is_subtree_greater(node.right, node.val) \
-            and self.__is_valid(node.left) and self.__is_valid(node.right)
+        return (
+            self.is_subtree_lesser(node.left, node.val)
+            and self.is_subtree_greater(node.right, node.val)
+            and self.__is_valid(node.left)
+            and self.__is_valid(node.right)
+        )
 
     def is_subtree_greater(self, node: Node, val: int) -> bool:
         if node is None:
             return True
 
-        return \
-            node.val > val \
-            and self.is_subtree_greater(node.left, val) and self.is_subtree_greater(node.right, val)
+        return (
+            node.val > val
+            and self.is_subtree_greater(node.left, val)
+            and self.is_subtree_greater(node.right, val)
+        )
 
     def is_subtree_lesser(self, node: Node, val: int) -> bool:
         if node is None:
             return True
 
-        return \
-            node.val <= val \
-            and self.is_subtree_lesser(node.left, val) and self.is_subtree_lesser(node.right, val)
+        return (
+            node.val <= val
+            and self.is_subtree_lesser(node.left, val)
+            and self.is_subtree_lesser(node.right, val)
+        )
 
     def delete(self, val: int) -> Node:
         """

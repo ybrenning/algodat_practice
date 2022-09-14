@@ -1,7 +1,7 @@
 def merge(arr: list[int], left: int, mid: int, right: int) -> None:
     # Copy left and right sub-arrays
-    arr_l = arr[left:mid+1]
-    arr_r = arr[mid+1:right+1]
+    arr_l = arr[left : mid + 1]
+    arr_r = arr[mid + 1 : right + 1]
 
     i = j = 0
     k = left

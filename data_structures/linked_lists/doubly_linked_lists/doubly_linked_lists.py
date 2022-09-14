@@ -286,7 +286,6 @@ def main():
 
     print(linked_list)
 
-
     # Reverse method: swaps each prev and next pointer
     # using a temp node to store the prev node
 

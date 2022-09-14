@@ -47,7 +47,9 @@ def dijkstra(graph: WeightedGraph, start: int) -> tuple[list[int], list[int]]:
         # Loop over all neighbours of current node
         for i in range(len(graph.edges[index])):
             curr_edge_dest: int = graph.edges[index][i][0]  # Current destination node
-            curr_edge_weight: int = graph.edges[index][i][1]  # Weight of said destination
+            curr_edge_weight: int = graph.edges[index][i][
+                1
+            ]  # Weight of said destination
 
             if vis[curr_edge_dest]:
                 continue
@@ -60,7 +62,9 @@ def dijkstra(graph: WeightedGraph, start: int) -> tuple[list[int], list[int]]:
             if dist[curr_edge_dest] is None or new_dist < dist[curr_edge_dest]:
                 prev[curr_edge_dest] = index  # Save the node we got here from
                 dist[curr_edge_dest] = new_dist  # Set new lowest distance
-                heapq.heappush(pq, (curr_edge_dest, new_dist))  # Add tuple to pq so we visit it later
+                heapq.heappush(
+                    pq, (curr_edge_dest, new_dist)
+                )  # Add tuple to pq so we visit it later
 
     return dist, prev
 
@@ -72,7 +76,7 @@ def main():
         [(2, 6), (0, 1)],
         [(3, 2), (4, 4)],
         [(4, 1)],
-        [(1, 5)]
+        [(1, 5)],
     ]
 
     print(dijkstra(graph, 2))

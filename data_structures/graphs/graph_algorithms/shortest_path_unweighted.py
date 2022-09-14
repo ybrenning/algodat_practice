@@ -52,13 +52,7 @@ def shortest_path(graph: Graph, start: int, dest: int):
 
 def main():
     graph = Graph(5)
-    graph.edges = [
-        [1],
-        [3],
-        [4],
-        [4, 1],
-        [0, 1]
-    ]
+    graph.edges = [[1], [3], [4], [4, 1], [0, 1]]
 
     print(shortest_path(graph, 0, 4))
 
