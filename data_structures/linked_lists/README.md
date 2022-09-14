@@ -16,11 +16,11 @@ In Java for instance, Linked Lists are implemented using Doubly Linked Lists wit
 
 ### Characteristics
 Time complexities:
-* Accessing elements: **O(n)**
-* Finding elements: **O(n)**
-* Insertion/Deletion: **O(1)**
+* Accessing elements: **$O(n)$**
+* Finding elements: **$O(n)$**
+* Insertion/Deletion: **$O(1)$**
 
-Space complexity: **O(n)**
+Space complexity: **$O(n)$**
 
 > Linked lists offer dynamic sizing as well as ease of insertion and deletion. On the other hand, random access
 > is not possible the way it is in arrays. Another disadvantage is the extra storage needed for references.

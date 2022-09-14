@@ -15,9 +15,9 @@ This is particularly helpful in the following scenarios:
 
 ### Characteristics
 Time complexities:
-* Accessing elements (peek) **O(1)**
-* Insertion/Deletion: **O(1)**
+* Accessing elements (peek) **$O(1)$**
+* Insertion/Deletion: **$O(1)$**
 
-Space complexity: **O(n)**
+Space complexity: **$O(n)$**
 
 > Queues may be implemented using linear data structures such as arrays or linked lists.

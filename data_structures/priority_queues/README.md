@@ -22,10 +22,10 @@ A heap is a complete binary tree that satisfies the so-called _heap property_ :
 
 ### Characteristics
 Time complexities:
-* Accessing min/max: **O(1)**
-* Insertion/Deletion: **O(log n)**
+* Accessing min/max: **$O(1)$**
+* Insertion/Deletion: **$O(\log n)$**
 
-Space complexity: **O(n)
+Space complexity: **$O(n)$**
 
 **More on heaps**
 * [Programiz](https://www.programiz.com/dsa/heap-data-structure)

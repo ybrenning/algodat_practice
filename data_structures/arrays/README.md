@@ -12,11 +12,11 @@ Python offers the `list` data type as an implementation of the dynamic array dat
 
 ### Characteristics
 Time complexities:
-* Accessing elements: **O(1)**
-* Finding elements: **O(n)**
-* Insertion/Deletion: **O(n)**
+* Accessing elements: **$O(1)$**
+* Finding elements: **$O(n)$**
+* Insertion/Deletion: **$O(n)$**
 
-Space complexity: **O(n)**
+Space complexity: **$O(n)$**
 
 > Dynamic arrays allow for fast random read access, but adding or removing from anywhere but
 > the back of the array requires shifting other elements over.
